@@ -14,6 +14,7 @@ import XMonad.Util.Run(safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import Data.List 
 import System.IO
 
 defaultModMask :: KeyMask
@@ -29,7 +30,6 @@ myBar = "xmobar"
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    , title     =? "Friends"        --> doFloat
     , isFullscreen 		    --> (doF W.focusDown <+> doFullFloat)
     , manageTerm
     , manageWeb
@@ -52,14 +52,17 @@ manageEmacs = composeOne
 manageWeb :: ManageHook
 manageWeb = composeOne
     [ className =? c -?> (ask >>= doF . \w -> (copyWindow w "3:web"))
-    | c <- [ "Chromium-browser"
-           , "Firefox"
+    | c <- [ "Chromium-browser",
+             "Google-chrome",
+             "Firefox"
            ]]
 
 manageSteam :: ManageHook
-manageSteam = composeOne
-    [ className =? "Steam" -?> doF (W.shift "8:steam")]
+manageSteam = composeAll
+    [ className =? "Steam" --> doShift "8:steam",
+      title =? "Friends"  --> doFloat ]
 
+      
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "1:term"
                , "2:emacs"
@@ -115,7 +118,7 @@ myConfig = defaultConfig
 	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask , xK_e),               safeSpawn "emacsclient" ["-c"])
-        , ((mod4Mask , xK_u),               safeSpawn "chromium-browser" [])
+        , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
         , ((mod4Mask , xK_F6),              safeSpawn "brightness" ["down"])
         , ((mod4Mask , xK_F7),              safeSpawn "brightness" ["up"])
         , ((mod4Mask , xK_f) ,              nextWS)
