@@ -34,7 +34,8 @@ myManageHook = composeAll
     , manageTerm
     , manageWeb
     , manageEmacs
-    , manageSteam]
+    , manageSteam
+    , manageEclipse]
 
 
 manageTerm :: ManageHook
@@ -62,12 +63,15 @@ manageSteam = composeAll
     [ className =? "Steam" --> doShift "8:steam",
       title =? "Friends"  --> doFloat ]
 
+manageEclipse :: ManageHook
+manageEclipse = composeAll
+    [ className =? "Eclipse" --> doShift "4:eclipse" ]
       
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "1:term"
                , "2:emacs"
                , "3:web"
-               , "4"
+               , "4:eclipse"
                , "5"
                , "6"
                , "7"
