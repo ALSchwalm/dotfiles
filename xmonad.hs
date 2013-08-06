@@ -6,6 +6,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.GridSelect
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
@@ -80,7 +81,7 @@ myWorkspaces = [ "1:term"
                ]
     
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "[" "]",
+myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
        		  ppLayout = const "",
                   ppTitle = const ""
                   }
@@ -122,6 +123,7 @@ myConfig = defaultConfig
 	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask , xK_e),               safeSpawn "emacsclient" ["-c"])
+        , ((mod4Mask , xK_g),                 goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
         , ((mod4Mask , xK_F6),              safeSpawn "brightness" ["down"])
         , ((mod4Mask , xK_F7),              safeSpawn "brightness" ["up"])
