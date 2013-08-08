@@ -32,6 +32,7 @@ myBar = "xmobar"
 myManageHook = composeAll
     [ className =? "MPlayer"   --> doFloat
     , className =? "Gimp"      --> doFloat
+    , isDialog                 --> doFloat
     , isFullscreen 	       --> (doF W.focusDown <+> doFullFloat)
     , manageTerm
     , manageWeb
@@ -99,7 +100,7 @@ myStartup = do
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
 
 
-myLayouts = smartBorders tiled ||| simpleTabbedBottom ||| Full ||| Mirror tiled
+myLayouts = smartBorders tiled ||| smartBorders simpleTabbedBottom ||| smartBorders Full ||| Mirror tiled
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
