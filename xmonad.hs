@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.FadeInactive
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.FlexibleResize as Flex
@@ -29,9 +30,9 @@ myBar = "xmobar"
 
 -- Float specific windows
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , isFullscreen 		    --> (doF W.focusDown <+> doFullFloat)
+    [ className =? "MPlayer"   --> doFloat
+    , className =? "Gimp"      --> doFloat
+    , isFullscreen 	       --> (doF W.focusDown <+> doFullFloat)
     , manageTerm
     , manageWeb
     , manageEmacs
@@ -83,8 +84,13 @@ myWorkspaces = [ "1:term"
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
        		  ppLayout = const "",
-                  ppTitle = const ""
+                  ppTitle = const "",
+                  ppUrgent = xmobarColor "#FF0000" ""
                   }
+
+myLogHook :: X ()
+myLogHook = fadeInactiveLogHook fadeAmount
+     where fadeAmount = 0.8
 
 myStartup = do
           spawnOn (myWorkspaces!!0) "xfce4-terminal"
@@ -111,7 +117,9 @@ myConfig = defaultConfig
 	, manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ myLayouts
         , startupHook = myStartup
-	, focusedBorderColor = "#555555"
+        , logHook = myLogHook
+        , borderWidth = 3
+	, focusedBorderColor = "#AA3333"
 	, normalBorderColor = "#000000"
         , terminal = "xfce4-terminal"
         , workspaces = myWorkspaces
