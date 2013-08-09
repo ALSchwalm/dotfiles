@@ -56,6 +56,16 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
+(defun my-backward-kill-word ()
+  (interactive)
+  (if (bolp)
+      (backward-delete-char 1)
+    (if (string-match "^\\s-+$" (buffer-substring (point-at-bol) (point)))
+        (kill-region (point-at-bol) (point))
+      (backward-kill-word 1))))
+
+(global-set-key [C-backspace] 'my-backward-kill-word)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
