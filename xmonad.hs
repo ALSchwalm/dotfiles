@@ -11,8 +11,9 @@ import XMonad.Actions.GridSelect
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.Run(safeSpawn)
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.SimplestFloat
+import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -94,13 +95,13 @@ myLogHook = fadeInactiveLogHook fadeAmount
      where fadeAmount = 0.8
 
 myStartup = do
-          spawnOn (myWorkspaces!!0) "xfce4-terminal"
+          spawnAndDo (doShift "1:term") "xfce4-terminal"
                   
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
 
 
-myLayouts = smartBorders tiled ||| smartBorders simpleTabbedBottom ||| smartBorders Full ||| Mirror tiled
+myLayouts = smartBorders  $ tiled |||  simpleTabbedBottom |||  Full ||| Mirror tiled
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -132,7 +133,7 @@ myConfig = defaultConfig
 	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask , xK_e),               safeSpawn "emacsclient" ["-c"])
-        , ((mod4Mask , xK_g),                 goToSelected defaultGSConfig)  
+        , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
         , ((mod4Mask , xK_F6),              safeSpawn "brightness" ["down"])
         , ((mod4Mask , xK_F7),              safeSpawn "brightness" ["up"])
@@ -145,4 +146,6 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_w) ,              moveTo Next EmptyWS)
         , ((mod4Mask .|. shiftMask, xK_w) , shiftTo Next EmptyWS)
         , ((mod4Mask , xK_Tab) ,            toggleWS)
+        , ((mod1Mask , xK_Tab) ,            windows W.focusDown)
+        , ((mod1Mask .|. shiftMask, xK_Tab) , windows W.focusUp)
         ]
