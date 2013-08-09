@@ -12,7 +12,6 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.SimplestFloat
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
@@ -35,18 +34,10 @@ myManageHook = composeAll
     , className =? "Gimp"      --> doFloat
     , isDialog                 --> doFloat
     , isFullscreen 	       --> (doF W.focusDown <+> doFullFloat)
-    , manageTerm
     , manageWeb
     , manageEmacs
     , manageSteam
     , manageEclipse]
-
-
-manageTerm :: ManageHook
-manageTerm = composeOne
-    [ className =? c -?> (ask >>= doF . \w -> (copyWindow w "1:term"))
-    | c <- [ "xterm",
-             "Xfce4-terminal"]]
 
 manageEmacs :: ManageHook
 manageEmacs = composeOne
@@ -101,7 +92,7 @@ myStartup = do
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
 
 
-myLayouts = smartBorders  $ tiled |||  simpleTabbedBottom |||  Full ||| Mirror tiled
+myLayouts = smartBorders  $ onWorkspace "8:steam" Full $ tiled |||  simpleTabbedBottom |||  Full ||| Mirror tiled
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
