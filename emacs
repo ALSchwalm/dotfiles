@@ -11,10 +11,12 @@
 (setq minibuffer-prompt-properties (quote 
 	(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
 
-;; dont create backups
-(setq backup-inhibited t)
-(setq make-backup-files nil)
-
+;;Put backups/autosave in temp directory        
+(setq backup-directory-alist
+    `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+    `((".*" ,temporary-file-directory t)))
+          
 ;;spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
