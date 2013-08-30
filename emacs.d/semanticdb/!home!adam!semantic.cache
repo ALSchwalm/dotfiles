@@ -1,0 +1,23 @@
+;; Object adam/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "adam/"
+  :tables (list 
+   (semanticdb-table "test.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("iostream" include (:system-flag t) nil [1 19])
+            ("vector" include (:system-flag t) nil [20 36])
+            ("algorithm" include (:system-flag t) nil [37 56])
+            ("map" include (:system-flag t) nil [57 70])
+            ("main" function (:type "int") nil [73 204]))          
+    :file "test.cpp"
+    :pointmax 208
+    :fsize 166
+    :lastmodtime '(20982 46068 997034 280000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!adam!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

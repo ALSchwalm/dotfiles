@@ -1,0 +1,86 @@
+;; Object MetaprogrammingExercises/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "MetaprogrammingExercises/"
+  :tables (list 
+   (semanticdb-table "Primes.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("iostream" include (:system-flag t) nil [1 20])
+            ("array" include (:system-flag t) nil [21 37])
+            ("type_traits" include (:system-flag t) nil [38 60])
+            ("Ints" type (:type "struct") nil [112 126])
+            ("FactorsHelper" type
+               (:template 
+                  ( ("factorList" type (:type "class") nil nil)
+                    ("unsigned int" type nil nil nil)
+                    ("unsigned int" type nil nil nil))                  
+                :type "struct"
+                :prototype t)
+                nil [152 231])
+            ("Move" type
+               (:template 
+                  ( ("valueList" type (:type "class") nil nil)
+                    ("unsigned int" type nil nil nil)
+                    ("unsigned int" type nil nil nil)
+                    ("bool" type nil nil nil))                  
+                :type "struct"
+                :prototype t)
+                nil [248 323])
+            ("values" variable (:type "int") nil [1449 1476])
+            ("Remove" type
+               (:template 
+                  ( ("intList" type (:type "class") nil nil)
+                    ("bool" type nil nil nil))                  
+                :type "struct"
+                :prototype t)
+                nil [2036 2083])
+            ("PrimeHelper" type
+               (:template 
+                  ( ("intList" type (:type "class") nil nil))                  
+                :type "struct"
+                :prototype t)
+                nil [2115 2161])
+            ("values" variable (:type "int") nil [3016 3043])
+            ("Primes" type
+               (:template 
+                  ( ("unsigned int" type nil nil nil))                  
+                :type "struct"
+                :superclasses 
+                  ( ("PrimeHelper" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  )
+                nil [3369 3448])
+            ("main" function (:type "int") nil [3450 3571]))          
+    :file "Primes.cpp"
+    :pointmax 3572
+    :fsize 3571
+    :lastmodtime '(20978 59799 34117 131000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "Range.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("array" include (:system-flag t) nil [1 17])
+            ("iostream" include (:system-flag t) nil [18 37])
+            ("Ints" type (:type "struct") nil [70 84])
+            ("RangeHelper" type
+               (:template 
+                  ( ("intList" type (:type "class") nil nil)
+                    ("bool" type nil nil nil))                  
+                :type "struct"
+                :prototype t)
+                nil [86 142])
+            ("values" variable (:type "int") nil [436 457])
+            ("main" function (:type "int") nil [715 820]))          
+    :file "Range.cpp"
+    :pointmax 821
+    :fsize 820
+    :lastmodtime '(20978 52536 880064 979000)
+    :unmatched-syntax '((punctuation 712 . 713) (semantic-list 710 . 712) (punctuation 709 . 710) (number 708 . 709) (punctuation 707 . 708) (punctuation 706 . 707) (symbol 701 . 706) (punctuation 699 . 700) (punctuation 698 . 699) (symbol 693 . 698) (punctuation 692 . 693) (symbol 688 . 692) (punctuation 687 . 688) (symbol 676 . 687) (PUBLIC 669 . 675) (punctuation 667 . 668) (symbol 661 . 666) (STRUCT 654 . 660) (punctuation 652 . 653) (symbol 647 . 652) (INT 643 . 646) (UNSIGNED 634 . 642) (punctuation 633 . 634) (TEMPLATE 625 . 633) (punctuation 622 . 623) (semantic-list 620 . 622) (punctuation 619 . 620) (number 618 . 619) (punctuation 617 . 618) (punctuation 616 . 617) (number 615 . 616) (punctuation 614 . 615) (symbol 610 . 614) (punctuation 608 . 609) (punctuation 607 . 608) (punctuation 606 . 607) (punctuation 605 . 606) (punctuation 604 . 605) (symbol 600 . 604) (punctuation 598 . 599) (symbol 594 . 598) (punctuation 592 . 593) (number 591 . 592) (punctuation 590 . 591) (symbol 586 . 590) (punctuation 585 . 586) (symbol 581 . 585) (punctuation 580 . 581) (symbol 569 . 580) (PUBLIC 562 . 568) (punctuation 556 . 557) (punctuation 554 . 555) (symbol 549 . 554) (punctuation 547 . 548) (punctuation 546 . 547) (punctuation 545 . 546) (punctuation 544 . 545) (punctuation 543 . 544) (symbol 539 . 543) (punctuation 537 . 538) (symbol 533 . 537) (punctuation 532 . 533) (symbol 528 . 532) (punctuation 527 . 528) (symbol 516 . 527) (STRUCT 509 . 515) (punctuation 507 . 508) (symbol 503 . 507) (INT 499 . 502) (UNSIGNED 490 . 498) (punctuation 488 . 489) (symbol 484 . 488) (punctuation 482 . 483) (punctuation 481 . 482) (punctuation 480 . 481) (INT 477 . 480) (UNSIGNED 468 . 476) (punctuation 467 . 468) (TEMPLATE 459 . 467) (punctuation 435 . 436) (punctuation 434 . 435) (punctuation 433 . 434) (symbol 429 . 433) (punctuation 427 . 428) (punctuation 426 . 427) (punctuation 425 . 426) (punctuation 424 . 425) (punctuation 423 . 424) (symbol 419 . 423) (punctuation 418 . 419) (symbol 414 . 418) (punctuation 413 . 414) (symbol 402 . 413) (punctuation 399 . 400) (semantic-list 393 . 399) (punctuation 392 . 393) (punctuation 391 . 392) (punctuation 390 . 391) (SIZEOF 384 . 390) (punctuation 382 . 383) (INT 379 . 382) (UNSIGNED 370 . 378) (punctuation 369 . 370) (symbol 364 . 369) (punctuation 363 . 364) (punctuation 362 . 363) (symbol 359 . 362) (CONST 353 . 358) (punctuation 350 . 351) (symbol 346 . 350) (punctuation 344 . 345) (punctuation 343 . 344) (punctuation 342 . 343) (INT 339 . 342) (UNSIGNED 330 . 338) (punctuation 329 . 330) (TEMPLATE 321 . 329) (punctuation 318 . 319) (semantic-list 214 . 318) (punctuation 213 . 214) (symbol 209 . 213) (punctuation 207 . 208) (punctuation 206 . 207) (punctuation 205 . 206) (punctuation 204 . 205) (punctuation 203 . 204) (symbol 199 . 203) (punctuation 198 . 199) (symbol 194 . 198) (punctuation 193 . 194) (symbol 182 . 193) (STRUCT 175 . 181) (punctuation 173 . 174) (symbol 169 . 173) (punctuation 167 . 168) (punctuation 166 . 167) (punctuation 165 . 166) (INT 162 . 165) (UNSIGNED 153 . 161) (punctuation 152 . 153) (TEMPLATE 144 . 152) (punctuation 68 . 69) (symbol 64 . 68) (punctuation 62 . 63) (punctuation 61 . 62) (punctuation 60 . 61) (INT 57 . 60) (UNSIGNED 48 . 56) (punctuation 47 . 48) (TEMPLATE 39 . 47) (punctuation 435 . 436) (punctuation 434 . 435) (punctuation 433 . 434) (symbol 429 . 433) (punctuation 427 . 428) (punctuation 426 . 427) (punctuation 425 . 426) (punctuation 424 . 425) (punctuation 423 . 424) (symbol 419 . 423) (punctuation 418 . 419) (symbol 414 . 418) (punctuation 413 . 414) (symbol 402 . 413) (punctuation 399 . 400) (semantic-list 393 . 399) (punctuation 392 . 393) (punctuation 391 . 392) (punctuation 390 . 391) (SIZEOF 384 . 390) (punctuation 382 . 383) (INT 379 . 382) (UNSIGNED 370 . 378) (punctuation 369 . 370) (symbol 364 . 369) (punctuation 363 . 364) (punctuation 362 . 363) (symbol 359 . 362) (CONST 353 . 358) (punctuation 350 . 351) (symbol 346 . 350) (punctuation 344 . 345) (punctuation 343 . 344) (punctuation 342 . 343) (INT 339 . 342) (UNSIGNED 330 . 338) (punctuation 329 . 330) (TEMPLATE 321 . 329) (punctuation 318 . 319) (semantic-list 214 . 318) (punctuation 213 . 214) (symbol 209 . 213) (punctuation 207 . 208) (punctuation 206 . 207) (punctuation 205 . 206) (punctuation 204 . 205) (punctuation 203 . 204) (symbol 199 . 203) (punctuation 198 . 199) (symbol 194 . 198) (punctuation 193 . 194) (symbol 182 . 193) (STRUCT 175 . 181) (punctuation 173 . 174) (symbol 169 . 173) (punctuation 167 . 168) (punctuation 166 . 167) (punctuation 165 . 166) (INT 162 . 165) (UNSIGNED 153 . 161) (punctuation 152 . 153) (TEMPLATE 144 . 152) (punctuation 68 . 69) (symbol 64 . 68) (punctuation 62 . 63) (punctuation 61 . 62) (punctuation 60 . 61) (INT 57 . 60) (UNSIGNED 48 . 56) (punctuation 47 . 48) (TEMPLATE 39 . 47))
+    )
+   )
+  :file "!home!adam!MetaprogrammingExercises!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

@@ -1,0 +1,118 @@
+;; Object Dialog/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "Dialog/"
+  :tables (list 
+   (semanticdb-table "DialogOK.h"
+    :major-mode 'c-mode
+    :tags 
+        '( ("DIALOGOK_H_" variable (:constant-flag t) nil [29 40])
+            ("ncurses.h" include (:system-flag t) nil [96 117])
+            ("Interface/CLI/Dialog/Dialog.h" include nil nil [126 166])
+            ("string" include (:system-flag t) nil [167 184])
+            ("Interface" type
+               (:members 
+                  ( ("CLI" type
+                       (:members 
+                          ( ("DialogOK" type
+                               (:superclasses 
+                                  ( ("Dialog" type
+                                       (:protection "public"
+                                        :type "class")
+                                        nil nil))                                  
+                                :members 
+                                  ( ("public" label nil (reparse-symbol classsubparts) [289 296])
+                                    ("DialogOK" function
+                                       (:prototype-flag t
+                                        :constructor-flag t
+                                        :arguments 
+                                          ( ("" variable (:type ("std::string" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [318 330]))                                          
+                                        :type ("DialogOK" type (:type "class") nil nil))
+                                        (reparse-symbol classsubparts) [309 331])
+                                    ("handleInput" function
+                                       (:prototype-flag t
+                                        :type "void")
+                                        (reparse-symbol classsubparts) [344 363]))                                  
+                                :type "class")
+                                (reparse-symbol namespacesubparts) [240 374]))                          
+                        :type "namespace")
+                        (reparse-symbol namespacesubparts) [212 380]))                  
+                :type "namespace")
+                nil [186 382]))          
+    :file "DialogOK.h"
+    :pointmax 391
+    :fsize 390
+    :lastmodtime '(20976 36340 798031 880000)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("DIALOGOK_H_")
+          )
+
+    )
+   (semanticdb-table "Dialog.h"
+    :major-mode 'c-mode
+    :tags 
+        '( ("DIALOG_H_" variable (:constant-flag t) nil [27 36])
+            ("ncurses.h" include (:system-flag t) nil [92 113])
+            ("memory" include (:system-flag t) nil [122 139])
+            ("Interface" type
+               (:members 
+                  ( ("CLI" type
+                       (:members 
+                          ( ("Dialog" type
+                               (:members 
+                                  ( ("public" label nil (reparse-symbol classsubparts) [226 233])
+                                    ("Dialog" function
+                                       (:destructor-flag t
+                                        :typemodifiers ("virtual")
+                                        :type "void")
+                                        (reparse-symbol classsubparts) [246 328])
+                                    ("handleInput" function
+                                       (:pure-virtual-flag t
+                                        :prototype-flag t
+                                        :typemodifiers ("virtual")
+                                        :type "void")
+                                        (reparse-symbol classsubparts) [341 370])
+                                    ("protected" label nil (reparse-symbol classsubparts) [380 390])
+                                    ("Dialog" function
+                                       (:constructor-flag t
+                                        :arguments 
+                                          ( ("win" variable
+                                               (:pointer 1
+                                                :type ("WINDOW" type (:type "class") nil nil))
+                                                (reparse-symbol arg-sub-list) [410 422]))                                          
+                                        :type ("Dialog" type (:type "class") nil nil))
+                                        (reparse-symbol classsubparts) [403 548])
+                                    ("dialogWin" variable
+                                       (:pointer 1
+                                        :type ("WINDOW" type (:type "class") nil nil))
+                                        (reparse-symbol classsubparts) [561 579]))                                  
+                                :type "class")
+                                (reparse-symbol namespacesubparts) [195 591])
+                            ("Dialog_ptr" type
+                               (:typedef ("std::shared_ptr" type
+                                     (:template-specifier 
+                                        ( ("Dialog" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil)
+                                :superclasses "std::shared_ptr"
+                                :type "typedef")
+                                (reparse-symbol namespacesubparts) [601 644]))                          
+                        :type "namespace")
+                        (reparse-symbol namespacesubparts) [167 651]))                  
+                :type "namespace")
+                nil [141 653]))          
+    :file "Dialog.h"
+    :pointmax 662
+    :fsize 661
+    :lastmodtime '(20976 36340 798031 880000)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("DIALOG_H_")
+          )
+
+    )
+   )
+  :file "!home!adam!WorldSimulator!include!Interface!CLI!Dialog!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

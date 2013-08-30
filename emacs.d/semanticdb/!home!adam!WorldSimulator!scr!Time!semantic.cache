@@ -1,0 +1,87 @@
+;; Object Time/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "Time/"
+  :tables (list 
+   (semanticdb-table "DateManager.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("Time/DateManager.h" include nil nil [2 31])
+            ("Time" using (:type ("Time" type
+                 (:prototype t
+                  :type "namespace")
+                  nil nil)) nil [33 54])
+            ("getInstance" function
+               (:parent "DateManager"
+                :type ("DateManager" type (:type "class") nil nil))
+                nil [56 140])
+            ("DateManager" function
+               (:constructor-flag t
+                :parent "DateManager"
+                :type ("DateManager" type (:type "class") nil nil))
+                nil [142 226])
+            ("nextMinute" function
+               (:parent "DateManager"
+                :type "void")
+                nil [228 273]))          
+    :file "DateManager.cpp"
+    :pointmax 274
+    :fsize 273
+    :lastmodtime '(20982 60127 713000 226000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "TimeManager.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("unistd.h" include (:system-flag t) nil [51 71])
+            ("Sleep" variable (:constant-flag t) nil [81 86])
+            ("Time/TimeManager.h" include nil nil [112 141])
+            ("Utils/Config.h" include nil nil [142 167])
+            ("time.h" include (:system-flag t) nil [168 185])
+            ("Time" using (:type ("Time" type
+                 (:prototype t
+                  :type "namespace")
+                  nil nil)) nil [189 210])
+            ("getInstance" function
+               (:parent "TimeManager"
+                :type ("TimeManager" type (:type "class") nil nil))
+                nil [212 316])
+            ("TimeManager::MAX_FPS" variable
+               (:constant-flag t
+                :type "unsigned int")
+                nil [318 417])
+            ("TimeManager::MINUTES_PER_SECOND" variable
+               (:constant-flag t
+                :type "unsigned int")
+                nil [418 539])
+            ("TimeManager" function
+               (:constructor-flag t
+                :parent "TimeManager"
+                :type ("TimeManager" type (:type "class") nil nil))
+                nil [542 751])
+            ("capFPS" function
+               (:parent "TimeManager"
+                :type "void")
+                nil [753 1124])
+            ("getFPS" function
+               (:parent "TimeManager"
+                :type "int")
+                nil [1126 1380])
+            ("tick" function
+               (:parent "TimeManager"
+                :type "void")
+                nil [1382 1916]))          
+    :file "TimeManager.cpp"
+    :pointmax 1917
+    :fsize 1916
+    :lastmodtime '(20976 36340 815031 880000)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("Sleep" (spp-arg-list ("x") 86 . 89) . ((symbol "sleep" 90 . 95) (semantic-list "(x/1000)" 95 . 103)))
+          )
+
+    )
+   )
+  :file "!home!adam!WorldSimulator!scr!Time!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )
