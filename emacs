@@ -10,6 +10,9 @@
 ;; don't let the cursor go into minibuffer prompt
 (setq minibuffer-prompt-properties (quote 
 	(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+               
+;; flyspell mode for spell checking everywhere
+(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 
 ;;Put backups/autosave in temp directory        
 (setq backup-directory-alist
@@ -58,15 +61,23 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
-(defun my-backward-kill-word ()
+;; Add basic delete word method
+(defun backward-delete-word (arg)
+  "Delete characters backward until encountering the beginning of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (backward-word arg) (point))))
+
+;; Stop delete word at newlines
+(defun whitespace-backward-delete-word ()
   (interactive)
   (if (bolp)
       (backward-delete-char 1)
     (if (string-match "^\\s-+$" (buffer-substring (point-at-bol) (point)))
-        (kill-region (point-at-bol) (point))
-      (backward-kill-word 1))))
+        (delete-region (point-at-bol) (point))
+      (backward-delete-word 1))))
 
-(global-set-key [C-backspace] 'my-backward-kill-word)
+(global-set-key [C-backspace] 'whitespace-backward-delete-word)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -75,6 +86,7 @@
  ;; If there is more than one, they won't work right.
  '(fci-rule-column 80)
  '(inhibit-startup-screen t)
+ '(org-startup-indented t)
  '(x-alt-keysym meta t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
