@@ -19,14 +19,19 @@
     `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
     `((".*" ,temporary-file-directory t)))
-          
-;;spaces instead of tabs
-(setq-default indent-tabs-mode nil)
 
-;;(require 'fill-column-indicator)
+;; Set browse-kill-ring defaults
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings)
+
+;; spaces instead of tabs
+(setq-default indent-tabs-mode nil)
 
 ;; copy/past/undo hotkeys
 (cua-mode t)
+
+;; remove menu bar
+(menu-bar-mode -1)
 
 ;; remove toolbar
 (tool-bar-mode -1)
@@ -38,10 +43,6 @@
 ;; Highlight current line
 (global-hl-line-mode)
 (set-face-background hl-line-face "gainsboro")
-
-
-;;(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
-;;  (global-fci-mode 1)
 
 ;; trunkate long lines rather than wrapping
 (set-default 'truncate-lines t)
@@ -84,7 +85,6 @@ With argument ARG, do this that many times."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fci-rule-column 80)
  '(inhibit-startup-screen t)
  '(org-startup-indented t)
  '(x-alt-keysym meta t))
