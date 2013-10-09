@@ -129,7 +129,7 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_F6),              safeSpawn "brightness" ["down"])
         , ((mod4Mask , xK_F7),              safeSpawn "brightness" ["up"])
         , ((mod4Mask , xK_f) ,              nextWS)
-    n    , ((mod4Mask , xK_Right) ,          nextWS)
+        , ((mod4Mask , xK_Right) ,          nextWS)
         , ((mod4Mask .|. shiftMask, xK_f) , shiftToNext)
         , ((mod4Mask , xK_b) ,              prevWS)
         , ((mod4Mask , xK_Left) ,           prevWS)
