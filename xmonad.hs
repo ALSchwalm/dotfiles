@@ -8,6 +8,7 @@ import XMonad.Actions.CopyWindow
 import XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.GridSelect
+import XMonad.Actions.WindowGo
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
@@ -35,15 +36,9 @@ myManageHook = composeAll
     , isDialog                 --> doFloat
     , isFullscreen 	       --> (doF W.focusDown <+> doFullFloat)
     , manageWeb
-    , manageEmacs
     , manageSteam
+    , manageEmacs
     , manageEclipse]
-
-manageEmacs :: ManageHook
-manageEmacs = composeOne
-    [ className =? c -?> (ask >>= doF . \w -> (copyWindow w "2:emacs"))
-    | c <- [ "Emacs" ]]
-
 
 manageWeb :: ManageHook
 manageWeb = composeOne
@@ -52,6 +47,11 @@ manageWeb = composeOne
              "Google-chrome",
              "Firefox"
            ]]
+
+manageEmacs :: ManageHook
+manageEmacs = composeOne
+    [ className =? "Emacs" -?> doShift "2:emacs" ]
+
 
 manageSteam :: ManageHook
 manageSteam = composeAll
@@ -99,7 +99,6 @@ myLayouts = smartBorders  $ onWorkspace "8:steam" Full $ tiled |||  simpleTabbed
      ratio   = 1/2
      delta   = 3/100
 
-
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
     , ((modMask, button2), (\w -> focus w >> windows W.swapMaster))
@@ -123,13 +122,14 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_F10),             safeSpawn "amixer" ["-q", "set", "Master", "5+"])
 	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
-        , ((mod4Mask , xK_e),               safeSpawn "emacsclient" ["-c"])
+        , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >> 
+                                                        safeSpawn "emacsclient" ["-c"]) (className =? "Emacs"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
         , ((mod4Mask , xK_F6),              safeSpawn "brightness" ["down"])
         , ((mod4Mask , xK_F7),              safeSpawn "brightness" ["up"])
         , ((mod4Mask , xK_f) ,              nextWS)
-        , ((mod4Mask , xK_Right) ,          nextWS)
+    n    , ((mod4Mask , xK_Right) ,          nextWS)
         , ((mod4Mask .|. shiftMask, xK_f) , shiftToNext)
         , ((mod4Mask , xK_b) ,              prevWS)
         , ((mod4Mask , xK_Left) ,           prevWS)

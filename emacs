@@ -30,10 +30,8 @@
 ;; copy/past/undo hotkeys
 (cua-mode t)
 
-;; remove menu bar
+;; remove bars
 (menu-bar-mode -1)
-
-;; remove toolbar
 (tool-bar-mode -1)
 
 ;; show column and line number
@@ -62,6 +60,9 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
+(add-to-list 'load-path "~/.emacs.d//helm")
+(require 'helm-config)
+
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
   "Delete characters backward until encountering the beginning of a word.
@@ -79,6 +80,8 @@ With argument ARG, do this that many times."
       (backward-delete-word 1))))
 
 (global-set-key [C-backspace] 'whitespace-backward-delete-word)
+(global-set-key (kbd "M-n") 'scroll-up)
+(global-set-key (kbd "M-p") 'scroll-down)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -87,7 +90,10 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(org-startup-indented t)
- '(x-alt-keysym meta t))
+ '(x-alt-keysym meta t)
+ '(scroll-conservatively 1000)
+ '(mouse-wheel-scroll-amount '(1 ((shift) . 1))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
