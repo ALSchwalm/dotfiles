@@ -82,6 +82,7 @@ With argument ARG, do this that many times."
 (global-set-key [C-backspace] 'whitespace-backward-delete-word)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
+(global-set-key [C-tab] 'other-window)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

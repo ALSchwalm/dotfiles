@@ -3,6 +3,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.UrgencyHook
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.FlexibleResize as Flex
@@ -24,7 +25,7 @@ defaultModMask :: KeyMask
 defaultModMask = mod4Mask
 
 -- The main function.
-main = xmonad =<< statusBar myBar myPP  toggleStrutsKey myConfig
+main = xmonad =<<  statusBar myBar myPP  toggleStrutsKey (withUrgencyHook NoUrgencyHook myConfig)
 
 -- Command to launch the bar.
 myBar = "xmobar"
@@ -37,6 +38,7 @@ myManageHook = composeAll
     , isFullscreen 	       --> (doF W.focusDown <+> doFullFloat)
     , manageWeb
     , manageSteam
+    , manageIRC
     , manageEmacs
     , manageEclipse]
 
@@ -47,6 +49,10 @@ manageWeb = composeOne
              "Google-chrome",
              "Firefox"
            ]]
+
+manageIRC :: ManageHook
+manageIRC = composeOne
+    [ className =? "Xchat" -?> doShift "7:irc" ]
 
 manageEmacs :: ManageHook
 manageEmacs = composeOne
@@ -69,7 +75,7 @@ myWorkspaces = [ "1:term"
                , "4:eclipse"
                , "5"
                , "6"
-               , "7"
+               , "7:irc"
                , "8:steam"
                , "9:music"
                ]
@@ -78,7 +84,7 @@ myWorkspaces = [ "1:term"
 myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
        		  ppLayout = const "",
                   ppTitle = const "",
-                  ppUrgent = xmobarColor "#FF0000" ""
+                  ppUrgent = wrap "~" "~"
                   }
 
 myLogHook :: X ()
@@ -87,6 +93,8 @@ myLogHook = fadeInactiveLogHook fadeAmount
 
 myStartup = do
           spawnAndDo (doShift "1:term") "xfce4-terminal"
+          spawn "emacsclient -c -a ''"
+          safeSpawn "xchat" []
                   
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
