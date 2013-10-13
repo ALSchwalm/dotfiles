@@ -82,8 +82,7 @@ With argument ARG, do this that many times."
 (require 'solarized-dark-theme)
 
 ;; Highlight current line
-;;(global-hl-line-mode)
-;;(set-face-background hl-line-face "gainsboro")
+(global-hl-line-mode)
 
 (global-set-key [C-backspace] 'whitespace-backward-delete-word)
 (global-set-key (kbd "M-n") 'scroll-up)
