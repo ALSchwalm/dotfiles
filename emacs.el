@@ -98,9 +98,7 @@ With argument ARG, do this that many times."
  '(inhibit-startup-screen t)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
  '(org-startup-indented t)
- '(initial-scratch-message
- 
- ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
+ '(initial-scratch-message  ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
  ")
  '(scroll-conservatively 1000))
