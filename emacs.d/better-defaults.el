@@ -43,8 +43,11 @@
 
 ;;;###autoload
 (progn
+  (require 'flx-ido)
   (ido-mode t)
-  (setq ido-enable-flex-matching t)
+  (ido-everywhere t)
+  (flx-ido-mode t)
+  (setq ido-use-faces nil)
 
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)

@@ -5,16 +5,30 @@
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   )
   
 (setq delete-by-moving-to-trash t)
 
 (require 'better-defaults)
 
+;; Use projectile everywhere
+(projectile-global-mode)
+
+;; Fallback to ido-find-file when not in a project
+(defun projectile-find-file-with-fallback ()
+  (interactive)
+  (condition-case nil
+      (projectile-find-file)
+    (error (ido-find-file))))
+
+;; completion for M-x
+(smex-initialize)
+
 ;; linux style indents
 (setq c-default-style "linux"
       c-basic-offset 4)
-	  
+
 ;; don't let the cursor go into minibuffer prompt
 (setq minibuffer-prompt-properties (quote 
 	(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
@@ -47,12 +61,11 @@
 (column-number-mode 1)
 (global-linum-mode 1)
 
+;; supress bell
+(setq ring-bell-function 'ignore)
+
 ;; trunkate long lines rather than wrapping
 (set-default 'truncate-lines t)
-
-;; re-indent on newline
-(define-key global-map (kbd "RET") 'newline-and-indent)
-
 
 ;; auto-complete setup
 (require 'auto-complete-config)
@@ -84,10 +97,15 @@ With argument ARG, do this that many times."
 ;; Highlight current line
 (global-hl-line-mode)
 
+;; Additional global hotkeys
 (global-set-key [C-backspace] 'whitespace-backward-delete-word)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key [C-tab] 'other-window)
+(global-set-key [?\C-x ?\C-f] 'projectile-find-file-with-fallback)
+(global-set-key (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -96,8 +114,10 @@ With argument ARG, do this that many times."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(inhibit-startup-screen t)
+ '(completion-cycle-threshold t)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
  '(org-startup-indented t)
+ '(max-mini-window-height 2)
  '(initial-scratch-message  ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
  ")

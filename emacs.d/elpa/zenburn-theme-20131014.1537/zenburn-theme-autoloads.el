@@ -3,8 +3,8 @@
 ;;; Code:
 
 
-;;;### (autoloads nil "zenburn-theme" "zenburn-theme.el" (21082 3503
-;;;;;;  744009 200000))
+;;;### (autoloads nil "zenburn-theme" "zenburn-theme.el" (21085 39052
+;;;;;;  733024 693000))
 ;;; Generated autoloads from zenburn-theme.el
 
 (and load-file-name (boundp 'custom-theme-load-path) (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
@@ -13,8 +13,8 @@
 
 ;;;***
 
-;;;### (autoloads nil nil ("zenburn-theme-pkg.el") (21082 3503 758602
-;;;;;;  817000))
+;;;### (autoloads nil nil ("zenburn-theme-pkg.el") (21085 39052 749175
+;;;;;;  433000))
 
 ;;;***
 
