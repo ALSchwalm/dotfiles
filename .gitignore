@@ -12,3 +12,9 @@
 auto-save-list/
 places
 semanticdb/
+
+##################
+# Emacs Bytecode
+##################
+
+*.elc
