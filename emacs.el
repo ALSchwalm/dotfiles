@@ -7,10 +7,6 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   )
-  
-(setq delete-by-moving-to-trash t)
-
-(require 'better-defaults)
 
 ;; Use projectile everywhere
 (projectile-global-mode)
@@ -24,31 +20,30 @@
 
 ;; completion for M-x
 (smex-initialize)
-
-;; linux style indents
-(setq c-default-style "linux"
-      c-basic-offset 4)
-
-;; don't let the cursor go into minibuffer prompt
-(setq minibuffer-prompt-properties (quote 
-	(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
-
+ 
 ;; flyspell mode for spell checking everywhere
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
-
-;;Put backups/autosave in temp directory        
-(setq backup-directory-alist
-    `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-    `((".*" ,temporary-file-directory t)))
 
 ;; Set browse-kill-ring defaults
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 
+;; ido/flx/ido-ubiquitous
+(require 'flx-ido)
+(require 'ido-ubiquitous)
+(ido-ubiquitous-mode t)
+(ido-mode t)
+(ido-everywhere t)
+(flx-ido-mode t)
+(setq ido-use-faces nil)
+
 ;; Better duplicate buffer names
 (require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
 
+
+(require 'saveplace)
+(setq-default save-place t)
 
 ;; spaces instead of tabs
 (setq-default indent-tabs-mode nil)
@@ -58,6 +53,7 @@
 
 ;; Add matching parens / braces
 (electric-pair-mode)
+(show-paren-mode 1)
 
 ;; remove bars
 (menu-bar-mode -1)
@@ -67,9 +63,6 @@
 ;; show column and line number
 (column-number-mode 1)
 (global-linum-mode 1)
-
-;; supress bell
-(setq ring-bell-function 'ignore)
 
 ;; trunkate long lines rather than wrapping
 (set-default 'truncate-lines t)
@@ -81,8 +74,8 @@
 
 (add-to-list 'load-path "~/.emacs.d//helm")
 (require 'helm-config)
-
-;; Add basic delete word method
+ 
+ ;; Add basic delete word method
 (defun backward-delete-word (arg)
   "Delete characters backward until encountering the beginning of a word.
 With argument ARG, do this that many times."
@@ -118,27 +111,65 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
+(global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+
+ ;; Make tab completions cycle
  '(completion-cycle-threshold t)
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+
+ ;; linux style indents
+ '(c-default-style "linux")
+ '(c-basic-offset 4)
+
+ '(x-select-enable-clipboard t)
+ '(x-select-enable-primary t)
+ '(save-interprogram-paste-before-kill t)
+ '(apropos-do-all t)
+ '(mouse-yank-at-point t)
+ '(save-place-file (concat user-emacs-directory "places"))
+ '(backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                            "backups"))))
+
+ ;; Hide startup and shorter scratch
  '(inhibit-startup-screen t)
  '(initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
  ")
+
  '(max-mini-window-height 2)
- '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
- '(org-startup-indented t)
+
+ ;; Stop prompt from going into minibuffer
+ '(minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+
+ ;; fix scrolling with mouse / hotkeys
  '(scroll-conservatively 1000)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+ '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
+ 
+ '(org-startup-indented t)
+ '(delete-by-moving-to-trash t)
+ 
+ ;; Better unique names for duplicate buffers
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+
+ ;; Silence the bell
+ '(ring-bell-function 'ignore)
+
+)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+)
