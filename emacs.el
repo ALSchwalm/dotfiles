@@ -32,7 +32,7 @@
 ;; don't let the cursor go into minibuffer prompt
 (setq minibuffer-prompt-properties (quote 
 	(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
-               
+
 ;; flyspell mode for spell checking everywhere
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 
@@ -46,11 +46,18 @@
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 
+;; Better duplicate buffer names
+(require 'uniquify)
+
+
 ;; spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
 ;; copy/past/undo hotkeys
 (cua-mode t)
+
+;; Add matching parens / braces
+(electric-pair-mode)
 
 ;; remove bars
 (menu-bar-mode -1)
@@ -91,6 +98,11 @@ With argument ARG, do this that many times."
         (delete-region (point-at-bol) (point))
       (backward-delete-word 1))))
 
+(defun back-to-indentation-or-beginning ()
+  (interactive)
+  (if (= (point) (progn (back-to-indentation) (point)))
+      (beginning-of-line)))
+
 ;; Load theme
 (require 'solarized-dark-theme)
 
@@ -105,28 +117,28 @@ With argument ARG, do this that many times."
 (global-set-key [?\C-x ?\C-f] 'projectile-find-file-with-fallback)
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(completion-cycle-threshold t)
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(inhibit-startup-screen t)
- '(completion-cycle-threshold t)
- '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
- '(org-startup-indented t)
- '(max-mini-window-height 2)
- '(initial-scratch-message  ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
+ '(initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
  ")
- '(scroll-conservatively 1000))
+ '(max-mini-window-height 2)
+ '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
+ '(org-startup-indented t)
+ '(scroll-conservatively 1000)
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;;'(region ((t (:background "tan" :foreground "gtk_selection_fg_color"))))
  )
