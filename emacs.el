@@ -33,7 +33,6 @@
 (require 'ido-ubiquitous)
 (ido-ubiquitous-mode t)
 (ido-mode t)
-(ido-everywhere t)
 (flx-ido-mode t)
 (setq ido-use-faces nil)
 

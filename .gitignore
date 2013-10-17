@@ -12,6 +12,7 @@
 auto-save-list/
 places
 semanticdb/
+backups/
 
 ##################
 # Projectile 
