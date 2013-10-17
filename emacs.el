@@ -7,7 +7,7 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   )
-
+n
 ;; Use projectile everywhere
 (projectile-global-mode)
 
@@ -17,6 +17,15 @@
   (condition-case nil
       (projectile-find-file)
     (error (ido-find-file))))
+
+(defun projectile-ido-fallback()
+  (interactive)
+  (setq ido-exit 'fallback)
+  (exit-minibuffer))
+
+(defun ido-define-keys()
+  (define-key ido-completion-map (kbd "C-f") 'projectile-ido-fallback))
+(add-hook 'ido-setup-hook 'ido-define-keys)
 
 ;; completion for M-x
 (smex-initialize)
@@ -51,7 +60,6 @@
 (cua-mode t)
 
 ;; Add matching parens / braces
-(electric-pair-mode)
 (show-paren-mode 1)
 
 ;; remove bars
