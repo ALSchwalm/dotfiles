@@ -7,9 +7,12 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   )
-n
+
 ;; Use projectile everywhere
 (projectile-global-mode)
+
+;; Subword mode for subword-backwords
+(global-subword-mode)
 
 ;; Fallback to ido-find-file when not in a project
 (defun projectile-find-file-with-fallback ()
@@ -49,7 +52,6 @@ n
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-
 (require 'saveplace)
 (setq-default save-place t)
 
@@ -87,7 +89,7 @@ n
   "Delete characters backward until encountering the beginning of a word.
 With argument ARG, do this that many times."
   (interactive "p")
-  (delete-region (point) (progn (backward-word arg) (point))))
+  (delete-region (point) (progn (subword-backward arg) (point))))
 
 ;; Stop delete word at newlines
 (defun whitespace-backward-delete-word ()
