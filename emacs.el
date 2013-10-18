@@ -30,6 +30,20 @@
   (define-key ido-completion-map (kbd "C-f") 'projectile-ido-fallback))
 (add-hook 'ido-setup-hook 'ido-define-keys)
 
+
+(defun projectile-ff-find-other-file-with-fallback()
+  (interactive)
+  (condition-case nil
+      ((setq ff-always-try-to-create nil)
+       (setq dirs (mapcar '(lambda (file)
+                             (expand-file-name file (projectile-project-root)))
+                          (projectile-current-project-dirs)))
+       (setq ff-search-directories dirs)
+       (ff-find-other-file))
+    (error (ff-find-other-file))))
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
 ;; completion for M-x
 (smex-initialize)
  
@@ -126,6 +140,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
+(global-set-key [M-f1] 'projectile-ff-find-other-file-with-fallback)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
