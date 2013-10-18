@@ -122,6 +122,12 @@ With argument ARG, do this that many times."
 ;; Load theme
 (require 'solarized-dark-theme)
 
+;; Simple y/n
+(fset 'yes-or-no-p 'y-or-n-p) 
+
+;; always turn on, where available
+(global-font-lock-mode t)
+
 ;; Highlight current line
 (global-hl-line-mode)
 
@@ -171,10 +177,9 @@ With argument ARG, do this that many times."
 
  ")
 
- '(max-mini-window-height 2)
-
  ;; Stop prompt from going into minibuffer
  '(minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+ '(max-mini-window-height 2)
 
  ;; fix scrolling with mouse / hotkeys
  '(scroll-conservatively 1000)
