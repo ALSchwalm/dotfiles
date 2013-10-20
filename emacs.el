@@ -188,9 +188,6 @@ With argument ARG, do this that many times."
  '(org-startup-indented t)
  '(delete-by-moving-to-trash t)
  
- ;; Better unique names for duplicate buffers
- '(uniquify-buffer-name-style (quote forward) nil (uniquify))
-
  ;; Silence the bell
  '(ring-bell-function 'ignore)
 
