@@ -25,6 +25,17 @@
 ;; completion for M-x
 (smex-initialize)
 
+ ;; Always follow symbolic links to version controlled files
+(setq vc-follow-symlinks t)
+
+(require 'undo-tree)
+(global-undo-tree-mode)
+
+;; Tree undo
+(global-unset-key (kbd "C-z"))
+(global-set-key (kbd "C-z") 'undo-tree-undo)
+(global-set-key (kbd "C-S-z") 'undo-tree-redo)
+
 ;; linux style indents
 (setq c-default-style "linux"
       c-basic-offset 4)
@@ -56,6 +67,9 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+ ;; Line format: N <contents>
+(setq linum-format "%3d")
 
 ;; show column and line number
 (column-number-mode 1)
