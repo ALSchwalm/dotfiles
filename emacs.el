@@ -23,15 +23,9 @@
       (projectile-find-file)
     (error (ido-find-file))))
 
-(defun projectile-ido-fallback()
-  (interactive)
-  (setq ido-exit 'fallback)
-  (exit-minibuffer))
-
 (defun ido-define-keys()
-  (define-key ido-completion-map (kbd "C-f") 'projectile-ido-fallback))
+  (define-key ido-completion-map (kbd "C-f") 'ido-enter-find-file))
 (add-hook 'ido-setup-hook 'ido-define-keys)
-
 
 (defun projectile-ff-find-other-file-with-fallback()
   (interactive)
@@ -45,6 +39,7 @@
     (error (ff-find-other-file))))
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
 
 ;; completion for M-x
 (smex-initialize)
@@ -168,7 +163,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
 (global-set-key (kbd "M-/") 'hippie-expand)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
