@@ -13,6 +13,9 @@
 ;; Required for forward-to-word and others
 (require 'misc)
 
+;; Add expand region
+(require 'expand-region)
+
 ;; Make compile buffer show lines
 (defun truncate-hook()
   (setq truncate-lines nil))
@@ -47,7 +50,6 @@
     (error (ff-find-other-file))))
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
 
 ;; completion for M-x
 (smex-initialize)
@@ -124,6 +126,7 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
+(add-to-list 'ac-modes 'rust-mode)
 
 (add-to-list 'load-path "~/.emacs.d//helm")
 (require 'helm-config)
@@ -177,6 +180,13 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 (global-set-key [M-f1] 'projectile-ff-find-other-file-with-fallback)
+(global-set-key [f5] 'compile)
+(global-set-key (kbd "C-;") 'ace-jump-mode)
+(global-set-key (kbd "C-'") 'er/expand-region)
+
+ ;; Key chords
+ ;; (key-chord-mode t)
+ ;; (key-chord-define-global "cv" 'compile)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
