@@ -10,6 +10,14 @@
   
 (setq delete-by-moving-to-trash t)
 
+;; Required for forward-to-word and others
+(require 'misc)
+
+;; Make compile buffer show lines
+(defun truncate-hook()
+  (setq truncate-lines nil))
+(add-hook 'compilation-mode-hook 'truncate-hook)
+
 ;; Use projectile everywhere
 (projectile-global-mode)
 
