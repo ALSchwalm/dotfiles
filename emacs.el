@@ -20,6 +20,7 @@
 (require 'git-gutter-fringe)
 (global-git-gutter-mode t)
 (setq git-gutter-fr:side 'right-fringe)
+(fringe-helper-define 'git-gutter-fr:deleted nil "")
 
 ;; Make compile buffer show lines
 (defun truncate-hook()
