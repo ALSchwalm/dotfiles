@@ -16,6 +16,11 @@
 ;; Add expand region
 (require 'expand-region)
 
+;; Git gutter fringe mode
+(require 'git-gutter-fringe)
+(global-git-gutter-mode t)
+(setq git-gutter-fr:side 'right-fringe)
+
 ;; Make compile buffer show lines
 (defun truncate-hook()
   (setq truncate-lines nil))
@@ -183,6 +188,7 @@ With argument ARG, do this that many times."
 (global-set-key [f5] 'compile)
 (global-set-key (kbd "C-;") 'ace-jump-mode)
 (global-set-key (kbd "C-'") 'er/expand-region)
+(global-set-key (kbd "C--") 'er/contract-region)
 
  ;; Key chords
  ;; (key-chord-mode t)
