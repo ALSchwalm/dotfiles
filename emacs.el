@@ -7,8 +7,19 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   )
-  
+
 (setq delete-by-moving-to-trash t)
+
+;; Load theme
+(require 'solarized-dark-theme)
+
+
+;; auto-complete setup
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+(ac-config-default)
+(add-to-list 'ac-modes 'rust-mode)
+
 
 ;; Required for forward-to-word and others
 (require 'misc)
@@ -128,14 +139,16 @@
 ;; trunkate long lines rather than wrapping
 (set-default 'truncate-lines t)
 
-;; auto-complete setup
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
-(ac-config-default)
-(add-to-list 'ac-modes 'rust-mode)
-
 (add-to-list 'load-path "~/.emacs.d//helm")
 (require 'helm-config)
+
+(defun ansi-term-default ()
+  (interactive)
+  (ansi-term "zsh" "localhost"))
+
+(defun switch-to-previous-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
@@ -158,8 +171,11 @@ With argument ARG, do this that many times."
   (if (= (point) (progn (back-to-indentation) (point)))
       (beginning-of-line)))
 
-;; Load theme
-(require 'solarized-dark-theme)
+(defun mc/mark-next-like-this-expand ()
+  (interactive)
+  (if (not (region-active-p))
+      (er/expand-region 1))
+  (mc/mark-next-like-this 1))
 
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p) 
@@ -181,19 +197,23 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
+(global-set-key (kbd "C-c C-t") 'ansi-term-default)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 (global-set-key [M-f1] 'projectile-ff-find-other-file-with-fallback)
 (global-set-key [f5] 'compile)
-(global-set-key (kbd "C-;") 'ace-jump-mode)
+(global-set-key (kbd "C-;") 'ace-jump-word-mode)
 (global-set-key (kbd "C-'") 'er/expand-region)
 (global-set-key (kbd "C--") 'er/contract-region)
 
  ;; Key chords
- ;; (key-chord-mode t)
- ;; (key-chord-define-global "cv" 'compile)
+(key-chord-mode t)
+(key-chord-define-global "jj" 'ace-jump-word-mode)
+(key-chord-define-global "uu" 'undo-tree-visualize)
+(key-chord-define-global "JJ" 'switch-to-prev-buffer)
+(key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
