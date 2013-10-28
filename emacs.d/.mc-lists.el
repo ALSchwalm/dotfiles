@@ -4,9 +4,13 @@
 (setq mc/cmds-to-run-for-all
       '(
         back-to-indentation-or-beginning
+        indent-for-tab-command
+        sgml-slash
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        mc/mark-all-like-this-expand
         mc/mark-next-like-this-expand
+        undo-tree-visualize
         ))

@@ -13,13 +13,11 @@
 ;; Load theme
 (require 'solarized-dark-theme)
 
-
 ;; auto-complete setup
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 (add-to-list 'ac-modes 'rust-mode)
-
 
 ;; Required for forward-to-word and others
 (require 'misc)
@@ -177,6 +175,12 @@ With argument ARG, do this that many times."
       (er/expand-region 1))
   (mc/mark-next-like-this 1))
 
+(defun sudo-edit (&optional arg)
+  (interactive "p")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p) 
 
@@ -207,6 +211,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-;") 'ace-jump-word-mode)
 (global-set-key (kbd "C-'") 'er/expand-region)
 (global-set-key (kbd "C--") 'er/contract-region)
+(global-set-key (kbd "M-s M-s") 'sudo-edit)
 
  ;; Key chords
 (key-chord-mode t)
@@ -214,6 +219,7 @@ With argument ARG, do this that many times."
 (key-chord-define-global "uu" 'undo-tree-visualize)
 (key-chord-define-global "JJ" 'switch-to-prev-buffer)
 (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
+(key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
