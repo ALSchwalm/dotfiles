@@ -28,8 +28,6 @@
 ;; Git gutter fringe mode
 (require 'git-gutter-fringe)
 (global-git-gutter-mode t)
-(setq git-gutter-fr:side 'right-fringe)
-(fringe-helper-define 'git-gutter-fr:deleted nil "")
 
 ;; Make compile buffer show lines
 (defun truncate-hook()
@@ -125,6 +123,9 @@
 ;; Add matching parens / braces
 (show-paren-mode 1)
 
+;; Automatically revert changes
+(global-auto-revert-mode t)
+
 ;; remove bars
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -132,7 +133,6 @@
 
 ;; show column and line number
 (column-number-mode 1)
-(global-linum-mode 1)
 
 ;; trunkate long lines rather than wrapping
 (set-default 'truncate-lines t)
