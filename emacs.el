@@ -1,4 +1,5 @@
 (add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/emacs-powerline")
 
 ;; pakages
 (when (>= emacs-major-version 24)
@@ -12,6 +13,9 @@
 
 ;; Load theme
 (require 'solarized-dark-theme)
+(setq solarized-distinct-fringe-background t)
+(require 'powerline)
+(blink-cursor-mode)
 
 ;; auto-complete setup
 (require 'auto-complete-config)
@@ -226,49 +230,32 @@ With argument ARG, do this that many times."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
- ;; Make tab completions cycle
+ '(apropos-do-all t)
+ '(backup-directory-alist (\` (("." \, (concat user-emacs-directory "backups")))))
+ '(c-basic-offset 4 t)
+ '(c-default-style "linux" t)
  '(completion-cycle-threshold t)
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
-
- ;; linux style indents
- '(c-default-style "linux")
- '(c-basic-offset 4)
-
- '(x-select-enable-clipboard t)
- '(x-select-enable-primary t)
- '(save-interprogram-paste-before-kill t)
- '(apropos-do-all t)
- '(mouse-yank-at-point t)
- '(save-place-file (concat user-emacs-directory "places"))
- '(backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                            "backups"))))
-
- ;; Hide startup and shorter scratch
+ '(delete-by-moving-to-trash t)
  '(inhibit-startup-screen t)
  '(initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
- ")
-
- ;; Stop prompt from going into minibuffer
- '(minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+")
  '(max-mini-window-height 2)
-
- ;; fix scrolling with mouse / hotkeys
- '(scroll-conservatively 1000)
+ '(minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
+ '(mouse-yank-at-point t)
  '(org-startup-indented t)
- '(delete-by-moving-to-trash t)
- 
- ;; Silence the bell
- '(ring-bell-function 'ignore)
- 
- '(scroll-conservatively 1000))
+ '(ring-bell-function (quote ignore) t)
+ '(save-interprogram-paste-before-kill t)
+ '(save-place-file (concat user-emacs-directory "places"))
+ '(scroll-conservatively 1000)
+ '(x-select-enable-clipboard t)
+ '(x-select-enable-primary t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;;'(region ((t (:background "tan" :foreground "gtk_selection_fg_color"))))
  )
