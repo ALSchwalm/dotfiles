@@ -5,6 +5,7 @@
 
 *.dat
 *.elc
+tramp
 
 ##############
 # Saves

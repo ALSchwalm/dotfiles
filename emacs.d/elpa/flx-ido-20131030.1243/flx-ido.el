@@ -6,7 +6,7 @@
 ;; Maintainer: Le Wang
 ;; Description: flx integration for ido
 ;; Created: Sun Apr 21 20:38:36 2013 (+0800)
-;; Version: 20130814.2156
+;; Version: 20131030.1243
 ;; X-Original-Version: 0.2
 ;; URL: https://github.com/lewang/flx
 ;; Package-Requires: ((flx "0.1") (cl-lib "0.3"))
@@ -57,6 +57,9 @@
 
 (require 'ido)
 (require 'flx)
+
+(eval-when-compile
+  (defvar ido-cur-item))
 
 (defcustom flx-ido-threshhold 6000
   "flx will not kick in until collection is filtered below this size with \"flex\"."

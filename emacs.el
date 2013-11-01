@@ -1,3 +1,9 @@
+;; remove bars
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(setq inhibit-startup-screen t)
+
 (add-to-list 'load-path "~/.emacs.d/")
 (add-to-list 'load-path "~/.emacs.d/emacs-powerline")
 
@@ -9,13 +15,22 @@
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   )
 
-(setq delete-by-moving-to-trash t)
+;; show column and line number
+(column-number-mode 1)
+
+;; trunkate long lines rather than wrapping
+(set-default 'truncate-lines t)
 
 ;; Load theme
 (require 'solarized-dark-theme)
 (setq solarized-distinct-fringe-background t)
 (require 'powerline)
+(set-face-foreground 'minibuffer-prompt "cyan")
 (blink-cursor-mode)
+
+
+(setq gc-cons-threshold 1500000)
+(setq delete-by-moving-to-trash t)
 
 ;; auto-complete setup
 (require 'auto-complete-config)
@@ -55,16 +70,14 @@
   (define-key ido-completion-map (kbd "C-f") 'ido-enter-find-file))
 (add-hook 'ido-setup-hook 'ido-define-keys)
 
-(defun projectile-ff-find-other-file-with-fallback()
+(defun projectile-ff-find-other-file()
   (interactive)
-  (condition-case nil
-      ((setq ff-always-try-to-create nil)
-       (setq dirs (mapcar '(lambda (file)
-                             (expand-file-name file (projectile-project-root)))
-                          (projectile-current-project-dirs)))
-       (setq ff-search-directories dirs)
-       (ff-find-other-file))
-    (error (ff-find-other-file))))
+  (setq ff-always-try-to-create nil)
+  (setq dirs (mapcar '(lambda (file)
+                        (expand-file-name file (projectile-project-root)))
+                     (projectile-current-project-dirs)))
+  (setq cc-search-directories dirs)
+  (ff-find-other-file))
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
@@ -104,12 +117,18 @@
 (browse-kill-ring-default-keybindings)
 
 ;; ido/flx/ido-ubiquitous
-(require 'flx-ido)
-(require 'ido-ubiquitous)
-(ido-ubiquitous-mode t)
+(require 'ido)
 (ido-mode t)
+
+(require 'flx-ido)
 (flx-ido-mode t)
 (setq ido-use-faces nil)
+
+(require 'ido-vertical-mode)
+(ido-vertical-mode)
+
+(require 'ido-ubiquitous)
+(ido-ubiquitous-mode t)
 
 ;; Better duplicate buffer names
 (require 'uniquify)
@@ -126,23 +145,6 @@
 
 ;; Add matching parens / braces
 (show-paren-mode 1)
-
-;; Automatically revert changes
-(global-auto-revert-mode t)
-
-;; remove bars
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-;; show column and line number
-(column-number-mode 1)
-
-;; trunkate long lines rather than wrapping
-(set-default 'truncate-lines t)
-
-(add-to-list 'load-path "~/.emacs.d//helm")
-(require 'helm-config)
 
 (defun ansi-term-default ()
   (interactive)
@@ -210,7 +212,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
-(global-set-key [M-f1] 'projectile-ff-find-other-file-with-fallback)
+(global-set-key [M-f1] 'projectile-ff-find-other-file)
 (global-set-key [f5] 'compile)
 (global-set-key (kbd "C-;") 'ace-jump-word-mode)
 (global-set-key (kbd "C-'") 'er/expand-region)
@@ -237,11 +239,9 @@ With argument ARG, do this that many times."
  '(completion-cycle-threshold t)
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(delete-by-moving-to-trash t)
- '(inhibit-startup-screen t)
  '(initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
 ")
- '(max-mini-window-height 2)
  '(minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
  '(mouse-yank-at-point t)

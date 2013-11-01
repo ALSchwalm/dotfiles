@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (git-commit-mode) "git-commit-mode" "git-commit-mode.el"
-;;;;;;  (21104 17909 687042 385000))
+;;;;;;  (21107 12631 325022 705000))
 ;;; Generated autoloads from git-commit-mode.el
 
 (autoload 'git-commit-mode "git-commit-mode" "\
@@ -16,10 +16,12 @@ basic structure of and errors in git commit messages.
 
 \(fn)" t nil)
 
+(dolist (pattern '("/COMMIT_EDITMSG\\'" "/NOTES_EDITMSG\\'" "/MERGE_MSG\\'" "/TAG_EDITMSG\\'" "/PULLREQ_EDITMSG\\'")) (add-to-list 'auto-mode-alist (cons pattern 'git-commit-mode)))
+
 ;;;***
 
-;;;### (autoloads nil nil ("git-commit-mode-pkg.el") (21104 17909
-;;;;;;  701891 637000))
+;;;### (autoloads nil nil ("git-commit-mode-pkg.el") (21107 12631
+;;;;;;  335672 360000))
 
 ;;;***
 
