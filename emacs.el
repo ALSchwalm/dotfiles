@@ -28,7 +28,6 @@
 (set-face-foreground 'minibuffer-prompt "cyan")
 (blink-cursor-mode)
 
-
 (setq gc-cons-threshold 1500000)
 (setq delete-by-moving-to-trash t)
 
@@ -111,6 +110,8 @@
     `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
     `((".*" ,temporary-file-directory t)))
+
+(require 'yank-auto-indent)
 
 ;; Set browse-kill-ring defaults
 (require 'browse-kill-ring)

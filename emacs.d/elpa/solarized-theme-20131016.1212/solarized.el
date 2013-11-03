@@ -233,10 +233,10 @@ customize the resulting theme."
      `(compilation-mode-line-run ((,class (:foreground ,orange :weight bold))))
 
      ;; cua
-     `(cua-global-mark ((,class (:background ,yellow :foreground ,solarized-bg))))
+     `(cua-global-mark ((,class (:background ,yellow :foreground ,solarized-fg))))
      `(cua-rectangle ((,class (:inherit region
-                                        :background ,magenta :foreground ,solarized-bg))))
-     `(cua-rectangle-noselect ((,class (:inherit region :background ,solarized-hl
+                                        :background ,magenta :foreground ,solarized-fg))))
+     `(cua-rectangle-noselect ((,class (:inherit region :background ,solarized-fg
                                                  :foreground ,solarized-comments))))
 
      ;; diary
