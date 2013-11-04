@@ -5,9 +5,9 @@
 ;; Author: Sebastian Wiesner <lunaryorn@gmail.com>
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Keywords: convenience
-;; Version: 20131020.1746
-;; X-Original-Version: 0.4-cvs
-;; Package-Requires: ((dash "1.6.0") (epl "0.1"))
+;; Version: 20131101.1208
+;; X-Original-Version: 0.5-cvs
+;; Package-Requires: ((dash "1.6.0") (epl "0.4"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -38,6 +38,9 @@
 ;; `pkg-info-package-version' gets the version of an installed package.
 ;;
 ;; `pkg-info-format-version' formats a version list as human readable string.
+;;
+;; `pkg-info-version-info' returns complete version information for a specific
+;; package.
 
 ;;; Code:
 
@@ -62,30 +65,40 @@ When SHOW is non-nil, show VERSION in minibuffer.
 
 Return VERSION."
   (when show
-    (message (pkg-info-format-version version)))
+    (message (if (listp version) (pkg-info-format-version version) version)))
   version)
+
+(defun pkg-info--read-library ()
+  "Read a library from minibuffer."
+  (completing-read "Load library: "
+                   (apply-partially 'locate-file-completion-table
+                                    load-path
+                                    (get-load-suffixes))))
+
+(defun pkg-info--read-package ()
+  "Read a package name from minibuffer."
+  (let* ((installed (epl-installed-packages))
+         (names (-sort #'string<
+                       (--map (symbol-name (epl-package-name it)) installed)))
+         (default (car names)))
+    (completing-read "Installed package: " names nil 'require-match
+                     nil nil default)))
 
 ;;;###autoload
 (defun pkg-info-library-version (library &optional show)
   "Get the version in the header of LIBRARY.
 
 LIBRARY is either a symbol denoting a named feature, or a library
-name as string..
+name as string.
 
-When SHOW is non-nil, show the version in the minibuffer.
+If SHOW is non-nil, show the version in the minibuffer.
 
 Return the version from the header of LIBRARY as list.  Signal an
 error if the LIBRARY was not found or had no proper header.
 
 See Info node `(elisp)Library Headers' for more information
 about library headers."
-  (interactive
-   (list (->> (completing-read "Load library: "
-                               (apply-partially 'locate-file-completion-table
-                                                load-path
-                                                (get-load-suffixes)))
-           find-library-name)
-         t))
+  (interactive (list (pkg-info--read-library) t))
   (let* ((library-name (if (symbolp library) (symbol-name library) library))
          (source (find-library-name library-name))
          (version (epl-package-version (epl-package-from-file source))))
@@ -95,7 +108,7 @@ about library headers."
 (defun pkg-info-defining-library-version (function &optional show)
   "Get the version of the library defining FUNCTION.
 
-When SHOW is non-nil, show the version in mini-buffer.
+If SHOW is non-nil, show the version in mini-buffer.
 
 This function is mainly intended to find the version of a major
 or minor mode, i.e.
@@ -120,22 +133,51 @@ or if the library had no proper version header."
 (defun pkg-info-package-version (package &optional show)
   "Get the version of an installed PACKAGE.
 
-When SHOW is non-nil, show the version in the minibuffer.
+If SHOW is non-nil, show the version in the minibuffer.
 
 Return the version as list, or nil if PACKAGE is not installed."
-  (interactive
-   (let* ((installed (epl-installed-packages))
-          (names (-sort #'string<
-                        (--map (symbol-name (epl-package-name it)) installed)))
-          (default (car names))
-          (reply (completing-read "Installed package: " names nil 'require-match
-                                  nil nil default)))
-     (list reply t)))
+  (interactive (list (pkg-info--read-package) t))
   (let* ((name (if (stringp package) (intern package) package))
          (package (epl-find-installed-package name)))
     (unless package
       (error "Can't find installed package %s" name))
     (pkg-info--show-version-and-return (epl-package-version package) show)))
+
+;;;###autoload
+(defun pkg-info-version-info (library &optional package show)
+  "Obtain complete version info for LIBRARY and PACKAGE.
+
+LIBRARY is a symbol denoting a named feature, or a library name
+as string.  PACKAGE is a symbol denoting an ELPA package.  If
+omitted or nil, default to LIBRARY.
+
+If SHOW is non-nil, show the version in the minibuffer.
+
+When called interactively, prompt for LIBRARY.  When called
+interactively with prefix argument, prompt for PACKAGE as well.
+
+Return a string with complete version information for LIBRARY.
+This version information contains the version from the headers of
+LIBRARY, and the version of the installed PACKAGE, the LIBRARY is
+part of.  If PACKAGE is not installed, or if the PACKAGE version
+is the same as the LIBRARY version, do not include a package
+version."
+  (interactive (list (pkg-info--read-library)
+                     (when current-prefix-arg
+                       (pkg-info--read-package))
+                     t))
+  (let* ((package (or package (if (stringp library) (intern library) library)))
+         (lib-version (pkg-info-library-version library))
+         (pkg-version (condition-case nil
+                          (pkg-info-package-version package)
+                        (error nil)))
+         (version (if (and pkg-version
+                           (not (version-list-= lib-version pkg-version)))
+                      (format "%s (package: %s)"
+                              (pkg-info-format-version lib-version)
+                              (pkg-info-format-version pkg-version))
+                    (pkg-info-format-version lib-version))))
+    (pkg-info--show-version-and-return version show)))
 
 (provide 'pkg-info)
 

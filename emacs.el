@@ -1,3 +1,7 @@
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 ;; remove bars
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -189,7 +193,7 @@ With argument ARG, do this that many times."
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 ;; Simple y/n
-(fset 'yes-or-no-p 'y-or-n-p) 
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; always turn on, where available
 (global-font-lock-mode t)

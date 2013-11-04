@@ -5,9 +5,9 @@
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/projectile
 ;; Keywords: project, convenience
-;; Version: 20131029.1130
+;; Version: 20131103.1114
 ;; X-Original-Version: 1.0.0-cvs
-;; Package-Requires: ((s "1.6.0") (dash "1.5.0") (pkg-info "0.1"))
+;; Package-Requires: ((s "1.6.0") (dash "1.5.0") (pkg-info "0.4"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -41,7 +41,7 @@
 (require 's)
 (require 'dash)
 (require 'grep)           ; For `rgrep'
-(require 'package)        ; For `package-buffer-info' and `package-version-join'
+(require 'pkg-info)       ; For `pkg-info-version-info'
 
 
 ;;; Customization
@@ -114,19 +114,20 @@ Otherwise consider the current directory the project root."
   :type 'string)
 
 (defcustom projectile-project-root-files
-  '(".projectile"    ; projectile project marker
-    ".git"           ; Git VCS root dir
-    ".hg"            ; Mercurial VCS root dir
-    ".fslckout"      ; Fossil VCS root dir
-    ".bzr"           ; Bazaar VCS root dir
-    "_darcs"         ; Darcs VCS root dir
-    "rebar.config"   ; Rebar project file
-    "project.clj"    ; Leiningen project file
-    "pom.xml"        ; Maven project file
-    "build.sbt"      ; SBT project file
-    "build.gradle"   ; Gradle project file
-    "Gemfile"        ; Bundler file
-    "Makefile"       ; Make project file
+  '(".projectile"        ; projectile project marker
+    ".git"               ; Git VCS root dir
+    ".hg"                ; Mercurial VCS root dir
+    ".fslckout"          ; Fossil VCS root dir
+    ".bzr"               ; Bazaar VCS root dir
+    "_darcs"             ; Darcs VCS root dir
+    "rebar.config"       ; Rebar project file
+    "project.clj"        ; Leiningen project file
+    "pom.xml"            ; Maven project file
+    "build.sbt"          ; SBT project file
+    "build.gradle"       ; Gradle project file
+    "Gemfile"            ; Bundler file
+    "requirements.txt"   ; Pip file
+    "Makefile"           ; Make project file
     )
   "A list of files considered to mark the root of a project."
   :group 'projectile
@@ -145,8 +146,22 @@ Otherwise consider the current directory the project root."
     ".hg"
     ".fslckout"
     ".bzr"
-    "_darcs")
+    "_darcs"
+    "venv")
   "A list of directories globally ignored by projectile."
+  :group 'projectile
+  :type '(repeat string))
+
+(defcustom projectile-globally-ignored-modes
+  '("erc-mode"
+    "help-mode"
+    "completion-list-mode"
+    "Buffer-menu-mode"
+    "gnus-.*-mode")
+  "A list of regular expressions for major modes ignored by projectile.
+
+If a buffer is using a given major mode, projectile will ignore
+it for functions working with buffers."
   :group 'projectile
   :type '(repeat string))
 
@@ -202,17 +217,6 @@ The list of projects is ordered by the time they have been accessed.")
 
 
 ;;; Version information
-(defun projectile-library-version ()
-  "Get the version in the Projectile library header."
-  (-when-let (version (pkg-info-defining-library-version 'projectile-mode))
-    (pkg-info-format-version version)))
-
-(defun projectile-package-version ()
-  "Get the package version of Projectile.
-
-This is the version number of the installed Projectile package."
-  (-when-let (version (pkg-info-package-version 'projectile))
-    (pkg-info-format-version version)))
 
 (defun projectile-version (&optional show-version)
   "Get the Projectile version as string.
@@ -226,18 +230,9 @@ and the library version, if both a present and different.
 If the version number could not be determined, signal an error,
 if called interactively, or if SHOW-VERSION is non-nil, otherwise
 just return nil."
-  (interactive (list (not (or executing-kbd-macro noninteractive))))
-  (let* ((lib-version (projectile-library-version))
-         (pkg-version (projectile-package-version))
-         (version (cond
-                   ((and lib-version pkg-version
-                         (not (string= lib-version pkg-version)))
-                    (format "%s (package: %s)" lib-version pkg-version))
-                   ((or pkg-version lib-version)
-                    (format "%s" (or pkg-version lib-version))))))
+  (interactive (list t))
+  (let ((version (pkg-info-version-info 'projectile)))
     (when show-version
-      (unless version
-        (error "Could not find out Projectile version"))
       (message "Projectile version: %s" version))
     version))
 
@@ -266,6 +261,35 @@ The cache is created both in memory and on the hard drive."
     (puthash project files projectile-projects-cache)
     (projectile-serialize-cache)))
 
+(defun projectile-purge-file-from-cache (file)
+  "Purge FILE from the cache of the current project."
+  (interactive
+   (list (projectile-completing-read
+          "Remove file from cache: "
+          (projectile-current-project-files))))
+  (let* ((project-root (projectile-project-root))
+         (project-cache (gethash project-root projectile-projects-cache)))
+    (if (projectile-file-cached-p file project-root)
+       (progn
+         (puthash project-root (remove file project-cache) projectile-projects-cache)
+         (projectile-serialize-cache)
+         (message "%s removed from cache" file))
+     (error "%s is not in the cache" file))))
+
+(defun projectile-purge-dir-from-cache (dir)
+  "Purge DIR from the cache of the current project."
+  (interactive
+   (list (projectile-completing-read
+          "Remove directory from cache: "
+          (projectile-current-project-dirs))))
+  (let* ((project-root (projectile-project-root))
+         (project-cache (gethash project-root projectile-projects-cache)))
+    (puthash project-root
+             (-filter (lambda (file)
+                        (s-starts-with-p dir file))
+                      project-cache)
+             projectile-projects-cache)))
+
 (defun projectile-file-cached-p (file project)
   "Check if FILE is already in PROJECT cache."
   (member file (gethash project projectile-projects-cache)))
@@ -274,8 +298,10 @@ The cache is created both in memory and on the hard drive."
   "Add the currently visited file to the cache."
   (interactive)
   (let* ((current-project (projectile-project-root))
-        (current-file (file-relative-name (buffer-file-name (current-buffer)) current-project)))
-    (unless (projectile-file-cached-p current-file current-project)
+         (abs-current-file (buffer-file-name (current-buffer)))
+         (current-file (file-relative-name abs-current-file)))
+    (unless (or (projectile-file-cached-p current-file current-project)
+                (projectile-ignored-directory-p (file-name-directory abs-current-file)))
       (puthash current-project
                (cons current-file (gethash current-project projectile-projects-cache))
                projectile-projects-cache)
@@ -478,7 +504,15 @@ Operates on filenames relative to the project root."
     (and (s-starts-with? project-root
                          (file-truename default-directory))
          ;; ignore hidden buffers
-         (not (s-starts-with? " " (buffer-name buffer))))))
+         (not (s-starts-with? " " (buffer-name buffer)))
+         (not (projectile-ignored-buffer-p buffer)))))
+
+(defun projectile-ignored-buffer-p (buffer)
+  "Check if BUFFER should be ignored."
+  (with-current-buffer buffer
+    (--any-p (s-matches? (concat "^" it "$")
+                         (symbol-name major-mode))
+             projectile-globally-ignored-modes)))
 
 (defun projectile-project-buffer-names ()
   "Get a list of project buffer names."
@@ -715,6 +749,8 @@ With a prefix ARG invalidates the cache first."
 (defvar projectile-symfony '("composer.json" "app" "src" "vendor"))
 (defvar projectile-ruby-rspec '("Gemfile" "lib" "spec"))
 (defvar projectile-ruby-test '("Gemfile" "lib" "test"))
+(defvar projectile-django '("manage.py"))
+(defvar projectile-python '("setup.py"))
 (defvar projectile-maven '("pom.xml"))
 (defvar projectile-lein '("project.clj"))
 (defvar projectile-rebar '("rebar"))
@@ -729,6 +765,8 @@ With a prefix ARG invalidates the cache first."
      ((projectile-verify-files projectile-rails-test) 'rails-test)
      ((projectile-verify-files projectile-ruby-rspec) 'ruby-rspec)
      ((projectile-verify-files projectile-ruby-test) 'ruby-test)
+     ((projectile-verify-files projectile-django) 'django)
+     ((projectile-verify-files projectile-python) 'python)
      ((projectile-verify-files projectile-symfony) 'symfony)
      ((projectile-verify-files projectile-maven) 'maven)
      ((projectile-verify-files projectile-lein) 'lein)
@@ -833,14 +871,14 @@ With a prefix ARG invalidates the cache first."
           (projectile-ignored-directories))))
     (call-interactively projectile-ack-function)))
 
-(defun projectile-ag ()
-  "Run an ag search in the project."
-  (interactive)
-  (if (fboundp 'ag)
-      (let ((search-regexp (read-from-minibuffer
-                            (projectile-prepend-project-name "Ag search for: ")
-                            (projectile-symbol-at-point))))
-       (ag/search search-regexp (projectile-project-root) t))
+(defun projectile-ag (regexp)
+  "Run an ag search with REGEXP in the project."
+  (interactive
+   (list (read-from-minibuffer
+          (projectile-prepend-project-name "Ag search for: ")
+          (projectile-symbol-at-point))))
+  (if (fboundp 'ag-regexp)
+      (ag-regexp regexp (projectile-project-root))
     (error "Ag is not available")))
 
 (defun projectile-tags-exclude-patterns ()
@@ -925,6 +963,10 @@ With a prefix argument ARG prompts you for a directory on which to run the repla
 (defvar projectile-ruby-compile-cmd "bundle exec rake build")
 (defvar projectile-ruby-test-cmd "bundle exec rake test")
 (defvar projectile-ruby-rspec-cmd "bundle exec rspec")
+(defvar projectile-django-compile-cmd "venv/bin/python manage.py runserver")
+(defvar projectile-django-test-cmd "venv/bin/python manage.py test")
+(defvar projectile-python-compile-cmd "venv/bin/python setup.py build")
+(defvar projectile-python-test-cmd "venv/bin/python setup.py test")
 (defvar projectile-symfony-compile-cmd "app/console server:run")
 (defvar projectile-symfony-test-cmd "phpunit -c app ")
 (defvar projectile-maven-compile-cmd "mvn clean install")
@@ -950,6 +992,8 @@ With a prefix argument ARG prompts you for a directory on which to run the repla
   (cond
    ((member project-type '(rails-rspec rails-test)) projectile-rails-compile-cmd)
    ((member project-type '(ruby-rspec ruby-test)) projectile-ruby-compile-cmd)
+   ((eq project-type 'django) projectile-django-compile-cmd)
+   ((eq project-type 'python) projectile-python-compile-cmd)
    ((eq project-type 'symfony) projectile-symfony-compile-cmd)
    ((eq project-type 'lein) projectile-lein-compile-cmd)
    ((eq project-type 'make) projectile-make-compile-cmd)
@@ -963,6 +1007,8 @@ With a prefix argument ARG prompts you for a directory on which to run the repla
   (cond
    ((member project-type '(rails-rspec ruby-rspec)) projectile-ruby-rspec-cmd)
    ((member project-type '(rails-test ruby-test)) projectile-ruby-test-cmd)
+   ((eq project-type 'django) projectile-django-test-cmd)
+   ((eq project-type 'python) projectile-python-test-cmd)
    ((eq project-type 'symfony) projectile-symfony-test-cmd)
    ((eq project-type 'lein) projectile-lein-test-cmd)
    ((eq project-type 'make) projectile-make-test-cmd)
