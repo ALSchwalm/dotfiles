@@ -84,6 +84,12 @@
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
+(defun projectile-compile-with-fallback ()
+  (interactive)
+  (condition-case nil
+      (call-interactively 'projectile-compile-project)
+    (error (call-interactively 'compile))))
+
 ;; completion for M-x
 (smex-initialize)
 
@@ -159,21 +165,22 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
+
+(defun backward-word-stop-eol (arg)
+  (interactive "p")
+  (let ((start (point)))
+    (save-restriction
+      (save-excursion
+        (move-beginning-of-line 1)
+        (narrow-to-region start (point)))
+      (subword-backward arg))))
+
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
-  "Delete characters backward until encountering the beginning of a word.
-With argument ARG, do this that many times."
   (interactive "p")
-  (delete-region (point) (progn (subword-backward arg) (point))))
-
-;; Stop delete word at newlines
-(defun whitespace-backward-delete-word ()
-  (interactive)
-  (if (bolp)
+  (if (eq (point) (line-beginning-position))
       (backward-delete-char 1)
-    (if (string-match "^\\s-+$" (buffer-substring (point-at-bol) (point)))
-        (delete-region (point-at-bol) (point))
-      (backward-delete-word 1))))
+    (delete-region (point) (progn (backward-word-stop-eol arg) (point)))))
 
 (defun back-to-indentation-or-beginning ()
   (interactive)
@@ -202,7 +209,7 @@ With argument ARG, do this that many times."
 (global-hl-line-mode)
 
 ;; Additional global hotkeys
-(global-set-key [C-backspace] 'whitespace-backward-delete-word)
+(global-set-key [C-backspace] 'backward-delete-word)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key [C-tab] 'other-window)
@@ -218,7 +225,7 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 (global-set-key [M-f1] 'projectile-ff-find-other-file)
-(global-set-key [f5] 'compile)
+(global-set-key [f5] 'projectile-compile-with-fallback)
 (global-set-key (kbd "C-;") 'ace-jump-word-mode)
 (global-set-key (kbd "C-'") 'er/expand-region)
 (global-set-key (kbd "C--") 'er/contract-region)
