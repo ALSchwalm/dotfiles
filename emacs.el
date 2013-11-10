@@ -199,6 +199,13 @@
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
+(defun sm-find-tag ()
+  (interactive)
+  (setq tags-file-name (concat (projectile-project-root) "TAGS"))
+  (find-tag (funcall (or find-tag-default-function
+                         (get major-mode 'find-tag-default-function)
+                         'find-tag-default))))
+
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -230,6 +237,7 @@
 (global-set-key (kbd "C-'") 'er/expand-region)
 (global-set-key (kbd "C--") 'er/contract-region)
 (global-set-key (kbd "M-s M-s") 'sudo-edit)
+(global-set-key (kbd "M-.") 'sm-find-tag)
 
  ;; Key chords
 (key-chord-mode t)

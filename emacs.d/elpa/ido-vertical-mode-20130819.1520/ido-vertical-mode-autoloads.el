@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (ido-vertical-mode) "ido-vertical-mode" "ido-vertical-mode.el"
-;;;;;;  (21104 38673 253024 442000))
+;;;;;;  (21118 58990 459923 582000))
 ;;; Generated autoloads from ido-vertical-mode.el
 
 (defvar ido-vertical-mode nil "\
@@ -23,8 +23,8 @@ Makes ido-mode display vertically.
 
 ;;;***
 
-;;;### (autoloads nil nil ("ido-vertical-mode-pkg.el") (21104 38673
-;;;;;;  269372 599000))
+;;;### (autoloads nil nil ("ido-vertical-mode-pkg.el") (21118 58990
+;;;;;;  470793 69000))
 
 ;;;***
 

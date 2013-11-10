@@ -233,10 +233,10 @@ customize the resulting theme."
      `(compilation-mode-line-run ((,class (:foreground ,orange :weight bold))))
 
      ;; cua
-     `(cua-global-mark ((,class (:background ,yellow :foreground ,solarized-fg))))
+     `(cua-global-mark ((,class (:background ,yellow :foreground ,solarized-bg))))
      `(cua-rectangle ((,class (:inherit region
-                                        :background ,magenta :foreground ,solarized-fg))))
-     `(cua-rectangle-noselect ((,class (:inherit region :background ,solarized-fg
+                                        :background ,magenta :foreground ,solarized-bg))))
+     `(cua-rectangle-noselect ((,class (:inherit region :background ,solarized-hl
                                                  :foreground ,solarized-comments))))
 
      ;; diary
@@ -592,10 +592,16 @@ customize the resulting theme."
        ((,(append '((supports :underline (:style wave))) class)
          (:underline (:style wave :color ,yellow) :inherit unspecified))
         (,class (:foreground ,yellow-hc :background ,yellow-lc :weight bold :underline t))))
+     `(flycheck-info
+       ((,(append '((supports :underline (:style wave))) class)
+         (:underline (:style wave :color ,blue) :inherit unspecified))
+        (,class (:foreground ,blue-hc :background ,blue-lc :weight bold :underline t))))
      `(flycheck-fringe-error
        ((,class (:foreground ,red-hc :background ,red-lc :weight bold))))
      `(flycheck-fringe-warning
        ((,class (:foreground ,yellow-hc :background ,yellow-lc :weight bold))))
+     `(flycheck-fringe-info
+       ((,class (:foreground ,blue-hc :background ,blue-lc :weight bold))))
 
      ;; flyspell
      `(flyspell-duplicate
@@ -1159,11 +1165,11 @@ customize the resulting theme."
 
      ;; show-paren
      `(show-paren-match
-       ((,class (:foreground ,solarized-bg :background ,cyan
-                             :weight bold :inverse-video t))))
+       ((,class (:foreground ,cyan :background ,solarized-bg
+                             :weight normal :inverse-video t))))
      `(show-paren-mismatch
-       ((,class (:foreground ,solarized-bg :background ,red
-                             :weight bold :inverse-video t))))
+       ((,class (:foreground ,red :background ,solarized-bg
+                             :weight normal :inverse-video t))))
 
      ;; mic-paren
      `(paren-face-match
