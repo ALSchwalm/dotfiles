@@ -114,6 +114,7 @@
                
 ;; flyspell mode for spell checking everywhere
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+(setq org-pretty-entities t)
 
 ;;Put backups/autosave in temp directory        
 (setq backup-directory-alist
@@ -201,10 +202,21 @@
 
 (defun sm-find-tag ()
   (interactive)
+  (setq tags-table-list nil)
   (setq tags-file-name (concat (projectile-project-root) "TAGS"))
   (find-tag (funcall (or find-tag-default-function
                          (get major-mode 'find-tag-default-function)
                          'find-tag-default))))
+
+(defun projectile-generate-tags ()
+  (interactive)
+  (setq pattern (read-from-minibuffer (concat "Generate tags (*."
+                                              (file-name-extension (buffer-file-name)) ") ")))
+  (if (eq pattern "")
+      (setq pattern (concat "*" (file-name-extension (buffer-file-name)))))
+  (shell-command (concat "find " (projectile-project-root) " -type f | egrep '"
+                         pattern
+                         "' | etags -")))
 
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
