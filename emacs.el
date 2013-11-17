@@ -218,6 +218,20 @@
                          pattern
                          "' | etags -")))
 
+;; Setup powerline
+(setq powerline-color1 "#073642")
+(setq powerline-color2 "#002b36")
+
+(set-face-attribute 'mode-line nil
+                    :foreground "#fdf6e3"
+                    :background "#2aa198"
+                    :box nil)
+
+(set-face-attribute 'mode-line-inactive nil
+                    :foreground "#e9e3fd"
+                    :background "#1a645f"
+                    :box nil)
+
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
