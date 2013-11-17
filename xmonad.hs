@@ -138,6 +138,8 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_F7),              safeSpawn "brightness" ["up"])
         , ((mod4Mask , xK_f) ,              nextWS)
         , ((mod4Mask , xK_Right) ,          nextWS)
+        , ((mod4Mask , xK_d) ,              windows copyToAll)
+        , ((mod4Mask .|. shiftMask, xK_d) , killAllOtherCopies)
         , ((mod4Mask .|. shiftMask, xK_f) , shiftToNext)
         , ((mod4Mask , xK_b) ,              prevWS)
         , ((mod4Mask , xK_Left) ,           prevWS)

@@ -15,6 +15,7 @@ auto-save-list/
 places
 semanticdb/
 backups/
+elpa/
 
 ##################
 # Projectile 
