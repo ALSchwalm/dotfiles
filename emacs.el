@@ -80,7 +80,7 @@
                         (expand-file-name file (projectile-project-root)))
                      (projectile-current-project-dirs)))
   (setq cc-search-directories dirs)
-  (ff-find-other-file))
+  (ff-find-other-file nil 't))
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
@@ -115,6 +115,9 @@
 ;; flyspell mode for spell checking everywhere
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (setq org-pretty-entities t)
+
+;; Fontify org-mode code blocks
+(setq org-src-fontify-natively t)
 
 ;;Put backups/autosave in temp directory        
 (setq backup-directory-alist
