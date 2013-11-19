@@ -41,6 +41,9 @@
 (ac-config-default)
 (add-to-list 'ac-modes 'rust-mode)
 
+(require 'yasnippet)
+(yas/global-mode t)
+
 ;; Required for forward-to-word and others
 (require 'misc)
 
