@@ -224,6 +224,30 @@
                          pattern
                          "' | etags -")))
 
+;; Function to toggle vertical split to horizontal / vice versa
+(defun toggle-frame-split ()
+  (interactive)
+  (unless (= (length (window-list)) 2) (error "Can only toggle a frame split in two"))
+  (let ((split-vertically-p (window-combined-p)))
+    (delete-window) ; closes current window
+    (if split-vertically-p
+        (split-window-horizontally)
+      (split-window-vertically)) ; gives us a split with the other window twice
+    (switch-to-buffer nil)))
+
+
+(defun transpose-windows (arg)
+  "Transpose the buffers shown in two windows."
+  (interactive "p")
+  (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
+    (while (/= arg 0)
+      (let ((this-win (window-buffer))
+            (next-win (window-buffer (funcall selector))))
+        (set-window-buffer (selected-window) next-win)
+        (set-window-buffer (funcall selector) this-win)
+        (select-window (funcall selector)))
+      (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
+
 ;; Setup powerline
 (setq powerline-color1 "#073642")
 (setq powerline-color2 "#002b36")
@@ -237,6 +261,23 @@
                     :foreground "#e9e3fd"
                     :background "#1a645f"
                     :box nil)
+
+(setq mode-line-format
+      (list "%e"
+            '(:eval (concat
+                     (powerline-lcl            'left   nil  )
+                     (powerline-rmw            'left   nil  )
+                     (powerline-buffer-id      'left   nil  powerline-color1  )
+                     (powerline-major-mode     'left        powerline-color1  )
+                     (powerline-narrow         'left        powerline-color1  powerline-color2  )
+                     (powerline-vc             'center                        powerline-color2  )
+                     (powerline-make-fill                                     powerline-color2  )
+                     (powerline-row            'right       powerline-color1  powerline-color2  )
+                     (powerline-make-text      ":"          powerline-color1  )
+                     (powerline-column         'right       powerline-color1  )
+                     (powerline-percent        'right  nil  powerline-color1  )
+                     (powerline-make-text      "  "    nil  )))))
+
 
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -270,6 +311,9 @@
 (global-set-key (kbd "C--") 'er/contract-region)
 (global-set-key (kbd "M-s M-s") 'sudo-edit)
 (global-set-key (kbd "M-.") 'sm-find-tag)
+(global-set-key (kbd "C-x 5") 'toggle-frame-split)
+(global-set-key (kbd "C-x 4") 'transpose-windows)
+
 
  ;; Key chords
 (key-chord-mode t)
