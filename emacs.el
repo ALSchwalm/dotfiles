@@ -118,6 +118,7 @@
 ;; flyspell mode for spell checking everywhere
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (setq org-pretty-entities t)
+(setq org-latex-create-formula-image-program 'imagemagick)
 
 ;; Fontify org-mode code blocks
 (setq org-src-fontify-natively t)
