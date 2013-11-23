@@ -117,8 +117,11 @@
                
 ;; flyspell mode for spell checking everywhere
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
-(setq org-pretty-entities t)
-(setq org-latex-create-formula-image-program 'imagemagick)
+(setq org-pretty-entities t
+      org-latex-create-formula-image-program 'imagemagick
+      org-startup-folded 'showall
+      org-src-fontify-natively t
+      org-startup-with-inline-images 'inlineimages)
 
 ;; Fontify org-mode code blocks
 (setq org-src-fontify-natively t)
@@ -137,6 +140,12 @@
 
 ;; ido/flx/ido-ubiquitous
 (require 'ido)
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-case-fold nil
+      ido-auto-merge-work-directories-length -1
+      ido-use-filename-at-point nil
+      ido-max-prospects 10)
 (ido-mode t)
 
 (require 'flx-ido)
@@ -341,8 +350,8 @@
 ")
  '(minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
+ '(org-startup-indented 'indent)
  '(mouse-yank-at-point t)
- '(org-startup-indented t)
  '(ring-bell-function (quote ignore) t)
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat user-emacs-directory "places"))

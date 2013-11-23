@@ -4,8 +4,10 @@
 (setq mc/cmds-to-run-for-all
       '(
         back-to-indentation-or-beginning
+        cua-delete-region
         indent-for-tab-command
         sgml-slash
+        yas-expand
         ))
 
 (setq mc/cmds-to-run-once
