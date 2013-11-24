@@ -324,7 +324,6 @@
 (global-set-key (kbd "C-x 5") 'toggle-frame-split)
 (global-set-key (kbd "C-x 4") 'transpose-windows)
 
-
  ;; Key chords
 (key-chord-mode t)
 (key-chord-define-global "jj" 'ace-jump-word-mode)
