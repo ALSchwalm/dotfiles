@@ -62,6 +62,15 @@
 ;; Use projectile everywhere
 (projectile-global-mode)
 
+(require 'project-explorer)
+(setq pe/width 30)
+
+(defun project-explorer-toggle ()
+  (interactive)
+  (if (pe/get-current-project-explorer-buffer)
+      (kill-buffer (pe/get-current-project-explorer-buffer))
+    (project-explorer-open)))
+
 ;; Subword mode for subword-backwords
 (global-subword-mode)
 
@@ -323,6 +332,7 @@
 (global-set-key (kbd "M-.") 'sm-find-tag)
 (global-set-key (kbd "C-x 5") 'toggle-frame-split)
 (global-set-key (kbd "C-x 4") 'transpose-windows)
+(global-set-key (kbd "M-`") 'project-explorer-toggle)
 
  ;; Key chords
 (key-chord-mode t)
