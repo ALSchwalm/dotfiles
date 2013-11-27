@@ -15,6 +15,7 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
+  (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   )
@@ -267,37 +268,6 @@
         (select-window (funcall selector)))
       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
-;; Setup powerline
-(setq powerline-color1 "#073642")
-(setq powerline-color2 "#002b36")
-
-(set-face-attribute 'mode-line nil
-                    :foreground "#fdf6e3"
-                    :background "#2aa198"
-                    :box nil)
-
-(set-face-attribute 'mode-line-inactive nil
-                    :foreground "#e9e3fd"
-                    :background "#1a645f"
-                    :box nil)
-
-(setq mode-line-format
-      (list "%e"
-            '(:eval (concat
-                     (powerline-lcl            'left   nil  )
-                     (powerline-rmw            'left   nil  )
-                     (powerline-buffer-id      'left   nil  powerline-color1  )
-                     (powerline-major-mode     'left        powerline-color1  )
-                     (powerline-narrow         'left        powerline-color1  powerline-color2  )
-                     (powerline-vc             'center                        powerline-color2  )
-                     (powerline-make-fill                                     powerline-color2  )
-                     (powerline-row            'right       powerline-color1  powerline-color2  )
-                     (powerline-make-text      ":"          powerline-color1  )
-                     (powerline-column         'right       powerline-color1  )
-                     (powerline-percent        'right  nil  powerline-color1  )
-                     (powerline-make-text      "  "    nil  )))))
-
-
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -333,6 +303,7 @@
 (global-set-key (kbd "C-x 5") 'toggle-frame-split)
 (global-set-key (kbd "C-x 4") 'transpose-windows)
 (global-set-key (kbd "M-`") 'project-explorer-toggle)
+(global-set-key (kbd "M-m") 'helm-mini)
 
  ;; Key chords
 (key-chord-mode t)
