@@ -18,7 +18,7 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 		    , Run StdinReader
 		    , Run ThermalZone 0 ["-t", "Temp: <temp>°C", "-L", "60", "-H", "70", "--low", "green", "--high", "red"] 30
                     , Run Com "volume" [] "volume" 20
-		    , Run BatteryP ["BATX"]
+		    , Run BatteryP ["BAT1"]
 		                  ["-t", "<acstatus>"
 				   , "-L", "35", "-H", "75"
 				   , "-l", "red", "-h", "green"

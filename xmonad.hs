@@ -56,7 +56,7 @@ manageIRC = composeOne
 
 manageEmacs :: ManageHook
 manageEmacs = composeOne
-    [ className =? "Emacs" -?> doShift "2:emacs" ]
+    [ className =? "Emacs24" -?> doShift "2:emacs" ]
 
 
 manageSteam :: ManageHook
@@ -94,6 +94,7 @@ myLogHook = fadeInactiveLogHook fadeAmount
 myStartup = do
           spawnAndDo (doShift "1:term") "xfce4-terminal"
           spawn "emacsclient -c -a ''"
+          spawn "sh ~/.xmonad/run.sh"
           safeSpawn "xchat" []
                   
 -- Key binding to toggle the gap for the bar.
@@ -125,17 +126,17 @@ myConfig = defaultConfig
         , workspaces = myWorkspaces
         , mouseBindings  = myMouseBindings
         } `additionalKeys`
-        [ ((mod4Mask , xK_F8 ),             safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
-        , ((mod4Mask , xK_F9 ),             safeSpawn "amixer" ["-q", "set", "Master", "5-"])
-        , ((mod4Mask , xK_F10),             safeSpawn "amixer" ["-q", "set", "Master", "5+"])
+        [ ((0, 0x1008ff12),                 safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
+        , ((0, 0x1008ff11),                 safeSpawn "amixer" ["-q", "set", "Master", "5-"])
+        , ((0, 0x1008ff13),                 safeSpawn "amixer" ["-q", "set", "Master", "5+"])
 	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >> 
-                                                        safeSpawn "emacsclient" ["-c"]) (className =? "Emacs"))
+                                                        safeSpawn "emacsclient" ["-c"]) (className =? "Emacs24"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
-        , ((mod4Mask , xK_F6),              safeSpawn "brightness" ["down"])
-        , ((mod4Mask , xK_F7),              safeSpawn "brightness" ["up"])
+        , ((0, 0x1008ff03),             safeSpawn "brightness" ["-0.1"])
+        , ((0, 0x1008ff02),             safeSpawn "brightness" ["+0.1"])
         , ((mod4Mask , xK_f) ,              nextWS)
         , ((mod4Mask , xK_Right) ,          nextWS)
         , ((mod4Mask , xK_d) ,              windows copyToAll)
