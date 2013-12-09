@@ -131,6 +131,7 @@ myConfig = defaultConfig
         , ((0, 0x1008ff13),                 safeSpawn "amixer" ["-q", "set", "Master", "5+"])
 	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
+        , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >> 
                                                         safeSpawn "emacsclient" ["-c"]) (className =? "Emacs24"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
