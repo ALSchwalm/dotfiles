@@ -31,5 +31,5 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %thermal0% | <action=amixer -q set Master toggle>Volume: %default:Master%</action> | %memory% * %swap% | %wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %battery% | <fc=#ee9a00>%date%</fc>"
+       , template = "%cpu% | %thermal0% | <action=amixer -q set Master toggle>Volume: %default:Master%</action>| %memory% * %swap% | %wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %battery% | <fc=#ee9a00>%date%</fc>"
        }
