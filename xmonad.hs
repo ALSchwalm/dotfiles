@@ -44,7 +44,7 @@ myManageHook = composeAll
 
 manageWeb :: ManageHook
 manageWeb = composeOne
-    [ className =? c -?> (ask >>= doF . \w -> (copyWindow w "3:web"))
+    [ className =? c -?> (doShift "3:web")
     | c <- [ "Chromium-browser",
              "Google-chrome",
              "Firefox"
@@ -92,7 +92,8 @@ myLogHook = fadeInactiveLogHook fadeAmount
      where fadeAmount = 0.8
 
 myStartup = do
-          spawnAndDo (doShift "1:term") "xfce4-terminal"
+          spawnOn (myWorkspaces!!0) "xfce4-terminal"
+          spawnOn (myWorkspaces!!2) "google-chrome"
           spawn "emacsclient -c -a ''"
           spawn "sh ~/.xmonad/run.sh"
           safeSpawn "xchat" []
@@ -115,7 +116,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 myConfig = defaultConfig
         { modMask = mod4Mask
-	, manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
+	, manageHook = manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ myLayouts
         , startupHook = myStartup
         , logHook = myLogHook
@@ -136,8 +137,8 @@ myConfig = defaultConfig
                                                         safeSpawn "emacsclient" ["-c"]) (className =? "Emacs24"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
-        , ((0, 0x1008ff03),             safeSpawn "brightness" ["-0.1"])
-        , ((0, 0x1008ff02),             safeSpawn "brightness" ["+0.1"])
+        , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
+        , ((0, 0x1008ff02),                 safeSpawn "brightness" ["+0.1"])
         , ((mod4Mask , xK_f) ,              nextWS)
         , ((mod4Mask , xK_Right) ,          nextWS)
         , ((mod4Mask , xK_d) ,              windows copyToAll)

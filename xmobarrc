@@ -17,16 +17,19 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                     , Run Wireless "wlan0" ["-t", "<essid> <quality>%", "-L", "30", "-H", "85", "--low", "red", "--high", "green"] 300
 		    , Run StdinReader
 		    , Run ThermalZone 0 ["-t", "Temp: <temp>°C", "-L", "60", "-H", "70", "--low", "green", "--high", "red"] 30
-                    , Run Com "volume" [] "volume" 20
 		    , Run BatteryP ["BAT1"]
 		                  ["-t", "<acstatus>"
 				   , "-L", "35", "-H", "75"
 				   , "-l", "red", "-h", "green"
-				   , "--", "-O", "<fc=green>Charging: </fc><left>% /<timeleft>", "-o", "Battery: <left>% /<timeleft>"
+				   , "--"
+                                   , "-O", "<fc=green>Charging: </fc><left>% /<timeleft>"
+                                   , "-o", "Battery: <left>% /<timeleft>"
+                                   , "-i", "Battery: Full"
 				   ] 40
+                   , Run Volume "default" "Master" [] 10
                    , Run Date "%a %b %_d %Y %r" "date" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %thermal0% | <action=amixer -q set Master toggle>Volume: %volume%</action> | %memory% * %swap% | %eth0%%wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %battery% | <fc=#ee9a00>%date%</fc>"
+       , template = "%cpu% | %thermal0% | <action=amixer -q set Master toggle>Volume: %default:Master%</action> | %memory% * %swap% | %wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %battery% | <fc=#ee9a00>%date%</fc>"
        }
