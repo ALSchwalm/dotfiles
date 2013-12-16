@@ -15,7 +15,34 @@ alias update="sudo apt-get update && sudo apt-get upgrade"
 alias untar="tar xvzf"
 alias grep="egrep"
 alias wget='wget -c'
+alias open=""
 
+alias -g G='| egrep'
+
+alias -s pdf=evince
+alias -s zip=file-roller
+alias -s rar=file-roller
+alias -s bz2=file-roller
+alias -s gz=file-roller
+alias -s deb="sudo gdebi"
+alias -s torrent=transmission-gtk
+
+alias -s mkv=vlc
+alias -s mp4=vlc
+alias -s mov=vlc
+alias -s avi=vlc
+alias -s mpg=vlc
+alias -s wmv=vlc
+
+alias -s txt="emacsclient -n"
+alias -s org="emacsclient -n"
+alias -s cpp="emacsclient -n"
+alias -s c="emacsclient -n"
+alias -s d="emacsclient -n"
+alias -s h="emacsclient -n"
+alias -s js="emacsclient -n"
+alias -s hpp="emacsclient -n"
+alias -s py="emacsclient -n"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -36,12 +63,12 @@ alias wget='wget -c'
 # DISABLE_CORRECTION="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-#COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment following line if you want to disable marking untracked files under
 # VCS as dirty. This makes repository status check for large repositories much,
 # much faster.
-#DISABLE_UNTRACKED_FILES_DIRTY="true"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -52,4 +79,4 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export TERM=xterm-256color
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
