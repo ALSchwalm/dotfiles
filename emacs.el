@@ -60,6 +60,9 @@
   (setq truncate-lines nil))
 (add-hook 'compilation-mode-hook 'truncate-hook)
 
+;; Fix haskell mode indentation
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
 ;; Use projectile everywhere
 (projectile-global-mode)
 
