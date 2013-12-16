@@ -137,6 +137,7 @@ myConfig = defaultConfig
                                                         safeSpawn "emacsclient" ["-c"]) (className =? "Emacs24"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
+        , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome" ["--incognito"])
         , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
         , ((0, 0x1008ff02),                 safeSpawn "brightness" ["+0.1"])
         , ((mod4Mask , xK_f) ,              nextWS)

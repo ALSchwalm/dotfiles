@@ -24,7 +24,7 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 				   , "--"
                                    , "-O", "<fc=green>Charging: </fc><left>% /<timeleft>"
                                    , "-o", "Battery: <left>% /<timeleft>"
-                                   , "-i", "Battery: Full"
+                                   , "-i", "Battery: <fc=green>Full</fc>"
 				   ] 40
                    , Run Volume "default" "Master" [] 10
                    , Run Date "%a %b %_d %Y %r" "date" 10
