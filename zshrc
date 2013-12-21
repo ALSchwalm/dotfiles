@@ -12,7 +12,6 @@ ZSH_THEME="gallois"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias install="sudo apt-get install"
 alias update="sudo apt-get update && sudo apt-get upgrade"
-alias untar="tar xvzf"
 alias grep="egrep"
 alias wget='wget -c'
 alias open=""
@@ -34,15 +33,41 @@ alias -s avi=vlc
 alias -s mpg=vlc
 alias -s wmv=vlc
 
-alias -s txt="emacsclient -n"
-alias -s org="emacsclient -n"
-alias -s cpp="emacsclient -n"
-alias -s c="emacsclient -n"
-alias -s d="emacsclient -n"
-alias -s h="emacsclient -n"
-alias -s js="emacsclient -n"
-alias -s hpp="emacsclient -n"
-alias -s py="emacsclient -n"
+alias -s txt="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s org="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s c="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s cpp="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s h="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s js="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s hpp="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s py="echo 'Opened in existing emacs' && emacsclient -n"
+
+function apt-list-packages {
+    dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | grep -v deinstall | sort -n | awk '{print $1" "$2}'
+}
+
+function move_up() { 
+    BUFFER="cd .."
+    zle accept-line
+}
+
+function move_back() { 
+  BUFFER="cd -"
+  zle accept-line
+}
+
+zle -N move_up
+zle -N move_back
+
+bindkey "^[[1;3D" move_up
+bindkey "^[[1;3C" move_back
+
+
+# Don't prompt for a huge list, page it!
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+
+# Don't prompt for a huge list, menu it!
+zstyle ':completion:*:default' menu 'select=0'
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -73,7 +98,7 @@ alias -s py="emacsclient -n"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git extract autojump colored-man torrent)
 
 source $ZSH/oh-my-zsh.sh
 
