@@ -10,6 +10,7 @@ import XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.GridSelect
 import XMonad.Actions.WindowGo
+import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
@@ -38,6 +39,7 @@ myManageHook = composeAll
     , isFullscreen 	       --> (doF W.focusDown <+> doFullFloat)
     , manageWeb
     , manageSteam
+    , manageTerm
     , manageIRC
     , manageEmacs
     , manageEclipse]
@@ -58,6 +60,9 @@ manageEmacs :: ManageHook
 manageEmacs = composeOne
     [ className =? "Emacs24" -?> doShift "2:emacs" ]
 
+manageTerm :: ManageHook
+manageTerm = composeAll
+    [ (className =? "Xfce4-terminal") --> (ask >>= doF . (\x -> W.swapDown))]
 
 manageSteam :: ManageHook
 manageSteam = composeAll
@@ -72,7 +77,7 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "1:term"
                , "2:emacs"
                , "3:web"
-               , "4:eclipse"
+               , "4"
                , "5"
                , "6"
                , "7:irc"
@@ -117,7 +122,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 myConfig = defaultConfig
         { modMask = mod4Mask
 	, manageHook = manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
-        , layoutHook = avoidStruts $ myLayouts
+        , layoutHook = smartSpacing 4 $ avoidStruts $ myLayouts
         , startupHook = myStartup
         , logHook = myLogHook
         , borderWidth = 3

@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         back-to-indentation-or-beginning
+        c-electric-delete-forward
         cua-delete-region
         indent-for-tab-command
         sgml-slash
