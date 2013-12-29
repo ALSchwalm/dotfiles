@@ -11,6 +11,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.GridSelect
 import XMonad.Actions.WindowGo
 import XMonad.Layout.Spacing
+import XMonad.Layout.Grid
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
@@ -62,7 +63,7 @@ manageEmacs = composeOne
 
 manageTerm :: ManageHook
 manageTerm = composeAll
-    [ (className =? "Xfce4-terminal") --> (ask >>= doF . (\x -> W.swapDown))]
+    [ (className =? "Xfce4-terminal") --> (doF W.swapDown)]
 
 manageSteam :: ManageHook
 manageSteam = composeAll
@@ -87,10 +88,18 @@ myWorkspaces = [ "1:term"
     
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
-       		  ppLayout = const "",
+       		  ppLayout = layoutName,
                   ppTitle = const "",
                   ppUrgent = wrap "~" "~"
-                  }
+                  } where
+  layoutName x
+    | "Smart" `isInfixOf` x = "SpTall"
+    | "Tall"  `isInfixOf` x = "Tall"
+    | "Grid"  `isInfixOf` x = "Grid"
+    | "Tab"   `isInfixOf` x = "Tab"
+    | "Full"  `isInfixOf` x = "Full"
+    | otherwise = show x
+    
 
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
@@ -107,7 +116,12 @@ myStartup = do
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
 
 
-myLayouts = smartBorders  $ onWorkspace "8:steam" Full $ tiled |||  simpleTabbedBottom |||  Full ||| Mirror tiled
+myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
+            smartSpacing 4 tiled |||
+            tiled |||
+            noBorders simpleTabbedBottom |||
+            Full |||
+            GridRatio (4/3)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -116,13 +130,13 @@ myLayouts = smartBorders  $ onWorkspace "8:steam" Full $ tiled |||  simpleTabbed
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
-    , ((modMask, button2), (\w -> focus w >> windows W.swapMaster))
+    , ((modMask, button3), (\w -> focus w >> windows W.swapMaster))
     , (((modMask .|. shiftMask), button1), (\w -> focus w >> Flex.mouseResizeWindow w)) ]
 
 myConfig = defaultConfig
         { modMask = mod4Mask
 	, manageHook = manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
-        , layoutHook = smartSpacing 4 $ avoidStruts $ myLayouts
+        , layoutHook = avoidStruts $ myLayouts
         , startupHook = myStartup
         , logHook = myLogHook
         , borderWidth = 3
@@ -139,23 +153,23 @@ myConfig = defaultConfig
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >> 
-                                                        safeSpawn "emacsclient" ["-c"]) (className =? "Emacs24"))
+                                                        safeSpawn "emacs" []) (className =? "Emacs24"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome" ["--incognito"])
         , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
         , ((0, 0x1008ff02),                 safeSpawn "brightness" ["+0.1"])
-        , ((mod4Mask , xK_f) ,              nextWS)
-        , ((mod4Mask , xK_Right) ,          nextWS)
-        , ((mod4Mask , xK_d) ,              windows copyToAll)
-        , ((mod4Mask .|. shiftMask, xK_d) , killAllOtherCopies)
-        , ((mod4Mask .|. shiftMask, xK_f) , shiftToNext)
-        , ((mod4Mask , xK_b) ,              prevWS)
-        , ((mod4Mask , xK_Left) ,           prevWS)
+        , ((mod4Mask , xK_f),               nextWS)
+        , ((mod4Mask , xK_Right),           nextWS)
+        , ((mod4Mask , xK_d),               windows copyToAll)
+        , ((mod4Mask .|. shiftMask, xK_d),  killAllOtherCopies)
+        , ((mod4Mask .|. shiftMask, xK_f),  shiftToNext)
+        , ((mod4Mask , xK_b),               prevWS)
+        , ((mod4Mask , xK_Left),            prevWS)
         , ((mod4Mask .|. shiftMask, xK_b) , shiftToPrev)
-        , ((mod4Mask , xK_w) ,              moveTo Next EmptyWS)
-        , ((mod4Mask .|. shiftMask, xK_w) , shiftTo Next EmptyWS)
-        , ((mod4Mask , xK_Tab) ,            toggleWS)
-        , ((mod1Mask , xK_Tab) ,            windows W.focusDown)
-        , ((mod1Mask .|. shiftMask, xK_Tab) , windows W.focusUp)
+        , ((mod4Mask , xK_w),               moveTo Next EmptyWS)
+        , ((mod4Mask .|. shiftMask, xK_w),  shiftTo Next EmptyWS)
+        , ((mod4Mask , xK_Tab),             toggleWS)
+        , ((mod1Mask , xK_Tab),             windows W.focusDown)
+        , ((mod1Mask .|. shiftMask, xK_Tab),  windows W.focusUp)
         ]
