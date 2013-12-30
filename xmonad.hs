@@ -135,12 +135,12 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 myConfig = defaultConfig
         { modMask = mod4Mask
-	, manageHook = manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
+	, manageHook = manageSpawn <+> manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ myLayouts
         , startupHook = myStartup
         , logHook = myLogHook
         , borderWidth = 3
-	, focusedBorderColor = "#AA3333"
+	, focusedBorderColor = "#BBBBBB"
 	, normalBorderColor = "#000000"
         , terminal = "xfce4-terminal"
         , workspaces = myWorkspaces
@@ -172,4 +172,6 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_Tab),             toggleWS)
         , ((mod1Mask , xK_Tab),             windows W.focusDown)
         , ((mod1Mask .|. shiftMask, xK_Tab),  windows W.focusUp)
+        , ((mod4Mask , xK_s),               spawn "nm-applet &")
+        , ((mod4Mask .|. shiftMask, xK_s),  spawn "killall nm-applet")
         ]
