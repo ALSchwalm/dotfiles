@@ -111,9 +111,22 @@ myStartup = do
           spawn "emacsclient -c -a ''"
           spawn "sh ~/.xmonad/run.sh"
           safeSpawn "xchat" []
-                  
+
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
+
+
+trayerCmd = concat ["trayer --transparent true",
+                     " --heighttype pixel",
+                     " --height 14",
+                     " --tint 0x000000",
+                     " --alpha 0",
+                     " --widthtype pixel",
+                     " --width 40",
+                     " --align right",
+                     " --distancefrom right",
+                     " --distance 445",
+                     " --expand false &"]
 
 
 myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
@@ -172,6 +185,6 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_Tab),             toggleWS)
         , ((mod1Mask , xK_Tab),             windows W.focusDown)
         , ((mod1Mask .|. shiftMask, xK_Tab),  windows W.focusUp)
-        , ((mod4Mask , xK_s),               spawn "nm-applet &")
-        , ((mod4Mask .|. shiftMask, xK_s),  spawn "killall nm-applet")
+        , ((mod4Mask , xK_s),               spawn trayerCmd)
+        , ((mod4Mask .|. shiftMask, xK_s),  spawn "killall trayer")
         ]

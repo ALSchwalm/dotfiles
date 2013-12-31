@@ -11,10 +11,12 @@ ZSH_THEME="gallois"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias install="sudo apt-get install"
+alias search="apt-cache search"
 alias update="sudo apt-get update && sudo apt-get upgrade"
 alias grep="egrep"
 alias wget='wget -c'
 alias open=""
+alias emacsn="emacsclient -n"
 
 alias -g G='| egrep'
 
