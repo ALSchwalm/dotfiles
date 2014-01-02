@@ -23,6 +23,10 @@
 ;; show column and line number
 (column-number-mode 1)
 
+(desktop-save-mode t)
+(setq desktop-restore-eager 3
+      desktop-save t)
+
 ;; trunkate long lines rather than wrapping
 (set-default 'truncate-lines t)
 
