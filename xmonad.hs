@@ -106,11 +106,10 @@ myLogHook = fadeInactiveLogHook fadeAmount
      where fadeAmount = 0.8
 
 myStartup = do
-          spawnOn (myWorkspaces!!0) "xfce4-terminal"
-          spawnOn (myWorkspaces!!2) "google-chrome"
-          spawn "emacsclient -c -a ''"
+          raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome") (className =? "Google-chrome")
+          raiseMaybe (spawn "emacsclient -c -a ''") (className =? "Emacs24")
+          raiseMaybe (spawnOn (myWorkspaces!!0) "xfce4-terminal") (className =? "Xfce4-terminal")
           spawn "sh ~/.xmonad/run.sh"
-          safeSpawn "xchat" []
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
