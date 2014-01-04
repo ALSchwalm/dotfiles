@@ -10,9 +10,12 @@ ZSH_THEME="gallois"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias install="sudo apt-get install"
-alias search="apt-cache search"
-alias update="sudo apt-get update && sudo apt-get upgrade"
+alias install="yaourt -S"
+alias search="yaourt -Ss"
+alias update="yaourt -Syua"
+alias autoremove="sudo pacman -R $(yaourt -Qdtq)"
+alias remove="yaourt -Rcns"
+
 alias grep="egrep"
 alias wget='wget -c'
 alias open=""
@@ -44,9 +47,8 @@ alias -s js="echo 'Opened in existing emacs' && emacsclient -n"
 alias -s hpp="echo 'Opened in existing emacs' && emacsclient -n"
 alias -s py="echo 'Opened in existing emacs' && emacsclient -n"
 
-function apt-list-packages {
-    dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | grep -v deinstall | sort -n | awk '{print $1" "$2}'
-}
+[ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
+setopt HIST_IGNORE_DUPS
 
 function move_up() { 
     BUFFER="cd .."
@@ -113,6 +115,7 @@ zstyle ':completion:*:default' menu 'select=0'
 plugins=(git extract autojump colored-man torrent)
 
 source $ZSH/oh-my-zsh.sh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Customize to your needs...
 export TERM=xterm-256color

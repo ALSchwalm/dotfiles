@@ -108,7 +108,7 @@ myLogHook = fadeInactiveLogHook fadeAmount
 myStartup = do
           raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome") (className =? "Google-chrome")
           raiseMaybe (spawn "emacsclient -c -a ''") (className =? "Emacs24")
-          raiseMaybe (spawnOn (myWorkspaces!!0) "xfce4-terminal") (className =? "Xfce4-terminal")
+          raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (className =? "lxterminal")
           spawn "sh ~/.xmonad/run.sh"
 
 -- Key binding to toggle the gap for the bar.
@@ -154,7 +154,7 @@ myConfig = defaultConfig
         , borderWidth = 3
 	, focusedBorderColor = "#BBBBBB"
 	, normalBorderColor = "#000000"
-        , terminal = "xfce4-terminal"
+        , terminal = "lxterminal"
         , workspaces = myWorkspaces
         , mouseBindings  = myMouseBindings
         } `additionalKeys`
