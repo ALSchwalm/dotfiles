@@ -47,10 +47,10 @@ myManageHook = composeAll
 
 manageWeb :: ManageHook
 manageWeb = composeOne
-    [ className =? c -?> (doShift "3:web")
-    | c <- [ "Chromium-browser",
-             "Google-chrome",
-             "Firefox"
+    [ appName =? c -?> (doShift "3:web")
+    | c <- [ "chromium-browser",
+             "google-chrome-stable",
+             "firefox"
            ]]
 
 manageIRC :: ManageHook
@@ -59,21 +59,17 @@ manageIRC = composeOne
 
 manageEmacs :: ManageHook
 manageEmacs = composeOne
-    [ className =? "Emacs24" -?> doShift "2:emacs" ]
+    [ appName =? "emacs" -?> doShift "2:emacs" ]
 
 manageTerm :: ManageHook
 manageTerm = composeAll
-    [ (className =? "Xfce4-terminal") --> (doF W.swapDown)]
+    [ (appName =? "lxterminal") --> (doF W.swapDown)]
 
 manageSteam :: ManageHook
 manageSteam = composeAll
     [ className =? "Steam" --> doShift "8:steam",
       title =? "Friends"  --> doFloat ]
 
-manageEclipse :: ManageHook
-manageEclipse = composeAll
-    [ className =? "Eclipse" --> doShift "4:eclipse" ]
-      
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "1:term"
                , "2:emacs"
@@ -106,9 +102,9 @@ myLogHook = fadeInactiveLogHook fadeAmount
      where fadeAmount = 0.8
 
 myStartup = do
-          raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome") (className =? "Google-chrome")
-          raiseMaybe (spawn "emacsclient -c -a ''") (className =? "Emacs24")
-          raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (className =? "lxterminal")
+          raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable") (appName =? "google-chrome-stable")
+          raiseMaybe (spawn "emacsclient -c -a ''") (appName =? "emacs")
+          raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (appName =? "lxterminal")
           spawn "sh ~/.xmonad/run.sh"
 
 -- Key binding to toggle the gap for the bar.
@@ -165,10 +161,10 @@ myConfig = defaultConfig
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >> 
-                                                        safeSpawn "emacs" []) (className =? "Emacs24"))
+                                                        safeSpawn "emacs" []) (appName =? "emacs"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
-        , ((mod4Mask , xK_u),               safeSpawn "google-chrome" [])
-        , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome" ["--incognito"])
+        , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
+        , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
         , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
         , ((0, 0x1008ff02),                 safeSpawn "brightness" ["+0.1"])
         , ((mod4Mask , xK_f),               nextWS)
