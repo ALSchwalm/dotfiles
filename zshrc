@@ -20,6 +20,7 @@ alias grep="egrep"
 alias wget='wget -c'
 alias open=""
 alias emacsn="emacsclient -n"
+alias s=ls
 
 alias -g G='| egrep'
 
@@ -49,6 +50,7 @@ alias -s py="echo 'Opened in existing emacs' && emacsclient -n"
 
 [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
 setopt HIST_IGNORE_DUPS
+setopt no_share_history
 
 function move_up() { 
     BUFFER="cd .."
@@ -60,11 +62,24 @@ function move_back() {
   zle accept-line
 }
 
+function expand-or-complete-or-list-files() {
+    if [[ $#BUFFER == 0 ]]; then
+        BUFFER="ls "
+        CURSOR=3
+        zle list-choices
+        zle backward-kill-word
+    else
+        zle expand-or-complete
+    fi
+}
+
 zle -N move_up
 zle -N move_back
+zle -N expand-or-complete-or-list-files
 
 bindkey "^[[1;3D" move_up
 bindkey "^[[1;3C" move_back
+bindkey '^I' expand-or-complete-or-list-files
 
 if [[ "$TERM" == "dumb" ]]
 then
