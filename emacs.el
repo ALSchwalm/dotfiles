@@ -149,6 +149,13 @@
 (setq auto-save-file-name-transforms
     `((".*" ,temporary-file-directory t)))
 
+;; Fix D compile regex
+(require 'compile)
+(add-to-list
+ 'compilation-error-regexp-alist
+ '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
+   1 2 nil (3 . 4)))
+
 (require 'yank-auto-indent)
 
 ;; Set browse-kill-ring defaults
@@ -194,6 +201,9 @@
 (defun ansi-term-default ()
   (interactive)
   (ansi-term "zsh" "localhost"))
+
+(add-hook 'term-mode-hook (lambda()
+                            (setq yas-dont-activate t)))
 
 (defun switch-to-previous-buffer ()
   (interactive)
