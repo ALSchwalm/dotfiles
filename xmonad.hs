@@ -42,8 +42,7 @@ myManageHook = composeAll
     , manageSteam
     , manageTerm
     , manageIRC
-    , manageEmacs
-    , manageEclipse]
+    , manageEmacs]
 
 manageWeb :: ManageHook
 manageWeb = composeOne
@@ -84,7 +83,7 @@ myWorkspaces = [ "1:term"
     
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
-       		  ppLayout = layoutName,
+       		  ppLayout = const "",
                   ppTitle = const "",
                   ppUrgent = wrap "~" "~"
                   } where
@@ -125,7 +124,7 @@ trayerCmd = concat ["trayer --transparent true",
 
 
 myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
-            smartSpacing 4 tiled |||
+            smartSpacing 10 tiled |||
             tiled |||
             noBorders simpleTabbedBottom |||
             Full |||
@@ -167,6 +166,8 @@ myConfig = defaultConfig
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
         , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
         , ((0, 0x1008ff02),                 safeSpawn "brightness" ["+0.1"])
+        , ((mod4Mask , xK_r),               spawn "rotate toggle right")
+        , ((mod4Mask .|. shiftMask, xK_r),  spawn "rotate toggle left")
         , ((mod4Mask , xK_f),               nextWS)
         , ((mod4Mask , xK_Right),           nextWS)
         , ((mod4Mask , xK_d),               windows copyToAll)
