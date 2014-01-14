@@ -13,26 +13,19 @@ import XMonad.Actions.WindowGo
 import XMonad.Layout.Spacing
 import XMonad.Layout.Grid
 import XMonad.Layout.Tabbed
-import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Util.Run(spawnPipe, safeSpawn)
+import XMonad.Util.Run(safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import Data.List 
-import System.IO
-
-defaultModMask :: KeyMask
-defaultModMask = mod4Mask
 
 -- The main function.
 main = xmonad =<<  statusBar myBar myPP  toggleStrutsKey (withUrgencyHook NoUrgencyHook myConfig)
 
--- Command to launch the bar.
-myBar = "xmobar"
-
 -- Float specific windows
+myManageHook :: ManageHook
 myManageHook = composeAll
     [ className =? "MPlayer"   --> doFloat
     , className =? "Gimp"      --> doFloat
@@ -80,26 +73,24 @@ myWorkspaces = [ "1:term"
                , "8:steam"
                , "9:music"
                ]
-    
--- Custom PP, configure it as you like. It determines what is being written to the bar.
+
+-- Command to launch the bar.
+myBar :: String
+myBar = "xmobar"
+
+-- Custom PP, configure it as you like. It determines what is being written to the bar
+myPP :: PP
 myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
        		  ppLayout = const "",
                   ppTitle = const "",
                   ppUrgent = wrap "~" "~"
-                  } where
-  layoutName x
-    | "Smart" `isInfixOf` x = "SpTall"
-    | "Tall"  `isInfixOf` x = "Tall"
-    | "Grid"  `isInfixOf` x = "Grid"
-    | "Tab"   `isInfixOf` x = "Tab"
-    | "Full"  `isInfixOf` x = "Full"
-    | otherwise = show x
-    
+                  }  
 
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
      where fadeAmount = 0.8
 
+myStartup :: X ()
 myStartup = do
           raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable") (appName =? "google-chrome-stable")
           raiseMaybe (spawn "emacsclient -c -a ''") (appName =? "emacs")
@@ -109,7 +100,7 @@ myStartup = do
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
 
-
+trayerCmd :: String
 trayerCmd = concat ["trayer --transparent true",
                      " --heighttype pixel",
                      " --height 14",
@@ -121,7 +112,6 @@ trayerCmd = concat ["trayer --transparent true",
                      " --distancefrom right",
                      " --distance 445",
                      " --expand false &"]
-
 
 myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
             smartSpacing 10 tiled |||
@@ -160,7 +150,7 @@ myConfig = defaultConfig
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >> 
-                                                        safeSpawn "emacs" []) (appName =? "emacs"))
+                                                        spawn "emacsclient -c -a ''") (appName =? "emacs"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])

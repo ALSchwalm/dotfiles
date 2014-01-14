@@ -13,7 +13,7 @@ ZSH_THEME="gallois"
 alias install="yaourt -S"
 alias search="yaourt -Ss"
 alias update="yaourt -Syua"
-alias autoremove="sudo pacman -R $(yaourt -Qdtq)"
+alias autoremove="pacman -Qdtq | sudo pacman -Rcns -"
 alias remove="yaourt -Rcns"
 
 alias grep="egrep"
@@ -134,4 +134,4 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # Customize to your needs...
 export TERM=xterm-256color
-export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export PATH="/home/adam/.gem/ruby/2.0.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
