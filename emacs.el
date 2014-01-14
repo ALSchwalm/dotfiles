@@ -67,6 +67,11 @@
 ;; Fix haskell mode indentation
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
+;; Flycheck mode
+(global-flycheck-mode t)
+(setq flycheck-clang-language-standard "c++11")
+(setq flycheck-clang-include-path '("/usr/include/"))
+
 ;; Use projectile everywhere
 (projectile-global-mode)
 
@@ -240,8 +245,8 @@
 (defun sudo-edit (&optional arg)
   (interactive "p")
   (if (or arg (not buffer-file-name))
-      (find-file (concat "/su:root@localhost:" (ido-read-file-name "File: ")))
-    (find-alternate-file (concat "/su:root@localhost:" buffer-file-name))))
+      (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (defun sm-find-tag ()
   (interactive)
