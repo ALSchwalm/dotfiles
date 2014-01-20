@@ -167,6 +167,14 @@
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 
+;; Slime
+(require 'slime-autoloads)
+
+;; Set your lisp system and, optionally, some contribs
+(setq inferior-lisp-program "/usr/sbin/sbcl")
+(require 'slime)
+(slime-setup '(slime-fancy))
+
 ;; ido/flx/ido-ubiquitous
 (require 'ido)
 (setq ido-enable-prefix nil
