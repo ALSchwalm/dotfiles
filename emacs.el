@@ -23,10 +23,6 @@
 ;; show column and line number
 (column-number-mode 1)
 
-(desktop-save-mode t)
-(setq desktop-restore-eager 3
-      desktop-save t)
-
 ;; trunkate long lines rather than wrapping
 (set-default 'truncate-lines t)
 
@@ -114,6 +110,26 @@
   (condition-case nil
       (call-interactively 'projectile-compile-project)
     (error (call-interactively 'compile))))
+
+(defun refresh-all-buffers ()
+  "Refreshes all open buffers from their respective files"
+  (interactive)
+  (let* ((list (buffer-list))
+         (buffer (car list)))
+    (while buffer
+      (when (and (buffer-file-name buffer) 
+                 (not (buffer-modified-p buffer)))
+        (set-buffer buffer)
+        (revert-buffer t t t))
+      (setq list (cdr list))
+      (setq buffer (car list))))
+  (message "Refreshed open files"))
+
+;; Shorthand for C-x C-x then C-l
+(defun cua-exchange-point-and-mark-center ()
+  (interactive)
+  (cua-exchange-point-and-mark ())
+  (recenter-top-bottom))
 
 ;; completion for M-x
 (smex-initialize)
@@ -334,6 +350,7 @@
 (global-set-key (kbd "C-x 4") 'transpose-windows)
 (global-set-key (kbd "M-`") 'project-explorer-toggle)
 (global-set-key (kbd "M-m") 'helm-mini)
+(global-set-key (kbd "C-x C-x") 'cua-exchange-point-and-mark-center)
 
  ;; Key chords
 (key-chord-mode t)
