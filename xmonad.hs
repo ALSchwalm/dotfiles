@@ -4,6 +4,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.FlexibleResize as Flex
@@ -87,7 +88,7 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
                   }  
 
 myLogHook :: X ()
-myLogHook = fadeInactiveLogHook fadeAmount
+myLogHook = ewmhDesktopsLogHook <+> fadeInactiveLogHook fadeAmount
      where fadeAmount = 0.8
 
 myStartup :: X ()
@@ -99,19 +100,6 @@ myStartup = do
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
-
-trayerCmd :: String
-trayerCmd = concat ["trayer --transparent true",
-                     " --heighttype pixel",
-                     " --height 14",
-                     " --tint 0x000000",
-                     " --alpha 0",
-                     " --widthtype pixel",
-                     " --width 40",
-                     " --align right",
-                     " --distancefrom right",
-                     " --distance 445",
-                     " --expand false &"]
 
 myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
             smartSpacing 10 tiled |||
@@ -135,6 +123,7 @@ myConfig = defaultConfig
 	, manageHook = manageSpawn <+> manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ myLayouts
         , startupHook = myStartup
+        , handleEventHook = ewmhDesktopsEventHook
         , logHook = myLogHook
         , borderWidth = 3
 	, focusedBorderColor = "#BBBBBB"
@@ -171,6 +160,4 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_Tab),             toggleWS)
         , ((mod1Mask , xK_Tab),             windows W.focusDown)
         , ((mod1Mask .|. shiftMask, xK_Tab),  windows W.focusUp)
-        , ((mod4Mask , xK_s),               spawn trayerCmd)
-        , ((mod4Mask .|. shiftMask, xK_s),  spawn "killall trayer")
         ]
