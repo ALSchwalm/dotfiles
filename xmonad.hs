@@ -20,6 +20,7 @@ import XMonad.Util.Run(safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import Control.Monad
 import Data.List 
 
 -- The main function.
@@ -95,7 +96,7 @@ myStartup :: X ()
 myStartup = do
           raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable") (appName =? "google-chrome-stable")
           raiseMaybe (spawn "emacsclient -c -a ''") (appName =? "emacs")
-          raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (appName =? "lxterminal")
+          replicateM_ 3 $ raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (appName =? "lxterminal")
           spawn "sh ~/.xmonad/run.sh"
 
 -- Key binding to toggle the gap for the bar.
