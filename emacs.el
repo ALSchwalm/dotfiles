@@ -65,8 +65,6 @@
 
 ;; Flycheck mode
 (global-flycheck-mode t)
-(setq flycheck-clang-language-standard "c++11")
-(setq flycheck-clang-include-path '("/usr/include/"))
 
 ;; Use projectile everywhere
 (projectile-global-mode)
@@ -104,6 +102,7 @@
   (ff-find-other-file nil 't))
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
 
 (defun projectile-compile-with-fallback ()
   (interactive)
@@ -153,16 +152,14 @@
 (setq minibuffer-prompt-properties (quote 
 	(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
                
-;; flyspell mode for spell checking everywhere
+;; Org mode setup
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+(add-hook 'org-mode-hook 'visual-line-mode 'append)
 (setq org-pretty-entities t
       org-latex-create-formula-image-program 'imagemagick
       org-startup-folded 'showall
       org-src-fontify-natively t
       org-startup-with-inline-images 'inlineimages)
-
-;; Fontify org-mode code blocks
-(setq org-src-fontify-natively t)
 
 ;;Put backups/autosave in temp directory        
 (setq backup-directory-alist
@@ -282,13 +279,11 @@
 
 (defun projectile-generate-tags ()
   (interactive)
-  (setq pattern (read-from-minibuffer (concat "Generate tags (*."
-                                              (file-name-extension (buffer-file-name)) ") ")))
-  (if (eq pattern "")
-      (setq pattern (concat "*" (file-name-extension (buffer-file-name)))))
-  (shell-command (concat "find " (projectile-project-root) " -type f | egrep '"
-                         pattern
-                         "' | etags -")))
+  (setq default (concat "*." (file-name-extension (buffer-file-name))))
+  (setq pattern (read-string (concat "Generate tags: ")
+                                      default))
+  (shell-command (concat "find " (projectile-project-root) " -name \"" pattern
+                   "\" -print | etags -")))
 
 ;; Function to toggle vertical split to horizontal / vice versa
 (defun toggle-frame-split ()
@@ -367,18 +362,20 @@
  ;; If there is more than one, they won't work right.
  '(apropos-do-all t)
  '(backup-directory-alist (\` (("." \, (concat user-emacs-directory "backups")))))
- '(c-basic-offset 4 t)
- '(c-default-style "linux" t)
+ '(c-basic-offset 4)
+ '(c-default-style "linux")
  '(completion-cycle-threshold t)
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(delete-by-moving-to-trash t)
+ '(flycheck-clang-language-standard "c++11")
+ '(flycheck-clang-include-path '("/usr/include/"))
  '(initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
 ")
  '(minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
- '(org-startup-indented 'indent)
  '(mouse-yank-at-point t)
+ '(org-startup-indented (quote indent))
  '(ring-bell-function (quote ignore) t)
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat user-emacs-directory "places"))

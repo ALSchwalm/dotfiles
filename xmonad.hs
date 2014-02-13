@@ -106,8 +106,7 @@ myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
             smartSpacing 10 tiled |||
             tiled |||
             noBorders simpleTabbedBottom |||
-            Full |||
-            GridRatio (4/3)
+            Full
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1

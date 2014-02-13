@@ -21,6 +21,9 @@ alias wget='wget -c'
 alias open=""
 alias emacsn="emacsclient -n"
 alias s=ls
+alias hr="hr ―"
+alias scons="scons -j4"
+alias make="make -j4"
 
 alias -g G='| egrep'
 
