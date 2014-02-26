@@ -46,7 +46,9 @@
 (yas/global-mode t)
 
 (require 'disaster)
-(define-key c-mode-base-map (kbd "C-c d") 'disaster)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+	    (define-key c-mode-base-map (kbd "C-c d") 'disaster)))
 
 ;; Required for forward-to-word and others
 (require 'misc)
