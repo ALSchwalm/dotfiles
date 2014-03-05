@@ -103,8 +103,8 @@ myStartup = do
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
 
 myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
-            smartSpacing 10 tiled |||
             tiled |||
+            smartSpacing 10 tiled |||
             noBorders simpleTabbedBottom |||
             Full
   where
