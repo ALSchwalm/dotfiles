@@ -357,6 +357,7 @@
 (key-chord-define-global "jj" 'ace-jump-word-mode)
 (key-chord-define-global "uu" 'undo-tree-visualize)
 (key-chord-define-global "JJ" 'switch-to-prev-buffer)
+(key-chord-define-global "KK" 'switch-to-next-buffer)
 (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
 (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
 
