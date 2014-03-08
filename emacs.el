@@ -121,7 +121,7 @@
   (let* ((list (buffer-list))
          (buffer (car list)))
     (while buffer
-      (when (and (buffer-file-name buffer) 
+      (when (and (buffer-file-name buffer)
                  (not (buffer-modified-p buffer)))
         (set-buffer buffer)
         (revert-buffer t t t))
@@ -154,9 +154,9 @@
       c-basic-offset 4)
 
 ;; don't let the cursor go into minibuffer prompt
-(setq minibuffer-prompt-properties (quote 
+(setq minibuffer-prompt-properties (quote
 	(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
-               
+
 ;; Org mode setup
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (add-hook 'org-mode-hook 'visual-line-mode 'append)
@@ -166,7 +166,7 @@
       org-src-fontify-natively t
       org-startup-with-inline-images 'inlineimages)
 
-;;Put backups/autosave in temp directory        
+;;Put backups/autosave in temp directory
 (setq backup-directory-alist
     `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
@@ -233,13 +233,19 @@
   (interactive)
   (ansi-term "zsh" "localhost"))
 
-(add-hook 'term-mode-hook (lambda()
-                            (setq yas-dont-activate t)))
+(add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
 
-(defun switch-to-previous-buffer ()
+(defun delete-whitespace-and-indent ()
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
+  (let ((start (point)))
+    (delete-trailing-whitespace)
+    (if (and (not (= start (line-beginning-position)))
+             (= (length (buffer-substring (line-beginning-position)
+                                          (line-end-position))) 0))
+        (indent-for-tab-command))))
 
+;; Remove whitespace
+(add-hook 'before-save-hook 'delete-whitespace-and-indent)
 
 (defun backward-word-stop-eol (arg)
   (interactive "p")
