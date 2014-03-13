@@ -247,6 +247,12 @@
 ;; Remove whitespace
 (add-hook 'before-save-hook 'delete-whitespace-and-indent)
 
+;; Better defaults for Markdown mode
+(add-hook 'markdown-mode-hook (lambda()
+                                (visual-line-mode t)
+                                (setq truncate-lines nil)
+                                (setq word-wrap t)))
+
 (defun backward-word-stop-eol (arg)
   (interactive "p")
   (let ((start (point)))
