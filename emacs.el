@@ -271,8 +271,10 @@
 
 (defun back-to-indentation-or-beginning ()
   (interactive)
-  (if (= (point) (progn (back-to-indentation) (point)))
-      (beginning-of-line)))
+  (if (not visual-line-mode)
+      (if (= (point) (progn (back-to-indentation) (point)))
+          (beginning-of-line))
+    (beginning-of-visual-line)))
 
 (defun mc/mark-next-like-this-expand ()
   (interactive)
@@ -301,6 +303,12 @@
                                       default))
   (shell-command (concat "find " (projectile-project-root) " -name \"" pattern
                    "\" -print | etags -")))
+
+(defun test-file ()
+  (interactive)
+  (let ((current (file-name-extension buffer-file-name))
+        (extension (read-string "Test file format (e.g. py, d, cpp): " current)))
+    (find-file (concat "~/test/test." extension))))
 
 ;; Function to toggle vertical split to horizontal / vice versa
 (defun toggle-frame-split ()
