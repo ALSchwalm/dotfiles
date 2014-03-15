@@ -10,6 +10,7 @@ ZSH_THEME="gallois"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 alias install="yaourt -S"
 alias search="yaourt -Ss"
 alias update="yaourt -Syua"
@@ -19,7 +20,6 @@ alias remove="yaourt -Rcns"
 alias grep="egrep"
 alias wget='wget -c'
 alias open=""
-alias emacsn="emacsclient -n"
 alias s=ls
 alias hr="hr ―"
 alias scons="scons -j4"
@@ -55,12 +55,12 @@ alias -s py="echo 'Opened in existing emacs' && emacsclient -n"
 setopt HIST_IGNORE_DUPS
 setopt no_share_history
 
-function move_up() { 
+function move_up() {
     BUFFER="cd .."
     zle accept-line
 }
 
-function move_back() { 
+function move_back() {
   BUFFER="cd -"
   zle accept-line
 }
@@ -130,7 +130,7 @@ zstyle ':completion:*:default' menu 'select=0'
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git extract autojump colored-man torrent)
+plugins=(git extract autojump colored-man torrent emacs)
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
