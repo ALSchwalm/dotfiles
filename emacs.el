@@ -28,7 +28,7 @@
 
 ;; Load theme
 (require 'solarized-dark-theme)
-(setq solarized-distinct-fringe-background t)
+
 (require 'powerline)
 (set-face-foreground 'minibuffer-prompt "cyan")
 (blink-cursor-mode)
@@ -304,11 +304,13 @@
   (shell-command (concat "find " (projectile-project-root) " -name \"" pattern
                    "\" -print | etags -")))
 
-(defun test-file ()
-  (interactive)
-  (let ((current (file-name-extension buffer-file-name))
-        (extension (read-string "Test file format (e.g. py, d, cpp): " current)))
-    (find-file (concat "~/test/test." extension))))
+(defun test-file (&optional N)
+  (interactive "P")
+  (let* ((current (file-name-extension buffer-file-name))
+         (extension (read-string "Test file format (e.g. py, d, cpp): " current)))
+    (if N
+        (find-file (concat "~/test/test" (number-to-string N) "." extension))
+      (find-file (concat "~/test/test." extension)))))
 
 ;; Function to toggle vertical split to horizontal / vice versa
 (defun toggle-frame-split ()
@@ -391,10 +393,11 @@
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(completion-cycle-threshold t)
- '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+ '(custom-enabled-themes (quote (solarized-dark)))
+ '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(delete-by-moving-to-trash t)
+ '(flycheck-clang-include-path (quote ("/usr/include")))
  '(flycheck-clang-language-standard "c++11")
- '(flycheck-clang-include-path '("/usr/include/"))
  '(initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
 ")
@@ -406,6 +409,7 @@
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat user-emacs-directory "places"))
  '(scroll-conservatively 1000)
+ '(solarized-distinct-fringe-background nil)
  '(x-select-enable-clipboard t)
  '(x-select-enable-primary t))
 
