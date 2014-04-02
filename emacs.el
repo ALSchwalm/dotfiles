@@ -60,6 +60,9 @@
 (require 'git-gutter-fringe)
 (global-git-gutter-mode t)
 
+;; Move around with shift+arrow
+(windmove-default-keybindings)
+
 ;; Make compile buffer show lines
 (defun truncate-hook()
   (setq truncate-lines nil))
