@@ -307,12 +307,12 @@
   (shell-command (concat "find " (projectile-project-root) " -name \"" pattern
                    "\" -print | etags -")))
 
-(defun test-file (&optional N)
+(defun test-file (&optional number)
   (interactive "P")
-  (let* ((current (file-name-extension buffer-file-name))
+  (let* ((current (file-name-extension (buffer-name)))
          (extension (read-string "Test file format (e.g. py, d, cpp): " current)))
-    (if N
-        (find-file (concat "~/test/test" (number-to-string N) "." extension))
+    (if number
+        (find-file (concat "~/test/test" (number-to-string number) "." extension))
       (find-file (concat "~/test/test." extension)))))
 
 ;; Function to toggle vertical split to horizontal / vice versa
