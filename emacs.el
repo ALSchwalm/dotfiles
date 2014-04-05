@@ -310,10 +310,11 @@
 (defun test-file (&optional number)
   (interactive "P")
   (let* ((current (file-name-extension (buffer-name)))
-         (extension (read-string "Test file format (e.g. py, d, cpp): " current)))
-    (if number
-        (find-file (concat "~/test/test" (number-to-string number) "." extension))
-      (find-file (concat "~/test/test." extension)))))
+         (extension (read-string "Test file format (e.g. py, d, cpp): " current))
+         (number (if (not number)
+                     (string-to-number (read-string "Test file number: "))
+                   number)))
+    (find-file (concat "~/test/test" (number-to-string number) "." extension))))
 
 ;; Function to toggle vertical split to horizontal / vice versa
 (defun toggle-frame-split ()
