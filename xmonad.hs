@@ -21,7 +21,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import Control.Monad
-import Data.List 
+import Data.List
 
 -- The main function.
 main = xmonad =<<  statusBar myBar myPP  toggleStrutsKey (withUrgencyHook NoUrgencyHook myConfig)
@@ -86,7 +86,7 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
        		  ppLayout = const "",
                   ppTitle = const "",
                   ppUrgent = wrap "~" "~"
-                  }  
+                  }
 
 myLogHook :: X ()
 myLogHook = ewmhDesktopsLogHook <+> fadeInactiveLogHook fadeAmount
@@ -114,7 +114,7 @@ myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
      delta   = 3/100
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-    [ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
+    [ ((modMask .|. controlMask, button1), mouseMoveWindow)
     , ((modMask, button3), (\w -> focus w >> windows W.swapMaster))
     , (((modMask .|. shiftMask), button1), (\w -> focus w >> Flex.mouseResizeWindow w)) ]
 
@@ -138,9 +138,9 @@ myConfig = defaultConfig
 	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
 	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
-        , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >> 
+        , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >>
                                                         spawn "emacsclient -c -a ''") (appName =? "emacs"))
-        , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)  
+        , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
         , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
