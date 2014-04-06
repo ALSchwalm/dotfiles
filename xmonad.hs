@@ -5,6 +5,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.SetWMName
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.FlexibleResize as Flex
@@ -12,7 +13,6 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.GridSelect
 import XMonad.Actions.WindowGo
 import XMonad.Layout.Spacing
-import XMonad.Layout.Grid
 import XMonad.Layout.Tabbed
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -21,7 +21,6 @@ import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import Control.Monad
-import Data.List
 
 -- The main function.
 main = xmonad =<<  statusBar myBar myPP  toggleStrutsKey (withUrgencyHook NoUrgencyHook myConfig)
@@ -97,6 +96,7 @@ myStartup = do
           raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable") (appName =? "google-chrome-stable")
           raiseMaybe (spawn "emacsclient -c -a ''") (appName =? "emacs")
           replicateM_ 3 $ raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (appName =? "lxterminal")
+          setWMName "LG3D"
           spawn "sh ~/.xmonad/run.sh"
 
 -- Key binding to toggle the gap for the bar.
