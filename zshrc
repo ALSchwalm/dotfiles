@@ -49,7 +49,7 @@ alias -s cpp="echo 'Opened in existing emacs' && emacsclient -n"
 alias -s h="echo 'Opened in existing emacs' && emacsclient -n"
 alias -s js="echo 'Opened in existing emacs' && emacsclient -n"
 alias -s hpp="echo 'Opened in existing emacs' && emacsclient -n"
-alias -s py="echo 'Opened in existing emacs' && emacsclient -n"
+alias -s py=python
 
 [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
 setopt HIST_IGNORE_DUPS
