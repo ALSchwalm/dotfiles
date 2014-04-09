@@ -73,6 +73,7 @@
 
 ;; Flycheck mode
 (global-flycheck-mode t)
+(add-hook 'c++-mode-hook (lambda() (setq flycheck-clang-language-standard "c++11")))
 
 ;; Use projectile everywhere
 (projectile-global-mode)
@@ -163,8 +164,7 @@
 ;; Org mode setup
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (add-hook 'org-mode-hook 'visual-line-mode 'append)
-(setq org-pretty-entities t
-      org-latex-create-formula-image-program 'imagemagick
+(setq org-latex-create-formula-image-program 'imagemagick
       org-startup-folded 'showall
       org-src-fontify-natively t
       org-startup-with-inline-images 'inlineimages)
@@ -316,6 +316,18 @@
                    number)))
     (find-file (concat "~/test/test" (number-to-string number) "." extension))))
 
+(defun move-window-split-right (&optional DELTA)
+  (interactive)
+  (let ((DELTA (if (not DELTA) 5 DELTA)))
+    (if (window-in-direction 'right)
+        (shrink-window-horizontally (* -1 DELTA))
+      (shrink-window-horizontally DELTA))))
+
+(defun move-window-split-left (&optional DELTA)
+  (interactive)
+  (let ((DELTA (if (not DELTA) 5 DELTA)))
+    (move-window-split-right (* -1 DELTA))))
+
 ;; Function to toggle vertical split to horizontal / vice versa
 (defun toggle-frame-split ()
   (interactive)
@@ -326,7 +338,6 @@
         (split-window-horizontally)
       (split-window-vertically)) ; gives us a split with the other window twice
     (switch-to-buffer nil)))
-
 
 (defun transpose-windows (arg)
   "Transpose the buffers shown in two windows."
@@ -376,16 +387,17 @@
 (global-set-key (kbd "C-x 4") 'transpose-windows)
 (global-set-key (kbd "M-`") 'project-explorer-toggle)
 (global-set-key (kbd "M-m") 'helm-mini)
+(global-set-key (kbd "M-]") 'move-window-split-right)
+(global-set-key (kbd "M-[") 'move-window-split-left)
 (global-set-key (kbd "C-x C-x") 'cua-exchange-point-and-mark-center)
 
  ;; Key chords
 (key-chord-mode t)
-(key-chord-define-global "jj" 'ace-jump-word-mode)
 (key-chord-define-global "uu" 'undo-tree-visualize)
 (key-chord-define-global "JJ" 'switch-to-prev-buffer)
 (key-chord-define-global "KK" 'switch-to-next-buffer)
-(key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
 (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -394,14 +406,13 @@
  ;; If there is more than one, they won't work right.
  '(apropos-do-all t)
  '(backup-directory-alist (\` (("." \, (concat user-emacs-directory "backups")))))
- '(c-basic-offset 4)
- '(c-default-style "linux")
+ '(c-basic-offset 4 t)
+ '(c-default-style "linux" t)
  '(completion-cycle-threshold t)
  '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(delete-by-moving-to-trash t)
  '(flycheck-clang-include-path (quote ("/usr/include")))
- '(flycheck-clang-language-standard "c++11")
  '(initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
 
 ")
@@ -413,7 +424,7 @@
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat user-emacs-directory "places"))
  '(scroll-conservatively 1000)
- '(solarized-distinct-fringe-background nil)
+ '(solarized-high-contrast-mode-line t)
  '(x-select-enable-clipboard t)
  '(x-select-enable-primary t))
 
