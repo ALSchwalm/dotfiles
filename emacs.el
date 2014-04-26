@@ -18,7 +18,13 @@
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   )
+
+(set-default 'cursor-type 'bar)
+(blink-cursor-mode)
+(set-default 'cursor-in-non-selected-windows nil)
 
 ;; show column and line number
 (column-number-mode 1)
@@ -31,7 +37,6 @@
 
 (require 'powerline)
 (set-face-foreground 'minibuffer-prompt "cyan")
-(blink-cursor-mode)
 
 (setq gc-cons-threshold 1500000)
 (setq delete-by-moving-to-trash t)
@@ -49,6 +54,7 @@
 (add-hook 'c-mode-common-hook
           (lambda ()
 	    (define-key c-mode-base-map (kbd "C-c d") 'disaster)))
+(setq disaster-cxxflags "-std=c++11")
 
 ;; Required for forward-to-word and others
 (require 'misc)
@@ -316,17 +322,17 @@
                    number)))
     (find-file (concat "~/test/test" (number-to-string number) "." extension))))
 
-(defun move-window-split-right (&optional DELTA)
+(defun move-window-split-right (&optional delta)
   (interactive)
-  (let ((DELTA (if (not DELTA) 5 DELTA)))
+  (let ((delta (if (not delta) 5 delta)))
     (if (window-in-direction 'right)
-        (shrink-window-horizontally (* -1 DELTA))
-      (shrink-window-horizontally DELTA))))
+        (shrink-window-horizontally (* -1 delta))
+      (shrink-window-horizontally delta))))
 
-(defun move-window-split-left (&optional DELTA)
+(defun move-window-split-left (&optional delta)
   (interactive)
-  (let ((DELTA (if (not DELTA) 5 DELTA)))
-    (move-window-split-right (* -1 DELTA))))
+  (let ((delta (if (not delta) 5 delta)))
+    (move-window-split-right (* -1 delta))))
 
 ;; Function to toggle vertical split to horizontal / vice versa
 (defun toggle-frame-split ()
@@ -397,6 +403,7 @@
 (key-chord-define-global "JJ" 'switch-to-prev-buffer)
 (key-chord-define-global "KK" 'switch-to-next-buffer)
 (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
+(key-chord-define-global ";;" 'er/expand-region)
 
 
 (custom-set-variables
