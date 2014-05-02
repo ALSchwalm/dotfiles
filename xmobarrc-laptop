@@ -12,7 +12,9 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
        , commands = [ Run Network "wlan0" ["-L","0","-H","500","--normal","green","--high","red"] 30
                     , Run Cpu ["-L","2","-H","50","--normal","green","--high","red", "-w", "3"] 10
                     , Run Memory ["-t","Mem: <usedratio>%", "-H", "80", "-L", "20", "--high", "red", "--low", "green"] 30
-                    , Run Wireless "wlan0" ["-t", "<essid> <quality>%", "-L", "30", "-H", "85", "--low", "red", "--high", "green", "-M", "8"] 300
+                    , Run Wireless "wlan0" ["-t", "<essid> <quality>%", "-L", "30", "-H", "85",
+                                            "--low", "red", "--high", "green", "-M", "8"
+                                            "--nastring", "disconnected"] 300
 		    , Run StdinReader
 		    , Run ThermalZone 0 ["-t", "Temp: <temp>°C", "-L", "60", "-H", "70", "--low", "green", "--high", "red"] 30
 		    , Run BatteryP ["BAT1"]

@@ -1,0 +1,26 @@
+Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Bottom
+       , lowerOnStart = True
+       , persistent = False
+       , hideOnStart = False
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Network "wlan0" ["-L","0","-H","500","--normal","green","--high","red"] 30
+                    , Run Cpu ["-L","2","-H","50","--normal","green","--high","red", "-w", "3"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%", "-H", "80", "-L", "20", "--high", "red", "--low", "green"] 30
+                    , Run Wireless "wlan0" ["-t", "<essid> <quality>% <qualitybar>", "-L", "30", "-H", "85", "--low", "red", "--high", "green", "--nastring", "disconnected"] 300
+		    , Run StdinReader
+		    , Run ThermalZone 0 ["-t", "Temp: <temp>°C", "-L", "60", "-H", "70", "--low", "green", "--high", "red"] 30
+                    , Run Volume "default" "PCM" [] 10
+                    , Run Date "%a %b %_d %Y %r" "date" 10
+                    , Run Uptime [] 60
+                    , Run DiskU [("/", "<used>/<size>")] [] 20
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%cpu% | %thermal0% | Disk: %disku% | <action=amixer -q set PCM toggle>Volume: %default:PCM%</action>| %memory% | %wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %uptime% | <fc=#ee9a00>%date%</fc>"
+       }
