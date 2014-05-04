@@ -83,7 +83,7 @@ myBar = "xmobar"
 myPP :: PP
 myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
        		  ppLayout = const "",
-                  ppTitle = const "",
+                  ppTitle = xmobarColor "#ee9a00" "" . shorten 50,
                   ppUrgent = wrap "~" "~"
                   }
 

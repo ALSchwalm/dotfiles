@@ -13,7 +13,7 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                     , Run Cpu ["-L","2","-H","50","--normal","green","--high","red", "-w", "3"] 10
                     , Run Memory ["-t","Mem: <usedratio>%", "-H", "80", "-L", "20", "--high", "red", "--low", "green"] 30
                     , Run Wireless "wlan0" ["-t", "<essid> <quality>%", "-L", "30", "-H", "85",
-                                            "--low", "red", "--high", "green", "-M", "8"
+                                            "--low", "red", "--high", "green", "-M", "8",
                                             "--nastring", "disconnected"] 300
 		    , Run StdinReader
 		    , Run ThermalZone 0 ["-t", "Temp: <temp>°C", "-L", "60", "-H", "70", "--low", "green", "--high", "red"] 30
@@ -31,5 +31,5 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %thermal0% | <action=amixer -q set Master toggle>Volume: %default:Master%</action>| %memory% | %wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %battery% | <fc=#ee9a00>%date%</fc>"
+       , template = "%StdinReader% }{ %cpu% | %thermal0% | <action=amixer -q set Master toggle>Volume: %default:Master%</action>| %memory% | Wireless: %wlan0wi% | %battery% | <fc=#ee9a00>%date%</fc>"
        }
