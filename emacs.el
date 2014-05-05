@@ -309,9 +309,9 @@
   (interactive)
   (setq default (concat "*." (file-name-extension (buffer-file-name))))
   (setq pattern (read-string (concat "Generate tags: ")
-                                      default))
-  (shell-command (concat "find " (projectile-project-root) " -name \"" pattern
-                   "\" -print | etags -")))
+                             default))
+  (let ((default-directory (projectile-project-root)))
+    (shell-command (format "find %s -type f -name \"%s\" | etags -" default-directory pattern))))
 
 (defun test-file (&optional number)
   (interactive "P")
