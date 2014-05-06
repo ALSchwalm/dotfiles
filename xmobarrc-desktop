@@ -15,12 +15,11 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                     , Run Wireless "wlan0" ["-t", "<essid> <quality>% <qualitybar>", "-L", "30", "-H", "85", "--low", "red", "--high", "green", "--nastring", "disconnected"] 300
 		    , Run StdinReader
 		    , Run ThermalZone 0 ["-t", "Temp: <temp>°C", "-L", "60", "-H", "70", "--low", "green", "--high", "red"] 30
-                    , Run Volume "default" "PCM" [] 10
                     , Run Date "%a %b %_d %Y %r" "date" 10
                     , Run Uptime [] 60
                     , Run DiskU [("/", "<used>/<size>")] [] 20
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %thermal0% | Disk: %disku% | <action=amixer -q set PCM toggle>Volume: %default:PCM%</action>| %memory% | %wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %uptime% | <fc=#ee9a00>%date%</fc>"
+       , template = "%cpu% | %thermal0% | Disk: %disku% | %memory% | %wlan0% }%StdinReader%{ Wireless: %wlan0wi% | %uptime% | <fc=#ee9a00>%date%</fc>"
        }
