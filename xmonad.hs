@@ -2,7 +2,6 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
@@ -87,10 +86,6 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
                   ppUrgent = wrap "~" "~"
                   }
 
-myLogHook :: X ()
-myLogHook = ewmhDesktopsLogHook <+> fadeInactiveLogHook fadeAmount
-     where fadeAmount = 0.8
-
 myStartup :: X ()
 myStartup = do
           raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable") (appName =? "google-chrome-stable")
@@ -124,7 +119,6 @@ myConfig = defaultConfig
         , layoutHook = avoidStruts $ myLayouts
         , startupHook = myStartup
         , handleEventHook = ewmhDesktopsEventHook
-        , logHook = myLogHook
         , borderWidth = 3
 	, focusedBorderColor = "#BBBBBB"
 	, normalBorderColor = "#000000"
@@ -143,6 +137,8 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
+        , ((mod4Mask , xK_F1),              safeSpawn "brightness" ["-0.1"])
+        , ((mod4Mask , xK_F2),              safeSpawn "brightness" ["+0.1"])
         , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
         , ((0, 0x1008ff02),                 safeSpawn "brightness" ["+0.1"])
         , ((mod4Mask , xK_r),               spawn "rotate toggle right")
