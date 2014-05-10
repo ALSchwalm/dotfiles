@@ -3,6 +3,7 @@
 .emacs.desktop.lock
 %backup%~
 emacs.d/url/
+emacs.d/project-explorer-cache/
 
 ###################
 # Autocomplete history
