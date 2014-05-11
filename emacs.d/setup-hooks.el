@@ -26,4 +26,6 @@
                                 (setq truncate-lines nil)
                                 (setq word-wrap t)))
 
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
 (provide 'setup-hooks)

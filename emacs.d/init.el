@@ -42,6 +42,7 @@
      smex
      solarized-theme
      undo-tree
+     web-mode
      yasnippet
      )))
 

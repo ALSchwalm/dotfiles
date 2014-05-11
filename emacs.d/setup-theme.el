@@ -31,6 +31,9 @@
 ;; linux style indents
 (setq c-default-style "linux"
       c-basic-offset 4)
+(setq web-mode-markup-indent-offset 4)
+(setq web-mode-css-indent-offset 4)
+(setq web-mode-code-indent-offset 4)
 
 ;; spaces instead of tabs
 (setq-default indent-tabs-mode nil)
