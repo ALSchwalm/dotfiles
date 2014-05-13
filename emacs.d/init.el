@@ -66,6 +66,7 @@
 (require 'setup-projectile)
 (require 'setup-autocomplete)
 (require 'setup-ido)
+(require 'setup-hooks)
 (require 'my-misc)
 (require 'functions)
 
