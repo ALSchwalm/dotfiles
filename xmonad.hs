@@ -11,7 +11,6 @@ import XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.GridSelect
 import XMonad.Actions.WindowGo
-import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -99,7 +98,6 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_y)
 
 myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
             tiled |||
-            smartSpacing 10 tiled |||
             noBorders simpleTabbedBottom |||
             Full
   where
