@@ -123,4 +123,8 @@
       (kill-buffer (pe/get-current-project-explorer-buffer))
     (project-explorer-open)))
 
+(defun duplicate-buffer ()
+  (interactive)
+  (set-window-buffer (next-window) (current-buffer)))
+
 (provide 'functions)

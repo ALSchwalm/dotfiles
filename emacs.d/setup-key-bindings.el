@@ -28,6 +28,7 @@
 (global-set-key (kbd "M-]") 'move-window-split-right)
 (global-set-key (kbd "M-[") 'move-window-split-left)
 (global-set-key (kbd "C-x C-x") 'cua-exchange-point-and-mark-center)
+(global-set-key (kbd "C-x d") 'duplicate-buffer)
 
  ;; Key chords
 (key-chord-mode t)
