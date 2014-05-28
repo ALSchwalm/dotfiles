@@ -52,17 +52,18 @@
     (find-file (concat "~/test/test" (number-to-string number) "." extension))))
 
 ;; Provide a tiling window manager style window movement
-(defun move-window-split-right (&optional delta)
+(defun expand-window-split (&optional delta)
   (interactive)
   (let ((delta (if (not delta) 5 delta)))
-    (if (window-in-direction 'right)
-        (shrink-window-horizontally (* -1 delta))
-      (shrink-window-horizontally delta))))
+    (cond ((window-in-direction 'right)  (shrink-window-horizontally (* -1 delta)))
+          ((window-in-direction 'left)   (shrink-window-horizontally delta))
+          ((window-in-direction 'above)  (enlarge-window (* -1 delta)))
+          ((window-in-direction 'below)  (enlarge-window delta)))))
 
-(defun move-window-split-left (&optional delta)
+(defun shrink-window-split (&optional delta)
   (interactive)
   (let ((delta (if (not delta) 5 delta)))
-    (move-window-split-right (* -1 delta))))
+    (expand-window-split (* -1 delta))))
 
 ;; Function to toggle vertical split to horizontal / vice versa
 (defun toggle-frame-split ()
@@ -77,7 +78,7 @@
 
 (defun transpose-windows (arg)
   "Transpose the buffers shown in two windows."
-  (interactive "p")
+  (interactive)
   (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
     (while (/= arg 0)
       (let ((this-win (window-buffer))
