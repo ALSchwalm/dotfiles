@@ -2,7 +2,7 @@
 (global-set-key (read-kbd-macro "<C-backspace>") 'backward-delete-word)
 (global-set-key (read-kbd-macro "M-n") 'scroll-up)
 (global-set-key (read-kbd-macro "M-p") 'scroll-down)
-(global-set-key (read-kbd-macro "<C-tab>" 'other-window)
+(global-set-key (read-kbd-macro "<C-tab>") 'other-window)
 (global-set-key (read-kbd-macro "C-x C-f") 'projectile-find-file-with-fallback)
 (global-set-key (read-kbd-macro "RET") 'newline-and-indent)
 (global-set-key (read-kbd-macro "M-x") 'smex)
