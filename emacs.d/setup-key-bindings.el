@@ -36,6 +36,7 @@
 (key-chord-define-global "JJ" 'switch-to-prev-buffer)
 (key-chord-define-global "KK" 'switch-to-next-buffer)
 (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
+(key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
 (key-chord-define-global ";;" 'er/expand-region)
 
 ;; Tree undo

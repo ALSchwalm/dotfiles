@@ -36,6 +36,7 @@
      ido-vertical-mode
      key-chord
      magit
+     multiple-cursors
      project-explorer
      projectile
      slime
