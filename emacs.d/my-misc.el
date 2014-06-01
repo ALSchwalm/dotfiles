@@ -16,6 +16,9 @@
 ;; Always follow symbolic links to version controlled files
 (setq vc-follow-symlinks t)
 
+;; Show keystrokes in progress
+(setq echo-keystrokes 0.1)
+
 ;; disaster for disassembly
 (require 'disaster)
 (add-hook 'c-mode-common-hook
@@ -53,6 +56,9 @@
 ;; Simple generic browser
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program (getenv "BROWSER"))
+
+;; Electric pair mode
+(electric-pair-mode)
 
 ;; Subword mode for subword-backwords
 (global-subword-mode)

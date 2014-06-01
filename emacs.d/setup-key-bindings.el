@@ -4,7 +4,7 @@
 (global-set-key (read-kbd-macro "M-p") 'scroll-down)
 (global-set-key (read-kbd-macro "<C-tab>") 'other-window)
 (global-set-key (read-kbd-macro "C-x C-f") 'projectile-find-file-with-fallback)
-(global-set-key (read-kbd-macro "RET") 'newline-and-indent)
+(global-set-key (read-kbd-macro "RET") 'new-line-dwim)
 (global-set-key (read-kbd-macro "M-x") 'smex)
 (global-set-key (read-kbd-macro "C-a") 'back-to-indentation-or-beginning)
 (global-set-key (read-kbd-macro "M-/") 'hippie-expand)
