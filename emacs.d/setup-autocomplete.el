@@ -4,6 +4,9 @@
 (ac-config-default)
 (add-to-list 'ac-modes 'rust-mode)
 
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+
 (require 'yasnippet)
 (yas/global-mode t)
 

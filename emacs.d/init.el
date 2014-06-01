@@ -22,6 +22,7 @@
      auto-complete
      auto-complete-c-headers
      browse-kill-ring
+     company
      dash
      disaster
      expand-region
