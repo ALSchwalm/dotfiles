@@ -28,4 +28,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
+;; Add search hotkey to c++-mode
+(add-hook 'c++-mode-hook (lambda ()
+                           (local-set-key (read-kbd-macro "<f1>") 'search-cpp-symbol-at-point)))
+
 (provide 'setup-hooks)

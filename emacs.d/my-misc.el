@@ -50,6 +50,10 @@
 (require 'project-explorer)
 (setq pe/width 30)
 
+;; Simple generic browser
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program (getenv "BROWSER"))
+
 ;; Subword mode for subword-backwords
 (global-subword-mode)
 

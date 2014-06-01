@@ -27,6 +27,22 @@
       (er/expand-region 1))
   (mc/mark-next-like-this 1))
 
+(defun search-cpp-docs (&optional search)
+  "Search en.cppreference.com for a given string"
+  (interactive)
+  (let ((search (if (not search)
+                   (read-from-minibuffer "Search for: ")
+                 search))
+        (base "http://en.cppreference.com/mwiki/index.php?search="))
+    (browse-url (concat base search))
+  (message (concat "Search executed using " browse-url-generic-program))))
+
+(require 'thingatpt)
+(defun search-cpp-symbol-at-point ()
+  (interactive)
+  (let ((search (thing-at-point 'symbol)))
+    (search-cpp-docs search)))
+
 (defun sudo-edit (&optional arg)
   (interactive "p")
   (if (or arg (not buffer-file-name))
