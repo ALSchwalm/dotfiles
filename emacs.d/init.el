@@ -20,9 +20,9 @@
   (packages-install
    '(magit
      auto-complete
-     auto-complete-c-headers
      browse-kill-ring
      company
+     company-c-headers
      dash
      disaster
      expand-region
