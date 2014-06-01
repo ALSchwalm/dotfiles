@@ -40,6 +40,11 @@
         (indent-for-tab-command)))
     (indent-for-tab-command)))
 
+(defun google-cpp-reference-verbose ()
+  (interactive)
+  (google-cpp-reference)
+  (message (concat "Search executed using " browse-url-generic-program)))
+
 (defun sudo-edit (&optional arg)
   (interactive "p")
   (if (or arg (not buffer-file-name))

@@ -30,6 +30,6 @@
 
 ;; Add search hotkey to c++-mode
 (add-hook 'c++-mode-hook (lambda ()
-                           (local-set-key (read-kbd-macro "<f1>") 'google-cpp-reference)))
+                           (local-set-key (read-kbd-macro "<f1>") 'google-cpp-reference-verbose)))
 
 (provide 'setup-hooks)
