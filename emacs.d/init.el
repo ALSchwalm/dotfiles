@@ -38,6 +38,7 @@
      key-chord
      magit
      multiple-cursors
+     paredit
      project-explorer
      projectile
      slime

@@ -32,4 +32,6 @@
 (add-hook 'c++-mode-hook (lambda ()
                            (local-set-key (read-kbd-macro "<f1>") 'search-cpp-symbol-at-point)))
 
+(add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode 1)))
+
 (provide 'setup-hooks)
