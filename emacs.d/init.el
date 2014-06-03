@@ -31,13 +31,14 @@
      flycheck
      haskell-mode
      git-gutter-fringe
-     highlight-symbol
      ido-ubiquitous
      ido-vertical-mode
      key-chord
      magit
      multiple-cursors
      paredit
+     perspective
+     persp-projectile
      project-explorer
      projectile
      slime
