@@ -14,16 +14,6 @@
 
 (package-initialize)
 
-(require 'dash)
-
-(defun packages-install (packages)
-  (--each packages
-    (when (not (package-installed-p it))
-      (package-install it)))
-  (delete-other-windows))
-
-;;; On-demand installation of packages
-
 (defun require-package (package &optional min-version no-refresh)
   "Install given PACKAGE, optionally requiring MIN-VERSION.
 If NO-REFRESH is non-nil, the available package lists will not be
@@ -35,5 +25,18 @@ re-downloaded in order to locate PACKAGE."
       (progn
         (package-refresh-contents)
         (require-package package min-version t)))))
+
+(require-package 'dash)
+(require 'dash)
+
+(defun packages-install (packages)
+  (--each packages
+    (when (not (package-installed-p it))
+      (package-install it)))
+  (delete-other-windows))
+
+;;; On-demand installation of packages
+
+
 
 (provide 'setup-package)
