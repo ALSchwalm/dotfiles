@@ -31,7 +31,6 @@
      flycheck
      haskell-mode
      git-gutter-fringe
-     helm
      highlight-symbol
      ido-ubiquitous
      ido-vertical-mode

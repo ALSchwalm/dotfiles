@@ -34,4 +34,10 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode 1)))
 
+;; Auto-update smex
+(defun smex-update-after-load (unused)
+  (when (boundp 'smex-cache)
+    (smex-update)))
+(add-hook 'after-load-functions 'smex-update-after-load)
+
 (provide 'setup-hooks)

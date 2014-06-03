@@ -24,7 +24,6 @@
 (global-set-key (read-kbd-macro "C-x 5") 'toggle-frame-split)
 (global-set-key (read-kbd-macro "C-x 4") 'transpose-windows)
 (global-set-key (read-kbd-macro "M-`") 'project-explorer-toggle)
-(global-set-key (read-kbd-macro "M-m") 'helm-mini)
 (global-set-key (read-kbd-macro "M-]") 'expand-window-split)
 (global-set-key (read-kbd-macro "M-[") 'shrink-window-split)
 (global-set-key (read-kbd-macro "C-x C-x") 'cua-exchange-point-and-mark-center)

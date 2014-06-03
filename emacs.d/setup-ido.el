@@ -5,12 +5,12 @@
       ido-case-fold nil
       ido-auto-merge-work-directories-length -1
       ido-use-filename-at-point nil
+      ido-use-faces nil
       ido-max-prospects 10)
 (ido-mode t)
 
 (require 'flx-ido)
 (flx-ido-mode t)
-(setq ido-use-faces nil)
 
 (require 'ido-vertical-mode)
 (ido-vertical-mode)

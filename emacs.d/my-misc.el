@@ -39,6 +39,7 @@
 ;; completion for M-x
 (require 'smex)
 (smex-initialize)
+(smex-auto-update nil)
 
 ;; Move around with shift+arrow
 (windmove-default-keybindings)
