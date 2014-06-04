@@ -4,6 +4,7 @@
 %backup%~
 emacs.d/url/
 emacs.d/project-explorer-cache/
+emacs.d/history
 
 ###################
 # Autocomplete history
@@ -24,7 +25,7 @@ backups/
 elpa/
 
 ##################
-# Projectile 
+# Projectile
 ##################
 *.eld
 *.cache

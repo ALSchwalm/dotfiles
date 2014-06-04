@@ -67,6 +67,11 @@
 ;; Subword mode for subword-backwords
 (global-subword-mode)
 
+;; Save a list of recent files visited. (open recent file with C-x f)
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-saved-items 100) ;; just 20 is too recent
+
 ;;Put backups/autosave in temp directory
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))

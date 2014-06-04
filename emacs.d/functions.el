@@ -157,4 +157,11 @@
   (interactive)
   (set-window-buffer (next-window) (current-buffer)))
 
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
+    (when file
+      (find-file file))))
+
 (provide 'functions)

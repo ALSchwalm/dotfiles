@@ -28,6 +28,7 @@
 (global-set-key (read-kbd-macro "M-[") 'shrink-window-split)
 (global-set-key (read-kbd-macro "C-x C-x") 'cua-exchange-point-and-mark-center)
 (global-set-key (read-kbd-macro "C-x d") 'duplicate-buffer)
+(global-set-key (read-kbd-macro "C-x f") 'recentf-ido-find-file)
 
  ;; Key chords
 (key-chord-mode t)
