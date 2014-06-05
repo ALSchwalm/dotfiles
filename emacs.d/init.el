@@ -54,9 +54,6 @@
    (package-refresh-contents)
    (init--install-packages)))
 
-;; copy/past/undo hotkeys
-(cua-mode t)
-
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
