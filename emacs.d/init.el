@@ -38,7 +38,6 @@
      multiple-cursors
      paredit
      perspective
-     persp-projectile
      project-explorer
      projectile
      slime

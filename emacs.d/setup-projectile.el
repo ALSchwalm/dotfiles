@@ -31,6 +31,5 @@
   (let ((default-directory (projectile-project-root)))
     (shell-command (format "find %s -type f -name \"%s\" | etags -" default-directory pattern))))
 
-(require 'persp-projectile)
 
 (provide 'setup-projectile)
