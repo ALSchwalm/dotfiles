@@ -164,4 +164,16 @@
     (when file
       (find-file file))))
 
+(defun commment-indent-buffer ()
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward comment-start)
+      (backward-char (length comment-start))
+      (let ((start (point)))
+        (back-to-indentation)
+        (if (not (eq (point) start))
+            (comment-indent)))
+      (forward-char (length comment-start)))))
+
 (provide 'functions)
