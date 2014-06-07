@@ -164,16 +164,20 @@
     (when file
       (find-file file))))
 
-(defun commment-indent-buffer ()
+(defun commment-indent-region ()
+  "Indent all comments in the region to the comment-column. Comments
+on their own line will not be indented."
   (interactive)
   (save-excursion
-    (beginning-of-buffer)
-    (while (re-search-forward comment-start)
+    (if (> (point) (mark))
+        (exchange-point-and-mark))
+    (while (re-search-forward comment-start (mark) t)
       (backward-char (length comment-start))
       (let ((start (point)))
         (back-to-indentation)
         (if (not (eq (point) start))
             (comment-indent)))
-      (forward-char (length comment-start)))))
+      (forward-char (length comment-start))))
+  (deactivate-mark))
 
 (provide 'functions)
