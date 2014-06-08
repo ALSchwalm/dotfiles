@@ -27,6 +27,7 @@
 
 ;; Highlight current line
 (global-hl-line-mode)
+(make-variable-buffer-local 'global-hl-line-mode)
 
 ;; linux style indents
 (setq c-default-style "linux"

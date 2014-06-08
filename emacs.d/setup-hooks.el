@@ -15,7 +15,9 @@
   (interactive)
   (ansi-term "zsh" "localhost"))
 
-(add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
+(add-hook 'term-mode-hook (lambda()
+                            (setq yas-dont-activate t)
+                            (setq global-hl-line-mode nil)))
 
 ;; Remove whitespace
 (add-hook 'before-save-hook 'delete-whitespace-and-indent)
