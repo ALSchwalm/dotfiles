@@ -27,7 +27,7 @@
 (global-set-key (read-kbd-macro "M-`") 'project-explorer-toggle)
 (global-set-key (read-kbd-macro "M-]") 'expand-window-split)
 (global-set-key (read-kbd-macro "M-[") 'shrink-window-split)
-(global-set-key (read-kbd-macro "C-x C-x") 'cua-exchange-point-and-mark-center)
+(global-set-key (read-kbd-macro "C-x C-x") 'exchange-point-and-mark-center)
 (global-set-key (read-kbd-macro "C-x d") 'duplicate-buffer)
 (global-set-key (read-kbd-macro "C-x f") 'recentf-ido-find-file)
 

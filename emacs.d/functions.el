@@ -1,3 +1,5 @@
+(require 'dash)
+
 (defun backward-word-stop-eol (arg)
   (interactive "p")
   (let ((start (point)))
@@ -135,9 +137,10 @@
   (message "Refreshed open files"))
 
 ;; Shorthand for C-x C-x then C-l
-(defun cua-exchange-point-and-mark-center ()
+(defun exchange-point-and-mark-center ()
   (interactive)
-  (cua-exchange-point-and-mark ())
+  (exchange-point-and-mark ())
+  (deactivate-mark)
   (recenter-top-bottom))
 
 (defun delete-whitespace-and-indent ()
@@ -181,5 +184,21 @@ on their own line will not be indented."
             (comment-indent)))
       (forward-char (length comment-start))))
   (deactivate-mark))
+
+(require 'find-file "find-file")
+(defun find-other-buffer ()
+  "ff-find-other-file with buffers"
+   (let ((other-buffer nil)
+        (extension-list (cadr (-first (lambda (pair)
+                                        (string= (car pair) (format "\\.%s\\'" (file-name-extension (buffer-file-name)))))
+                                      cc-other-file-alist))))
+    (-first (lambda (buffer)
+              (-first (lambda (extension)
+                        (if (string-match
+                             (concat (file-name-sans-extension (buffer-name)) extension)
+                             (buffer-name buffer))
+                            (setq other-buffer buffer))) extension-list))
+            (buffer-list))
+    other-buffer))
 
 (provide 'functions)
