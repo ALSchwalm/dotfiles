@@ -10,9 +10,11 @@
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
   (interactive "p")
-  (if (eq (point) (line-beginning-position))
-      (backward-delete-char 1)
-    (delete-region (point) (progn (backward-word-stop-eol arg) (point)))))
+  (if  (not (paredit-mode))
+      (if (eq (point) (line-beginning-position))
+          (backward-delete-char 1)
+        (delete-region (point) (progn (backward-word-stop-eol arg) (point))))
+    (paredit-backward-kill-word)))
 
 (defun back-to-indentation-or-beginning ()
   (interactive)
