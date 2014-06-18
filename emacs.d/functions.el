@@ -12,7 +12,7 @@
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
   (interactive "p")
-  (if  (not (paredit-mode))
+  (if  (not paredit-mode)
       (if (eq (point) (line-beginning-position))
           (backward-delete-char 1)
         (delete-region (point) (progn (backward-word-stop-eol arg) (point))))

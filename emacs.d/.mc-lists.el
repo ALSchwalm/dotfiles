@@ -8,6 +8,7 @@
         c-electric-delete-forward
         cua-delete-region
         indent-for-tab-command
+        paredit-forward-delete
         sgml-slash
         yas-expand
         ))
