@@ -36,6 +36,10 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode t)))
 
+(eval-after-load "paredit"
+'(progn
+   (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)))
+
 ;; Auto-update smex
 (defun smex-update-after-load (unused)
   (when (boundp 'smex-cache)

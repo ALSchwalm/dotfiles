@@ -9,6 +9,11 @@
         (narrow-to-region start (point)))
       (subword-backward arg))))
 
+(defun paredit-beginning-of-sexp ()
+  (interactive)
+  (paredit-close-round)
+  (beginning-of-sexp))
+
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
   (interactive "p")
