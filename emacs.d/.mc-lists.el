@@ -7,6 +7,7 @@
         backward-delete-word
         c-electric-delete-forward
         cua-delete-region
+        eval-last-sexp
         indent-for-tab-command
         paredit-forward-delete
         sgml-slash
