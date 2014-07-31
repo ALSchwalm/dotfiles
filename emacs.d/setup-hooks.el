@@ -30,9 +30,11 @@
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
-;; Spell checking in comments
-(add-hook 'prog-mode-hook (lambda ()
-                                (flyspell-prog-mode)))
+;; Spell checking in text-based modes
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode -1))))
 
 ;; Add search hotkey to c++-mode
 (add-hook 'c++-mode-hook (lambda ()
