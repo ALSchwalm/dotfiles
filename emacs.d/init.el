@@ -14,6 +14,7 @@
 
 ;; Setup packages
 (require 'setup-package)
+(require 'use-package)
 
 ;; Install extensions if they're missing
 (defun init--install-packages ()

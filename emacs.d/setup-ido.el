@@ -1,25 +1,28 @@
 ;; ido/flx/ido-ubiquitous
-(require 'ido)
-(setq ido-enable-prefix nil
-      ido-enable-flex-matching t
-      ido-case-fold nil
-      ido-auto-merge-work-directories-length -1
-      ido-use-filename-at-point nil
-      ido-use-faces nil
-      ido-max-prospects 10)
-(ido-mode t)
+(use-package ido
+  :init (ido-mode t)
+  :config
+  (progn
+    (setq ido-enable-prefix nil
+          ido-enable-flex-matching t
+          ido-case-fold nil
+          ido-auto-merge-work-directories-length -1
+          ido-use-filename-at-point nil
+          ido-use-faces nil
+          ido-max-prospects 10)
 
-(require 'flx-ido)
-(flx-ido-mode t)
+    (defun ido-define-keys()
+      (define-key ido-completion-map (kbd "C-f") 'ido-enter-find-file))
+    (add-hook 'ido-setup-hook 'ido-define-keys)))
 
-(require 'ido-vertical-mode)
-(ido-vertical-mode)
+(use-package flx-ido
+  :init (flx-ido-mode t))
 
-(require 'ido-ubiquitous)
-(ido-ubiquitous-mode t)
+(use-package ido-vertical-mode
+  :init (ido-vertical-mode))
 
-(defun ido-define-keys()
-  (define-key ido-completion-map (kbd "C-f") 'ido-enter-find-file))
-(add-hook 'ido-setup-hook 'ido-define-keys)
+
+(use-package ido-ubiquitous
+  :init (ido-ubiquitous-mode t))
 
 (provide 'setup-ido)

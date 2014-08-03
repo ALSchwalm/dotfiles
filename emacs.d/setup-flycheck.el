@@ -1,8 +1,14 @@
 ;; Flycheck mode
-(global-flycheck-mode t)
+(use-package flycheck
+  :idle (global-flycheck-mode t)
+  :config
+  (progn
+    (setq flycheck-idle-change-delay 2
+          flycheck-check-syntax-automatically '(save new-line mode-enabled)
+          flycheck-clang-include-path (quote ("/usr/include")))
 
-;; Best C++
-(add-hook 'c++-mode-hook (lambda() (setq flycheck-clang-language-standard "c++11")))
-(setq flycheck-clang-include-path (quote ("/usr/include")))
+    ;; Enable better c++
+    (add-hook 'c++-mode-hook (lambda()
+                               (setq flycheck-clang-language-standard "c++11")))))
 
 (provide 'setup-flycheck)

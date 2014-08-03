@@ -1,5 +1,10 @@
-;; Use projectile everywhere
-(projectile-global-mode)
+
+(use-package projectile
+  :init (projectile-global-mode)
+  :bind
+  (((read-kbd-macro "C-x C-f") . projectile-find-file-with-fallback)
+   ((read-kbd-macro "<M-f1>") . projectile-ff-find-other-file)
+   ((read-kbd-macro "<f5>") . projectile-compile-with-fallback)))
 
 ;; Fallback to ido-find-file when not in a project
 (defun projectile-find-file-with-fallback ()

@@ -33,6 +33,13 @@
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
    1 2 nil (3 . 4)))
 
+;; Don't allow me to kill the scratch
+(defadvice kill-buffer (around kill-buffer-around-advice activate)
+  (let ((buffer-to-kill (ad-get-arg 0)))
+    (if (equal buffer-to-kill "*scratch*")
+        (bury-buffer)
+      ad-do-it)))
+
 ;; Add expand region
 (require 'expand-region)
 
@@ -47,27 +54,28 @@
 ;; Move around with shift+arrow
 (windmove-default-keybindings)
 
-(require 'undo-tree)
-(global-undo-tree-mode)
-
-;; Keep region while undoing in region
-(defadvice undo-tree-undo (around keep-region activate)
-  (if (use-region-p)
-      (let ((m (set-marker (make-marker) (mark)))
-            (p (set-marker (make-marker) (point))))
-        ad-do-it
-        (goto-char p)
-        (set-mark m)
-        (set-marker p nil)
-        (set-marker m nil))
-    ad-do-it))
+(use-package undo-tree
+  :init (global-undo-tree-mode)
+  :config
+  (progn
+    ;; Keep region while undoing in region
+    (defadvice undo-tree-undo (around keep-region activate)
+      (if (use-region-p)
+          (let ((m (set-marker (make-marker) (mark)))
+                (p (set-marker (make-marker) (point))))
+            ad-do-it
+            (goto-char p)
+            (set-mark m)
+            (set-marker p nil)
+            (set-marker m nil))
+        ad-do-it))))
 
 ;; Set browse-kill-ring defaults
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 
-(require 'project-explorer)
-(setq pe/width 30)
+(use-package project-explorer
+  :config (setq pe/width 30))
 
 ;; Simple generic browser
 (setq browse-url-browser-function 'browse-url-generic
@@ -80,9 +88,9 @@
 (global-subword-mode)
 
 ;; Save a list of recent files visited. (open recent file with C-x f)
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-saved-items 100) ;; just 20 is too recent
+(use-package recentf
+  :init (recentf-mode 1)
+  :config (setq recentf-max-saved-items 100)) ;; just 20 is too recent
 
 ;;Put backups/autosave in temp directory
 (setq backup-directory-alist
