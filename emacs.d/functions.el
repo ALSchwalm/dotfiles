@@ -114,9 +114,10 @@
       (split-window-vertically)) ; gives us a split with the other window twice
     (switch-to-buffer nil)))
 
-(defun transpose-windows (arg)
+(defun transpose-windows (&optional arg)
   "Transpose the buffers shown in two windows."
   (interactive)
+  (setq arg (or arg 1))
   (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
     (while (/= arg 0)
       (let ((this-win (window-buffer))
@@ -165,7 +166,8 @@
 
 (defun duplicate-buffer ()
   (interactive)
-  (set-window-buffer (next-window) (current-buffer)))
+  (delete-other-windows)
+  (split-window-right))
 
 (defun recentf-ido-find-file ()
   "Find a recent file using Ido."

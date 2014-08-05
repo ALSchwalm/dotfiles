@@ -19,6 +19,9 @@
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
 
+(use-package idle-highlight-mode
+  :init (idle-highlight-mode))
+
 ;; disaster for disassembly
 (require 'disaster)
 (add-hook 'c-mode-common-hook
@@ -75,7 +78,8 @@
 (browse-kill-ring-default-keybindings)
 
 (use-package project-explorer
-  :config (setq pe/width 30))
+  :config (setq pe/width 30)
+  :bind (((read-kbd-macro "M-`") . project-explorer-toggle)))
 
 ;; Simple generic browser
 (setq browse-url-browser-function 'browse-url-generic
@@ -90,7 +94,10 @@
 ;; Save a list of recent files visited. (open recent file with C-x f)
 (use-package recentf
   :init (recentf-mode 1)
-  :config (setq recentf-max-saved-items 100)) ;; just 20 is too recent
+
+  ;; just 20 is too recent
+  :config (setq recentf-max-saved-items 100)
+  :bind (((read-kbd-macro "C-x f") . recentf-ido-find-file)))
 
 ;;Put backups/autosave in temp directory
 (setq backup-directory-alist
@@ -100,9 +107,17 @@
 
 (require 'yank-auto-indent)
 
+(use-package flex-isearchq
+  :init (global-flex-isearch-mode)
+  :bind (((read-kbd-macro "C-s") . flex-isearch-forward)
+         ((read-kbd-macro "C-r") . flex-isearch-backward)))
+
 ;; Save cursor position between sessions
-(require 'saveplace)
-(setq-default save-place t)
+(use-package saveplace
+  :config (setq-default save-place t))
+
+(use-package focus
+  :bind (((read-kbd-macro "<f11>") . focus-toggle-focus)))
 
 (setq mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
 (setq mouse-yank-at-point t)

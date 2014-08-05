@@ -10,10 +10,6 @@
 (global-set-key (read-kbd-macro "M-/") 'hippie-expand)
 (global-set-key (read-kbd-macro "C-x C-b") 'ibuffer-other-window)
 (global-set-key (read-kbd-macro "C-c C-t") 'ansi-term-default)
-(global-set-key (read-kbd-macro "C-s") 'isearch-forward-regexp)
-(global-set-key (read-kbd-macro "C-r") 'isearch-backward-regexp)
-(global-set-key (read-kbd-macro "C-M-s") 'isearch-forward)
-(global-set-key (read-kbd-macro "C-M-r") 'isearch-backward)
 (global-set-key (read-kbd-macro "C-;") 'ace-jump-word-mode)
 (global-set-key (read-kbd-macro "C-'") 'er/expand-region)
 (global-set-key (read-kbd-macro "C--") 'er/contract-region)
@@ -21,16 +17,11 @@
 (global-set-key (read-kbd-macro "M-.") 'sm-find-tag)
 (global-set-key (read-kbd-macro "C-x 5") 'toggle-frame-split)
 (global-set-key (read-kbd-macro "C-x 4") 'transpose-windows)
-(global-set-key (read-kbd-macro "M-`") 'project-explorer-toggle)
 (global-set-key (read-kbd-macro "M-]") 'expand-window-split)
 (global-set-key (read-kbd-macro "M-[") 'shrink-window-split)
 (global-set-key (read-kbd-macro "C-x C-x") 'exchange-point-and-mark-center)
 (global-set-key (read-kbd-macro "C-x d") 'duplicate-buffer)
-(global-set-key (read-kbd-macro "C-x f") 'recentf-ido-find-file)
 (global-set-key (read-kbd-macro "C-\\") 'hs-toggle-hiding)
-
-(require 'focus)
-(global-set-key (read-kbd-macro "<f11>") 'focus-toggle-focus)
 
  ;; Key chords
 (key-chord-mode t)

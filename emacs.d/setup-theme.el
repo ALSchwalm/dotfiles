@@ -1,7 +1,11 @@
 ;; Load theme
 (require 'solarized-dark-theme)
 
+(setq default-frame-alist '((font . "Source Code Pro-11")
+                            (vertical-scroll-bars . nil)))
+
 (require 'powerline)
+(setq powerline-arrow-shape 'arrow14) ;; best for small fonts
 (set-face-foreground 'minibuffer-prompt "cyan")
 (setq solarized-high-contrast-mode-line t)
 (setq custom-enabled-themes (quote (solarized-dark)))

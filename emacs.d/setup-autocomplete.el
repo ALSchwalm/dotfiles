@@ -22,8 +22,7 @@
 (add-to-list 'ac-modes 'rust-mode)
 (add-to-list 'ac-modes 'd-mode)
 
-(use-package yasnippet
-  :idle  (yas-reload-all))
+(require 'yasnippet)
 (yas-global-mode 1)
 
 (provide 'setup-autocomplete)

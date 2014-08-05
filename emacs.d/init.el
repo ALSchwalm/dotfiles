@@ -27,6 +27,7 @@
      dash
      disaster
      expand-region
+     flex-isearch
      flx
      flx-ido
      flycheck
