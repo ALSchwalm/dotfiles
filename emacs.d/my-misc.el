@@ -23,18 +23,22 @@
   :init (idle-highlight-mode))
 
 ;; disaster for disassembly
-(require 'disaster)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-	    (define-key c-mode-base-map (kbd "C-c d") 'disaster)))
-(setq disaster-cxxflags "-std=c++11")
+(use-package disaster
+  :commands disaster
+  :config
+  (progn
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (define-key c-mode-base-map (kbd "C-c d") 'disaster)))
+    (setq disaster-cxxflags "-std=c++11")))
+
 
 ;; Fix D compile regex
-(require 'compile)
-(add-to-list
- 'compilation-error-regexp-alist
- '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
-   1 2 nil (3 . 4)))
+(use-package compile
+  :config (add-to-list
+           'compilation-error-regexp-alist
+           '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
+             1 2 nil (3 . 4))))
 
 ;; Don't allow me to kill the scratch
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
@@ -44,12 +48,12 @@
       ad-do-it)))
 
 ;; Add expand region
-(require 'expand-region)
+(use-package expand-region)
 
 ;; completion for M-x
-(require 'smex)
-(smex-initialize)
-(smex-auto-update nil)
+(use-package smex
+  :init (smex-initialize)
+  :config (smex-auto-update nil))
 
 ;; Toggle the perspective mode
 (persp-mode)
@@ -74,8 +78,8 @@
         ad-do-it))))
 
 ;; Set browse-kill-ring defaults
-(require 'browse-kill-ring)
-(browse-kill-ring-default-keybindings)
+(use-package browse-kill-ring
+  :config (browse-kill-ring-default-keybindings))
 
 (use-package project-explorer
   :config (setq pe/width 30)
@@ -105,7 +109,7 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(require 'yank-auto-indent)
+(use-package yank-auto-indent)
 
 (use-package flex-isearchq
   :init (global-flex-isearch-mode)
