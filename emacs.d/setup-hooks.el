@@ -50,8 +50,6 @@
                     ;; namespace names and tags - these are rendered as constants by cc-mode
                     ("\\<\\(\\w+::\\)" . font-lock-function-name-face)
 
-                    ("\\<typename\\S*\\.\\.\\.\\S+\\(\\w+\\)\\>" 1 font-lock-type-face)
-
                     ;;  new C++11 keywords
                     ("\\<\\(alignof\\|alignas\\|constexpr\\|decltype\\|noexcept\\|nullptr\\|static_assert\\|thread_local\\|override\\|final\\)\\>" . font-lock-keyword-face)
                     ("\\<\\(char16_t\\|char32_t\\)\\>" . font-lock-keyword-face)
@@ -76,7 +74,6 @@
                     (   "\\<[uU8]*R\"[^\\s-\\\\()]\\{0,16\\}(.*?\\()[^\\s-\\\\()]\\{0,16\\}\"\\)" 1 font-lock-keyword-face t) ; end delimiter
 
                     ;; user-defined types (rather project-specific)
-                    ("\\<[A-Za-z_]+[A-Za-z_0-9]*_\\(type\\|ptr\\)\\>" . font-lock-type-face)
                     ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
                     ("[^a-zA-Z0-9_)]\\(\\[\\).*\\]*?\\(\\]\\)[ \t]*(.*)" (1 font-lock-function-name-face) (2 font-lock-function-name-face))
                     ))
