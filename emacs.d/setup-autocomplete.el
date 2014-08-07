@@ -25,4 +25,11 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
+(use-package xcscope
+  :init (cscope-setup)
+  :config
+  (progn
+    (setq cscope-max-cscope-buffer-size 1)
+    (setq cscope-display-times nil)))
+
 (provide 'setup-autocomplete)
