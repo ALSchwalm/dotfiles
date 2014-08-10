@@ -80,6 +80,7 @@
              ) t)
 
 (add-hook 'prog-mode-hook '(lambda ()
+                             (ggtags-mode 1)
                              (font-lock-add-keywords
                               nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
                                      1 '((:weight bold)) t)))))

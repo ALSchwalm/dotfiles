@@ -10,6 +10,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/")
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'load-path "~/.emacs.d/lisp/idle-highlight")
 (add-to-list 'load-path "~/.emacs.d/emacs-powerline")
 
 ;; Setup packages
@@ -27,25 +28,31 @@
      dash
      disaster
      expand-region
+     fill-column-indicator
      flex-isearch
      flx
      flx-ido
      flycheck
-     haskell-mode
      git-gutter-fringe
+     ggtags
+     haskell-mode
      ido-ubiquitous
      ido-vertical-mode
      key-chord
      magit
      multiple-cursors
+     ov
      paredit
+     pos-tip
      perspective
      project-explorer
      projectile
+     rust-mode
      slime
      smex
      solarized-theme
      undo-tree
+     use-package
      web-mode
      yasnippet
      )))
@@ -67,6 +74,7 @@
 (require 'setup-projectile)
 (require 'setup-autocomplete)
 (require 'setup-ido)
+(require 'setup-recentf)
 (require 'setup-hooks)
 (require 'my-misc)
 (require 'functions)

@@ -65,7 +65,7 @@
   :group 'idle-highlight
   :type '(repeat string))
 
-(defcustom idle-highlight-idle-time 0.5
+(defcustom idle-highlight-idle-time 0.2
   "Time after which to highlight the word at point."
   :group 'idle-highlight
   :type 'float)

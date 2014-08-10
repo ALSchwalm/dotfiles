@@ -19,17 +19,27 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
+(setq ac-use-menu-map t)
 (add-to-list 'ac-modes 'rust-mode)
 (add-to-list 'ac-modes 'd-mode)
+;; Default settings
+(define-key ac-menu-map "\C-n" 'ac-next)
+(define-key ac-menu-map "\C-p" 'ac-previous)
+(use-package pos-tip)
 
 (require 'yasnippet)
 (yas-global-mode 1)
 
-(use-package xcscope
-  :init (cscope-setup)
+(use-package ggtags
   :config
   (progn
-    (setq cscope-max-cscope-buffer-size 1)
-    (setq cscope-display-times nil)))
+    (add-hook 'prog-mode-hook 'ggtags-mode)))
+
+(defun my/ggtags-find-reference ()
+  (interactive)
+  (if (not (member major-mode
+                   '(c++-mode c-mode php-mode java-mode asm-mode)))
+      (error "ggtags does not support finding references for this mode")
+    (ggtags-find-reference (word-at-point))))
 
 (provide 'setup-autocomplete)

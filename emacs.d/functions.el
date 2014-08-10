@@ -71,15 +71,6 @@
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(defun sm-find-tag ()
-  (interactive)
-  (setq tags-table-list nil)
-  (setq tags-file-name (concat (projectile-project-root) "TAGS"))
-  (find-tag (funcall (or find-tag-default-function
-                         (get major-mode 'find-tag-default-function)
-                         'find-tag-default)))
-  (recenter-top-bottom))
-
 (defun test-file (&optional number)
   (interactive "P")
   (let* ((current (file-name-extension (buffer-name)))
@@ -168,13 +159,6 @@
   (interactive)
   (delete-other-windows)
   (split-window-right))
-
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
-    (when file
-      (find-file file))))
 
 (defun commment-indent-region ()
   "Indent all comments in the region to the comment-column. Comments

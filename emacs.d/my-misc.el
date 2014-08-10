@@ -95,14 +95,6 @@
 ;; Subword mode for subword-backwords
 (global-subword-mode)
 
-;; Save a list of recent files visited. (open recent file with C-x f)
-(use-package recentf
-  :init (recentf-mode 1)
-
-  ;; just 20 is too recent
-  :config (setq recentf-max-saved-items 100)
-  :bind (((read-kbd-macro "C-x f") . recentf-ido-find-file)))
-
 ;;Put backups/autosave in temp directory
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -111,7 +103,7 @@
 
 (use-package yank-auto-indent)
 
-(use-package flex-isearchq
+(use-package flex-isearch
   :init (global-flex-isearch-mode)
   :bind (((read-kbd-macro "C-s") . flex-isearch-forward)
          ((read-kbd-macro "C-r") . flex-isearch-backward)))
@@ -133,5 +125,14 @@
 (setq x-select-enable-clipboard t)
 (setq x-select-enable-primary t)
 (setq apropos-do-all t)
+
+(use-package popwin
+  :init (popwin-mode)
+  :config
+  (progn
+    ;; kill ring
+    (push "*Kill Ring*" popwin:special-display-config)
+    (push '("*ggtags-global*" :stick t) popwin:special-display-config)
+    ))
 
 (provide 'my-misc)
