@@ -50,6 +50,9 @@
                     ;; namespace names and tags - these are rendered as constants by cc-mode
                     ("\\<\\(\\w+::\\)" . font-lock-function-name-face)
 
+                    ;; Some support for c++11 variadic templates
+                    ("\\<typename[[:blank:]]*\\.\\.\\.[[:blank:]]+\\([A-Z_a-z]+\\)" 1 font-lock-type-face)
+
                     ;;  new C++11 keywords
                     ("\\<\\(alignof\\|alignas\\|constexpr\\|decltype\\|noexcept\\|nullptr\\|static_assert\\|thread_local\\|override\\|final\\)\\>" . font-lock-keyword-face)
                     ("\\<\\(char16_t\\|char32_t\\)\\>" . font-lock-keyword-face)
@@ -80,7 +83,8 @@
              ) t)
 
 (add-hook 'prog-mode-hook '(lambda ()
-                             (ggtags-mode 1)
+                             (define-key (current-local-map) (read-kbd-macro "<C-backspace>") 'backward-delete-word)
+                             (define-key (current-local-map) (read-kbd-macro "<M-backspace>") 'backward-kill-sexp)
                              (font-lock-add-keywords
                               nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
                                      1 '((:weight bold)) t)))))

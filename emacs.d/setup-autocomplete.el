@@ -22,9 +22,11 @@
 (setq ac-use-menu-map t)
 (add-to-list 'ac-modes 'rust-mode)
 (add-to-list 'ac-modes 'd-mode)
-;; Default settings
+;; Allow standard movement keys in completion popup
 (define-key ac-menu-map "\C-n" 'ac-next)
 (define-key ac-menu-map "\C-p" 'ac-previous)
+
+;; Used in popups for autocomplete mode
 (use-package pos-tip)
 
 (require 'yasnippet)
@@ -33,9 +35,11 @@
 (use-package ggtags
   :config
   (progn
-    (add-hook 'prog-mode-hook 'ggtags-mode)))
+    (add-hook 'prog-mode-hook 'ggtags-mode)
+    (define-key ggtags-mode-map (kbd "M-]") 'my/ggtags-find-reference)))
 
 (defun my/ggtags-find-reference ()
+  "Emit an error if gtags doesn't support finding references in the mode."
   (interactive)
   (if (not (member major-mode
                    '(c++-mode c-mode php-mode java-mode asm-mode)))
