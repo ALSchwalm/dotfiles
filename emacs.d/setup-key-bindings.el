@@ -1,6 +1,4 @@
 ;; Additional global hotkeys
-(global-set-key (read-kbd-macro "<C-backspace>") 'backward-delete-word)
-(global-set-key (read-kbd-macro "<M-backspace>") 'backward-kill-sexp)
 (global-set-key (read-kbd-macro "M-n") 'scroll-up)
 (global-set-key (read-kbd-macro "M-p") 'scroll-down)
 (global-set-key (read-kbd-macro "<C-tab>") 'other-window)
@@ -21,6 +19,7 @@
 (global-set-key (read-kbd-macro "C-x C-x") 'exchange-point-and-mark-center)
 (global-set-key (read-kbd-macro "C-x d") 'duplicate-buffer)
 (global-set-key (read-kbd-macro "C-\\") 'hs-toggle-hiding)
+(global-set-key (read-kbd-macro "C-k") 'kill-line-and-reindent)
 
  ;; Key chords
 (key-chord-mode t)
@@ -29,7 +28,7 @@
 (key-chord-define-global "KK" 'switch-to-next-buffer)
 (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
 (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
-(key-chord-define-global ";;" 'er/expand-region)
+(key-chord-define-global "??" 'er/expand-region)
 
 ;; Tree undo
 (global-unset-key (read-kbd-macro "C-z"))

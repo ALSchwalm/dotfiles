@@ -49,6 +49,11 @@
         (indent-for-tab-command)))
     (indent-for-tab-command)))
 
+(defun kill-line-and-reindent ()
+  (interactive)
+  (kill-line)
+  (indent-for-tab-command))
+
 (defun search-cpp-docs (&optional search)
   "Search en.cppreference.com for a given string"
   (interactive)
