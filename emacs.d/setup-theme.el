@@ -18,8 +18,8 @@
 ;; show column and line number
 (column-number-mode 1)
 
-;; Git gutter fringe mode
-(require 'git-gutter-fringe)
+;; Git gutter mode
+(require 'git-gutter)
 (global-git-gutter-mode t)
 
 ;; Better duplicate buffer names
