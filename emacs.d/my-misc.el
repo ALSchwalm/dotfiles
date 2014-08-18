@@ -101,8 +101,6 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(use-package yank-auto-indent)
-
 (use-package flex-isearch
   :init (global-flex-isearch-mode)
   :bind (((read-kbd-macro "C-s") . flex-isearch-forward)
