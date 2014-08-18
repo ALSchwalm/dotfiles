@@ -16,7 +16,7 @@ alias search="yaourt -Ss"
 alias update="yaourt -Syua"
 alias autoremove="pacman -Qdtq | sudo pacman -Rcns -"
 alias remove="yaourt -Rcns"
-alias vpnclient="(cd /etc/openvpn/; sudo openvpn client.conf)"
+alias vpnhome="(cd /etc/openvpn/; sudo openvpn home.conf)"
 
 alias grep="egrep"
 alias wget='wget -c'
