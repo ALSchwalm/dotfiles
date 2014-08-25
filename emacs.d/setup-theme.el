@@ -46,15 +46,4 @@
 ;; Add matching parens / braces
 (show-paren-mode 1)
 
-(setq-default fci-rule-column 80)
-(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
-(global-fci-mode 1)
-(defun auto-fci-mode (&optional unused)
-  (if (and (> (window-width) fci-rule-column)
-       (eq (get-buffer-window) (next-window nil 'omit)))
-      (fci-mode 1)
-    (fci-mode 0)))
-(add-hook 'after-change-major-mode-hook 'auto-fci-mode)
-(add-hook 'window-configuration-change-hook 'auto-fci-mode)
-
 (provide 'setup-theme)
