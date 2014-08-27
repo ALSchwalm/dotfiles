@@ -66,6 +66,11 @@
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Automatically recompile elisp buffers
+(require 'auto-compile)
+(auto-compile-on-load-mode 1)
+(auto-compile-on-save-mode 1)
+
 (eval-after-load 'org '(require 'setup-org))
 (eval-after-load 'slime '(require 'setup-slime))
 (require 'misc)
