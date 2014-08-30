@@ -1,14 +1,20 @@
 ;; Load theme
+
 (require 'solarized-dark-theme)
-
-(setq default-frame-alist '((font . "Source Code Pro-11")
-                            (vertical-scroll-bars . nil)))
-
 (require 'powerline)
 (setq powerline-arrow-shape 'arrow14) ;; best for small fonts
 (set-face-foreground 'minibuffer-prompt "cyan")
 (setq solarized-high-contrast-mode-line t)
 (setq custom-enabled-themes (quote (solarized-dark)))
+
+(defun disable-background-terminal ()
+  (unless (window-system (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+(add-hook 'window-setup-hook 'disable-background-terminal)
+
+(setq default-frame-alist '((font . "Source Code Pro-11")
+                            (vertical-scroll-bars . nil)))
 
 ;; Also setup cursor
 (set-default 'cursor-type 'bar)
