@@ -20,7 +20,7 @@
 (setq echo-keystrokes 0.1)
 
 (use-package idle-highlight-mode
-  :init (idle-highlight-mode))
+  :init (add-hook 'prog-mode-hook 'idle-highlight-mode))
 
 ;; disaster for disassembly
 (use-package disaster
@@ -103,6 +103,7 @@
 
 (use-package flex-isearch
   :init (global-flex-isearch-mode)
+  :config (setq flex-isearch-auto 'on-failed)
   :bind (((read-kbd-macro "C-s") . flex-isearch-forward)
          ((read-kbd-macro "C-r") . flex-isearch-backward)))
 
