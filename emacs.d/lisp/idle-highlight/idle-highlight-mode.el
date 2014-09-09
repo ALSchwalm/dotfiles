@@ -78,16 +78,16 @@
 
 (defun idle-highlight-word-at-point ()
   "Highlight the word under the point."
-  (if idle-highlight-mode
-      (let* ((target-symbol (symbol-at-point))
-             (target (symbol-name target-symbol)))
-        (idle-highlight-unhighlight)
-        (when (and target-symbol
-                   (not (in-string-p))
-                   (looking-at-p "\\s_\\|\\sw") ;; Symbol characters
-                   (not (member target idle-highlight-exceptions)))
-          (ov-set (concat "\\<" (regexp-quote target) "\\>")
-                  'face '(:weight bold) 'ovl1 t)))))
+  (save-excursion
+    (if idle-highlight-mode
+       (let* ((target-symbol (symbol-at-point))
+              (target (symbol-name target-symbol)))
+         (idle-highlight-unhighlight)
+         (when (and target-symbol
+                    (looking-at-p "\\s_\\|\\sw") ;; Symbol characters
+                    (not (member target idle-highlight-exceptions)))
+           (ov-set (concat "\\<" (regexp-quote target) "\\>")
+                   'face '(:weight bold) 'ovl1 t))))))
 
 (defsubst idle-highlight-unhighlight ()
   (ov-clear 'ovl1))
@@ -96,7 +96,6 @@
 (define-minor-mode idle-highlight-mode
   "Idle-Highlight Minor Mode"
   :group 'idle-highlight
-  :global t
   (if idle-highlight-mode
       (progn (unless idle-highlight-global-timer
                (setq idle-highlight-global-timer
