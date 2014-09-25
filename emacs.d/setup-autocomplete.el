@@ -22,9 +22,6 @@
 (setq ac-use-menu-map t)
 (add-to-list 'ac-modes 'rust-mode)
 (add-to-list 'ac-modes 'd-mode)
-;; Allow standard movement keys in completion popup
-(define-key ac-menu-map "\C-n" 'ac-next)
-(define-key ac-menu-map "\C-p" 'ac-previous)
 
 ;; Used in popups for autocomplete mode
 (use-package pos-tip)
@@ -45,5 +42,7 @@
                    '(c++-mode c-mode php-mode java-mode asm-mode)))
       (error "ggtags does not support finding references for this mode")
     (ggtags-find-reference (word-at-point))))
+
+(setq-local imenu-create-index-function #'ggtags-build-imenu-index)
 
 (provide 'setup-autocomplete)
