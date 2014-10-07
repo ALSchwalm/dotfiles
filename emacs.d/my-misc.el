@@ -114,6 +114,7 @@
 (use-package focus
   :bind (((read-kbd-macro "<f11>") . focus-toggle-focus)))
 
+(delete-selection-mode 1)
 (setq mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
 (setq mouse-yank-at-point t)
 
