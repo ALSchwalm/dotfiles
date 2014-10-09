@@ -21,6 +21,7 @@ import qualified Data.Map        as M
 import Control.Monad
 
 -- The main function.
+main :: IO()
 main = xmonad =<<  statusBar myBar myPP  toggleStrutsKey (withUrgencyHook NoUrgencyHook myConfig)
 
 -- Float specific windows
@@ -135,10 +136,10 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
-        , ((mod4Mask , xK_F1),              safeSpawn "brightness" ["-0.1"])
-        , ((mod4Mask , xK_F2),              safeSpawn "brightness" ["+0.1"])
-        , ((0, 0x1008ff03),                 safeSpawn "brightness" ["-0.1"])
-        , ((0, 0x1008ff02),                 safeSpawn "brightness" ["+0.1"])
+        , ((mod4Mask , xK_F1),              safeSpawn "xbacklight" ["-dec", "10"])
+        , ((mod4Mask , xK_F2),              safeSpawn "xbacklight" ["-inc", "10"])
+        , ((0 , 0x1008ff03),                safeSpawn "xbacklight" ["-dec", "10"])
+        , ((0 , 0x1008ff02),                safeSpawn "xbacklight" ["-inc", "10"])
         , ((mod4Mask , xK_r),               spawn "rotate toggle right")
         , ((mod4Mask .|. shiftMask, xK_r),  spawn "rotate toggle left")
         , ((mod4Mask , xK_f),               nextWS)
