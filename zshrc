@@ -56,6 +56,14 @@ alias -s py=python
 setopt HIST_IGNORE_DUPS
 setopt no_share_history
 
+function python() {
+    if (( $# == 0 )) then
+        ptpython ;
+    else
+        /bin/env python "$*"
+    fi
+}
+
 function move_up() {
     BUFFER="cd .."
     zle accept-line
