@@ -40,11 +40,15 @@
 (make-variable-buffer-local 'global-hl-line-mode)
 
 ;; linux style indents
-(setq c-default-style "linux"
-      c-basic-offset 4)
 (setq web-mode-markup-indent-offset 4)
 (setq web-mode-css-indent-offset 4)
 (setq web-mode-code-indent-offset 4)
+(defconst custom-cpp-style
+  '("linux"
+    (c-offsets-alist . ((innamespace . [0])))
+    (c-basic-offset . 4)))
+(c-add-style "custom-cpp-style" custom-cpp-style)
+(setq c-default-style "custom-cpp-style")
 
 ;; spaces instead of tabs
 (setq-default indent-tabs-mode nil)
