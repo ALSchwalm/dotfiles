@@ -154,6 +154,11 @@
                                           (line-end-position))) 0))
         (indent-for-tab-command))))
 
+(defun my-before-save-function ()
+  (if (eq major-mode 'c++-mode)
+      (clang-format-region (point-min) (point-max)))
+  (delete-whitespace-and-indent))
+
 (defun project-explorer-toggle ()
   (interactive)
   (if (pe/get-current-project-explorer-buffer)

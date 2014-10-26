@@ -20,7 +20,7 @@
                             (setq global-hl-line-mode nil)))
 
 ;; Remove whitespace
-(add-hook 'before-save-hook 'delete-whitespace-and-indent)
+(add-hook 'before-save-hook 'my-before-save-function)
 
 ;; Better defaults for Markdown mode
 (add-hook 'markdown-mode-hook (lambda()
@@ -36,12 +36,10 @@
 (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
   (add-hook hook (lambda () (flyspell-mode -1))))
 
-;; Add search hotkey to c++-mode
-(add-hook 'c++-mode-hook (lambda ()
-                           (local-set-key (read-kbd-macro "<f1>") 'search-cpp-symbol-at-point)))
-
 (add-hook 'c++-mode-hook
           '(lambda()
+             (local-set-key (read-kbd-macro "<f1>") 'search-cpp-symbol-at-point)
+
              ;; We could place some regexes into `c-mode-common-hook', but note that their evaluation order
              ;; matters.
              (font-lock-add-keywords
