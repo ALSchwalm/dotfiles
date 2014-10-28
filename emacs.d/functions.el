@@ -1,27 +1,56 @@
 (require 'dash)
 
-(defun backward-word-stop-eol (arg)
+(defvar backward-word-stop-regex
+     (rx
+      (or ?\" "}" "{" "<" ">" "[" "]")))
+
+(defun backward-word-stop (arg)
   (interactive "p")
-  (let ((start (point)))
-    (save-restriction
-      (save-excursion
-        (move-beginning-of-line 1)
-        (narrow-to-region start (point)))
-      (subword-backward arg))))
+  (let ((start (point))
+        (start-of-line (line-beginning-position))
+        (subword-back nil)
+        (search-back nil))
+    (save-excursion
+      (subword-backward arg)
+      (setq subword-back (point)))
+    (save-excursion
+      (setq search-back (re-search-backward
+                         backward-word-stop-regex
+                         subword-back t)))
+    (cond
+     ;; If the point is at a word stop, move back one char
+     ((eq search-back (- (point) 1))
+      (backward-delete-char 1))
+
+     ;; If the subword delete takes the point up a line, move to the
+     ;; end of that line
+     ((< subword-back start-of-line)
+      (subword-backward arg)
+      (move-end-of-line 1))
+
+     ;; If the regex word stop finds something on the same line,
+     ;; move to that point
+     (search-back
+      (goto-char search-back)
+      (forward-char))
+
+     ;; Otherwise, do the subword-backward
+     ((not (< subword-back start-of-line))
+      (subword-backward arg)))))
+
+;; Add basic delete word method
+(defun backward-delete-word (arg)
+  (interactive "p")
+  (if (not paredit-mode)
+      (if (eq (point) (line-beginning-position))
+          (backward-delete-char 1)
+        (delete-region (point) (progn (backward-word-stop arg) (point))))
+    (paredit-backward-kill-word)))
 
 (defun paredit-beginning-of-sexp ()
   (interactive)
   (paredit-close-round)
   (beginning-of-sexp))
-
-;; Add basic delete word method
-(defun backward-delete-word (arg)
-  (interactive "p")
-  (if  (not paredit-mode)
-      (if (eq (point) (line-beginning-position))
-          (backward-delete-char 1)
-        (delete-region (point) (progn (backward-word-stop-eol arg) (point))))
-    (paredit-backward-kill-word)))
 
 (defun back-to-indentation-or-beginning ()
   (interactive)
