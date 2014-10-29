@@ -20,19 +20,19 @@
     (cond
      ;; If the point is at a word stop, move back one char
      ((eq search-back (- (point) 1))
-      (backward-delete-char 1))
-
-     ;; If the subword delete takes the point up a line, move to the
-     ;; end of that line
-     ((< subword-back start-of-line)
-      (subword-backward arg)
-      (move-end-of-line 1))
+      (backward-char 1))
 
      ;; If the regex word stop finds something on the same line,
      ;; move to that point
      (search-back
       (goto-char search-back)
       (forward-char))
+
+     ;; If the subword delete takes the point up a line, move to the
+     ;; end of that line
+     ((< subword-back start-of-line)
+      (subword-backward arg)
+      (move-end-of-line 1))
 
      ;; Otherwise, do the subword-backward
      ((not (< subword-back start-of-line))
