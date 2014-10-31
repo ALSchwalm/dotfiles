@@ -2,7 +2,7 @@
 
 (defvar backward-word-stop-regex
      (rx
-      (or ?\" "}" "{" "<" ">" "[" "]")))
+      (or ?\" "}" "{" "<" ">" "[" "]" "(" ")")))
 
 (defun backward-word-stop (arg)
   (interactive "p")
@@ -24,9 +24,15 @@
 
      ;; If the regex word stop finds something on the same line,
      ;; move to that point
-     (search-back
+     ((and search-back (>= search-back start-of-line))
       (goto-char search-back)
       (forward-char))
+
+     ;; If the regex finds something on a different line, move to
+     ;; the end of that line
+     ((and search-back (< search-back start-of-line))
+      (goto-char search-back)
+      (move-end-of-line 1))
 
      ;; If the subword delete takes the point up a line, move to the
      ;; end of that line
