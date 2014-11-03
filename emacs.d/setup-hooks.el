@@ -80,12 +80,16 @@
                     ))
              ) t)
 
-(add-hook 'prog-mode-hook '(lambda ()
-                             (define-key (current-local-map) (read-kbd-macro "<C-backspace>") 'backward-delete-word)
-                             (define-key (current-local-map) (read-kbd-macro "<M-backspace>") 'backward-kill-sexp)
-                             (font-lock-add-keywords
-                              nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
-                                     1 '((:weight bold)) t)))))
+(add-hook 'prog-mode-hook
+          '(lambda ()
+             (define-key (current-local-map) (read-kbd-macro "<M-backspace>") 'backward-kill-sexp)
+             (font-lock-add-keywords
+              nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
+                     1 '((:weight bold)) t)))))
+
+(add-hook 'c-initialization-hook
+          '(lambda ()
+             (define-key (current-local-map) (read-kbd-macro "<C-backspace>") 'backward-delete-word)))
 
 ;; Enabled code folding in programming modes
 (add-hook 'prog-mode-hook #'hs-minor-mode)
@@ -93,8 +97,8 @@
 (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode t)))
 
 (eval-after-load "paredit"
-'(progn
-   (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)))
+  '(progn
+     (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)))
 
 ;; Auto-update smex
 (defun smex-update-after-load (unused)
