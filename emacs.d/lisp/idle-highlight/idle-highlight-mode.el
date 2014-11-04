@@ -79,7 +79,10 @@
 (defun idle-highlight-word-at-point ()
   "Highlight the word under the point."
   (save-excursion
-    (if idle-highlight-mode
+    (if (and idle-highlight-mode
+             ;; Do not highlight inside of comments for strings
+             (not (nth 4 (syntax-ppss)))
+             (not (nth 3 (syntax-ppss))))
        (let* ((target-symbol (symbol-at-point))
               (target (symbol-name target-symbol)))
          (idle-highlight-unhighlight)
