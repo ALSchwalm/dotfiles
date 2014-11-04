@@ -1,4 +1,5 @@
 ;; Flycheck mode
+
 (use-package flycheck
   :idle (global-flycheck-mode t)
   :config

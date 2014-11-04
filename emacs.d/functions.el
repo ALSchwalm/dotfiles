@@ -47,11 +47,9 @@
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
   (interactive "p")
-  (if (not paredit-mode)
-      (if (eq (point) (line-beginning-position))
-          (backward-delete-char 1)
-        (delete-region (point) (progn (backward-word-stop arg) (point))))
-    (paredit-backward-kill-word)))
+  (if (eq (point) (line-beginning-position))
+      (backward-delete-char 1)
+    (delete-region (point) (progn (backward-word-stop arg) (point)))))
 
 (defun paredit-beginning-of-sexp ()
   (interactive)
@@ -83,11 +81,6 @@
         (newline)
         (indent-for-tab-command)))
     (indent-for-tab-command)))
-
-(defun kill-line-and-reindent ()
-  (interactive)
-  (kill-line)
-  (indent-for-tab-command))
 
 (defun search-cpp-docs (&optional search)
   "Search en.cppreference.com for a given string"
@@ -193,6 +186,16 @@
   (if (eq major-mode 'c++-mode)
       (clang-format-region (point-min) (point-max)))
   (delete-whitespace-and-indent))
+
+(defun my-kill-line ()
+  "Kill the remainder of the line, unless the line is only whitespace,
+in which case it is deleted."
+  (interactive)
+  (let ((start (point)))
+   (if (not (re-search-forward (rx (not whitespace)) (line-end-position) t))
+       (delete-region (point) (line-end-position))
+     (goto-char start)
+     (kill-line))))
 
 (defun project-explorer-toggle ()
   (interactive)

@@ -19,6 +19,8 @@
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
 
+(use-package thing-at-point-string)
+
 (use-package idle-highlight-mode
   :init (add-hook 'prog-mode-hook 'idle-highlight-mode))
 

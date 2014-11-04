@@ -19,7 +19,7 @@
 (global-set-key (read-kbd-macro "C-x C-x") 'exchange-point-and-mark-center)
 (global-set-key (read-kbd-macro "C-x d") 'duplicate-buffer)
 (global-set-key (read-kbd-macro "C-\\") 'hs-toggle-hiding)
-(global-set-key (read-kbd-macro "C-k") 'kill-line-and-reindent)
+(global-set-key (read-kbd-macro "C-k") 'my-kill-line)
 
  ;; Key chords
 (key-chord-mode t)

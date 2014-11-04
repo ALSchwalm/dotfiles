@@ -89,7 +89,7 @@
 
 (add-hook 'c-initialization-hook
           '(lambda ()
-             (define-key (current-local-map) (read-kbd-macro "<C-backspace>") 'backward-delete-word)))
+             (define-key c-mode-base-map (read-kbd-macro "<C-backspace>") 'backward-delete-word)))
 
 ;; Enabled code folding in programming modes
 (add-hook 'prog-mode-hook #'hs-minor-mode)
