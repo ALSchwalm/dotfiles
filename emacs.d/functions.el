@@ -19,7 +19,7 @@
                          subword-back t)))
     (cond
      ;; If the point is at a word stop, move back one char
-     ((= search-back (- (point) 1))
+     ((equal search-back (- (point) 1))
       (backward-char 1))
 
      ;; If the regex word stop finds something on the same line,
