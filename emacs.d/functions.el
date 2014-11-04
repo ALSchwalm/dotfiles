@@ -19,7 +19,7 @@
                          subword-back t)))
     (cond
      ;; If the point is at a word stop, move back one char
-     ((eq search-back (- (point) 1))
+     ((= search-back (- (point) 1))
       (backward-char 1))
 
      ;; If the regex word stop finds something on the same line,
@@ -47,7 +47,7 @@
 ;; Add basic delete word method
 (defun backward-delete-word (arg)
   (interactive "p")
-  (if (eq (point) (line-beginning-position))
+  (if (= (point) (line-beginning-position))
       (backward-delete-char 1)
     (delete-region (point) (progn (backward-word-stop arg) (point)))))
 
@@ -193,9 +193,20 @@ in which case it is deleted."
   (interactive)
   (let ((start (point)))
    (if (not (re-search-forward (rx (not whitespace)) (line-end-position) t))
-       (delete-region (point) (line-end-position))
+       (delete-region (point) (1+ (line-end-position)))
      (goto-char start)
-     (kill-line))))
+     (kill-line))
+   (indent-for-tab-command)))
+
+(defun inside-comment-p ()
+  "Returns non-nil if inside comment, else nil.
+This depends on major mode having setup syntax table properly."
+  (nth 4 (syntax-ppss)))
+
+(defun inside-string-p ()
+  "Returns non-nil if inside string, else nil.
+This depends on major mode having setup syntax table properly."
+  (nth 3 (syntax-ppss)))
 
 (defun project-explorer-toggle ()
   (interactive)
@@ -227,7 +238,7 @@ on their own line will not be indented."
 (require 'find-file "find-file")
 (defun find-other-buffer ()
   "ff-find-other-file with buffers"
-   (let ((other-buffer nil)
+  (let ((other-buffer nil)
         (extension-list (cadr (-first (lambda (pair)
                                         (string= (car pair) (format "\\.%s\\'" (file-name-extension (buffer-file-name)))))
                                       cc-other-file-alist))))
