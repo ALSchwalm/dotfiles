@@ -5,6 +5,7 @@
 emacs.d/url/
 emacs.d/project-explorer-cache/
 emacs.d/history
+emacs.d/.python-environments/
 
 ###################
 # Autocomplete history
