@@ -20,6 +20,7 @@
 (global-set-key (read-kbd-macro "C-x d") 'duplicate-buffer)
 (global-set-key (read-kbd-macro "C-\\") 'hs-toggle-hiding)
 (global-set-key (read-kbd-macro "C-k") 'my-kill-line)
+(global-set-key (read-kbd-macro "M-y") 'helm-show-kill-ring)
 
  ;; Key chords
 (key-chord-mode t)

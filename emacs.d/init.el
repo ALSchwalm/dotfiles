@@ -22,7 +22,6 @@
   (packages-install
    '(magit
      auto-complete
-     browse-kill-ring
      company
      company-c-headers
      dash
@@ -36,6 +35,7 @@
      git-gutter-fringe
      ggtags
      haskell-mode
+     helm
      ido-ubiquitous
      ido-vertical-mode
      key-chord
@@ -81,6 +81,7 @@
 (require 'setup-ido)
 (require 'setup-recentf)
 (require 'setup-hooks)
+(require 'setup-helm)
 (require 'my-misc)
 (require 'functions)
 

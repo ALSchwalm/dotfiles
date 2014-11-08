@@ -21,9 +21,6 @@
 
 (use-package thing-at-point-string)
 
-(use-package idle-highlight-mode
-  :init (add-hook 'prog-mode-hook 'idle-highlight-mode))
-
 ;; disaster for disassembly
 (use-package disaster
   :commands disaster
@@ -79,10 +76,6 @@
             (set-marker m nil))
         ad-do-it))))
 
-;; Set browse-kill-ring defaults
-(use-package browse-kill-ring
-  :config (browse-kill-ring-default-keybindings))
-
 (use-package project-explorer
   :config (setq pe/width 30)
   :bind (((read-kbd-macro "M-`") . project-explorer-toggle)))
@@ -135,6 +128,9 @@
     ;; kill ring
     (push "*Kill Ring*" popwin:special-display-config)
     (push '("*ggtags-global*" :stick t) popwin:special-display-config)
-    ))
+    (push '("^\\*helm.*\\*$" :height 0.5 :regexp t :position bottom)
+          popwin:special-display-config)))
+
+(global-set-key (kbd "C-c w") popwin:keymap)
 
 (provide 'my-misc)
