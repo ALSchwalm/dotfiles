@@ -15,6 +15,9 @@
       company-dabbrev-ignore-case nil)
 (add-hook 'prog-mode-hook 'my/enable-company-mode)
 
+;; semantic mode for parsing
+(semantic-mode t)
+
 ;; auto-complete setup
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
