@@ -96,6 +96,11 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode t)))
 
+(add-hook 'ecb-activate-hook #'(lambda ()
+                                 (popwin-mode -1)))
+(add-hook 'ecb-deactivate-hook #'(lambda ()
+                                   (popwin-mode t)))
+
 (eval-after-load "paredit"
   '(progn
      (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)))
