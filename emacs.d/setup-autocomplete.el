@@ -26,6 +26,9 @@
 (add-to-list 'ac-modes 'rust-mode)
 (add-to-list 'ac-modes 'd-mode)
 
+;; Enable completions in python
+(setq jedi:complete-on-dot t)
+
 ;; Used in popups for autocomplete mode
 (use-package pos-tip)
 
