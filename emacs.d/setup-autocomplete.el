@@ -27,7 +27,8 @@
 (add-to-list 'ac-modes 'd-mode)
 
 ;; Enable completions in python
-(setq jedi:complete-on-dot t)
+(setq jedi:complete-on-dot t
+      jedi:tooltip-method nil)
 
 ;; Used in popups for autocomplete mode
 (use-package pos-tip)
