@@ -54,9 +54,6 @@
   :init (smex-initialize)
   :config (smex-auto-update nil))
 
-;; Toggle the perspective mode
-(persp-mode)
-
 ;; Move around with shift+arrow
 (windmove-default-keybindings)
 
