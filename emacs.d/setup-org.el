@@ -4,8 +4,8 @@
 (setq org-latex-create-formula-image-program 'imagemagick
       org-startup-folded 'showall
       org-src-fontify-natively t
-      org-startup-with-inline-images 'inlineimages)
-
-(setq org-startup-indented (quote indent))
+      org-startup-with-inline-images 'inlineimages
+      org-latex-to-pdf-process (list "latexmk -pdf %f")
+      org-startup-indented (quote indent))
 
 (provide 'setup-org)
