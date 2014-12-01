@@ -1,6 +1,6 @@
 ;; Flycheck mode
 
-(use-package flycheck
+(req-package flycheck
   :idle (global-flycheck-mode t)
   :config
   (progn

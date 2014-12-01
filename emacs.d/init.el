@@ -13,63 +13,20 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/idle-highlight/")
 (add-to-list 'load-path "~/.emacs.d/emacs-powerline/")
 
-;; Setup packages
 (require 'setup-package)
-(require 'use-package)
-
-;; Install extensions if they're missing
-(defun init--install-packages ()
-  (packages-install
-   '(magit
-     auto-complete
-     company
-     company-c-headers
-     dash
-     disaster
-     expand-region
-     fill-column-indicator
-     flex-isearch
-     flx
-     flx-ido
-     flycheck
-     git-gutter-fringe
-     ggtags
-     haskell-mode
-     helm
-     ido-ubiquitous
-     ido-vertical-mode
-     key-chord
-     magit
-     multiple-cursors
-     ov
-     paredit
-     pos-tip
-     perspective
-     project-explorer
-     projectile
-     rust-mode
-     slime
-     smex
-     solarized-theme
-     undo-tree
-     use-package
-     web-mode
-     yasnippet
-     )))
-
-(condition-case nil
-    (init--install-packages)
-  (error
-   (package-refresh-contents)
-   (init--install-packages)))
+(require-package 'req-package)
 
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Wrap use-package, but imply ':ensure'
+(require 'req-package)
+
 ;; Automatically recompile elisp buffers
-(require 'auto-compile)
-(auto-compile-on-load-mode 1)
-(auto-compile-on-save-mode 1)
+(req-package auto-compile
+  :config
+  (progn (auto-compile-on-load-mode 1)
+         (auto-compile-on-save-mode 1)))
 
 (eval-after-load 'org '(require 'setup-org))
 (eval-after-load 'slime '(require 'setup-slime))
@@ -86,5 +43,7 @@
 (require 'functions)
 
 (require 'setup-key-bindings)
+
+(req-package-finish)
 
 (provide 'init)

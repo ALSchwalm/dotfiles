@@ -1,5 +1,5 @@
 ;; ido/flx/ido-ubiquitous
-(use-package ido
+(req-package ido
   :init (ido-mode t)
   :config
   (progn
@@ -15,14 +15,14 @@
       (define-key ido-completion-map (kbd "C-f") 'ido-enter-find-file))
     (add-hook 'ido-setup-hook 'ido-define-keys)))
 
-(use-package flx-ido
+(req-package flx-ido
   :init (flx-ido-mode t))
 
-(use-package ido-vertical-mode
+(req-package ido-vertical-mode
   :init (ido-vertical-mode))
 
 
-(use-package ido-ubiquitous
+(req-package ido-ubiquitous
   :init (ido-ubiquitous-mode t))
 
 (provide 'setup-ido)

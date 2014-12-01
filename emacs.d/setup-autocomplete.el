@@ -31,12 +31,12 @@
       jedi:tooltip-method nil)
 
 ;; Used in popups for autocomplete mode
-(use-package pos-tip)
+(req-package pos-tip)
 
 (require 'yasnippet)
 (yas-global-mode 1)
 
-(use-package ggtags
+(req-package ggtags
   :config
   (progn
     (add-hook 'prog-mode-hook 'ggtags-mode)

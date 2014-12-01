@@ -1,11 +1,11 @@
 
-(use-package projectile
+(req-package projectile
   :init (projectile-global-mode)
   :bind (((read-kbd-macro "C-x C-f") . projectile-find-file-with-fallback)
          ((read-kbd-macro "<M-f1>") . projectile-ff-find-other-file)
          ((read-kbd-macro "<f5>") . projectile-compile-with-fallback)))
 
-(use-package helm-projectile
+(req-package helm-projectile
   :init (helm-projectile-on)
   :config (define-key projectile-command-map "s" 'helm-projectile-ag))
 

@@ -19,10 +19,10 @@
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
 
-(use-package thing-at-point-string)
+(req-package thing-at-point-string)
 
 ;; disaster for disassembly
-(use-package disaster
+(req-package disaster
   :commands disaster
   :config
   (progn
@@ -33,7 +33,7 @@
 
 
 ;; Fix D compile regex
-(use-package compile
+(req-package compile
   :config (add-to-list
            'compilation-error-regexp-alist
            '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
@@ -47,17 +47,17 @@
       ad-do-it)))
 
 ;; Add expand region
-(use-package expand-region)
+(req-package expand-region)
 
 ;; completion for M-x
-(use-package smex
+(req-package smex
   :init (smex-initialize)
   :config (smex-auto-update nil))
 
 ;; Move around with shift+arrow
 (windmove-default-keybindings)
 
-(use-package undo-tree
+(req-package undo-tree
   :init (global-undo-tree-mode)
   :config
   (progn
@@ -73,7 +73,7 @@
             (set-marker m nil))
         ad-do-it))))
 
-(use-package project-explorer
+(req-package project-explorer
   :config (setq pe/width 30)
   :bind (((read-kbd-macro "M-`") . project-explorer-toggle)))
 
@@ -93,17 +93,17 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(use-package flex-isearch
+(req-package flex-isearch
   :init (global-flex-isearch-mode)
   :config (setq flex-isearch-auto 'on-failed)
   :bind (((read-kbd-macro "C-s") . flex-isearch-forward)
          ((read-kbd-macro "C-r") . flex-isearch-backward)))
 
 ;; Save cursor position between sessions
-(use-package saveplace
+(req-package saveplace
   :config (setq-default save-place t))
 
-(use-package focus
+(req-package focus
   :bind (((read-kbd-macro "<f11>") . focus-toggle-focus)))
 
 (delete-selection-mode 1)
@@ -118,16 +118,16 @@
 (setq x-select-enable-primary t)
 (setq apropos-do-all t)
 
-(use-package popwin
+(req-package popwin
   :init (popwin-mode)
   :config
   (progn
     ;; kill ring
     (push "*Kill Ring*" popwin:special-display-config)
+    (push '(" *undo-tree*" :position) popwin:special-display-config)
     (push '("*ggtags-global*" :stick t) popwin:special-display-config)
     (push '("^\\*helm.*\\*$" :height 0.5 :regexp t :position bottom)
-          popwin:special-display-config)))
-
-(global-set-key (kbd "C-c w") popwin:keymap)
+          popwin:special-display-config)
+    (global-set-key (kbd "C-c w") popwin:keymap)))
 
 (provide 'my-misc)

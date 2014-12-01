@@ -1,12 +1,11 @@
 ;; Save a list of recent files visited. (open recent file with C-x f)
-(use-package recentf
-  :init (recentf-mode 1)
-  :bind (((read-kbd-macro "C-x f") . recentf-ido-find-file)))
+(req-package recentf
+  :init (progn (recentf-mode t)
+               (add-to-list 'recentf-exclude "\\TAGS\\'")
+               (add-to-list 'recentf-exclude "\\archive-contents\\'"))
+  :bind (((read-kbd-macro "C-x f") . recentf-ido-find-file))
   ;; just 20 is too recent
-  :config (progn
-            (setq recentf-max-saved-items 100)
-            (add-to-list 'recentf-exclude "\\TAGS\\'")
-            (add-to-list 'recentf-exclude "\\archive-contents\\'"))
+  :config (setq recentf-max-saved-items 100))
 
 (defun recentf-ido-find-file ()
   "Find a recent file using Ido."
