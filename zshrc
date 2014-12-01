@@ -19,6 +19,7 @@ alias remove="yaourt -Rcns"
 alias vpnhome="(cd /etc/openvpn/; sudo openvpn home.conf)"
 
 alias grep="egrep"
+alias sed="sed -r"
 alias wget='wget -c'
 alias open=""
 alias s=ls
