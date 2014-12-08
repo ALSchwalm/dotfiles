@@ -103,6 +103,14 @@
 (add-hook 'ecb-deactivate-hook #'(lambda ()
                                    (popwin-mode t)))
 
+; Create any missing directory when using find-file
+(defun create-non-existent-directory ()
+  (let ((parent-directory (file-name-directory buffer-file-name)))
+    (when (and (not (file-exists-p parent-directory))
+               (y-or-n-p (format "Directory `%s' does not exist. Create it?" parent-directory)))
+      (make-directory parent-directory t))))
+(add-to-list 'find-file-not-found-functions #'create-non-existent-directory)
+
 (eval-after-load "paredit"
   '(progn
      (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)))
