@@ -7,7 +7,7 @@
 
 (req-package helm-projectile
   :init (helm-projectile-on)
-  :config (define-key projectile-command-map "s" 'helm-projectile-ag))
+  :config (define-key projectile-command-map "s" 'my/helm-projectile-ag))
 
 ;; Fallback to ido-find-file when not in a project
 (defun projectile-find-file-with-fallback ()
