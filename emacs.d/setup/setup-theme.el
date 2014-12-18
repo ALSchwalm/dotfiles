@@ -1,10 +1,13 @@
 ;; Load theme
 
 (require 'solarized-dark-theme)
-(require 'powerline)
-(setq powerline-arrow-shape 'arrow14) ;; best for small fonts
-(set-face-foreground 'minibuffer-prompt "cyan")
-(setq solarized-high-contrast-mode-line t)
+(setq sml/no-confirm-load-theme t)
+(require 'smart-mode-line)
+(sml/setup)
+(sml/apply-theme 'respectful)
+(setq sml/name-width 20)
+(setq sml/mode-width 'right)
+(set-face-foreground 'minibuffer-prompt "#268bd2")
 (setq custom-enabled-themes (quote (solarized-dark)))
 
 (defun disable-background-terminal ()

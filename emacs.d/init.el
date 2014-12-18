@@ -8,10 +8,9 @@
 (scroll-bar-mode -1)
 (setq inhibit-startup-screen t)
 
-(add-to-list 'load-path "~/.emacs.d/")
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path "~/.emacs.d/setup/")
 (add-to-list 'load-path "~/.emacs.d/lisp/idle-highlight/")
-(add-to-list 'load-path "~/.emacs.d/emacs-powerline/")
 
 (require 'setup-package)
 (require-package 'req-package)
