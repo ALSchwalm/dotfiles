@@ -1,14 +1,17 @@
 ;; Load theme
 
-(require 'solarized-dark-theme)
-(setq sml/no-confirm-load-theme t)
-(require 'smart-mode-line)
-(sml/setup)
-(sml/apply-theme 'respectful)
-(setq sml/name-width 20)
-(setq sml/mode-width 'right)
-(set-face-foreground 'minibuffer-prompt "#268bd2")
-(setq custom-enabled-themes (quote (solarized-dark)))
+(req-package solarized-dark-theme
+  :config
+  (progn (setq sml/no-confirm-load-theme t)
+         (set-face-foreground 'minibuffer-prompt "#268bd2")
+         (setq custom-enabled-themes (quote (solarized-dark)))))
+
+(req-package smart-mode-line
+  :config
+  (progn (sml/setup)
+         (sml/apply-theme 'respectful)
+         (setq sml/name-width 20)
+         (setq sml/mode-width 'right)))
 
 (defun disable-background-terminal ()
   (unless (window-system (selected-frame))
@@ -28,12 +31,13 @@
 (column-number-mode 1)
 
 ;; Git gutter mode
-(require 'git-gutter)
-(global-git-gutter-mode t)
+(req-package git-gutter
+  :config
+  (progn (global-git-gutter-mode t)))
 
 ;; Better duplicate buffer names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
+(req-package uniquify
+  :config (progn (setq uniquify-buffer-name-style 'forward)))
 
 ;; always turn on, where available
 (global-font-lock-mode t)
