@@ -131,7 +131,6 @@
     (global-set-key (kbd "C-c w") popwin:keymap)))
 
 (req-package revive)
-(add-hook 'auto-save-hook 'save-current-configuration)
 (add-hook 'kill-emacs-hook 'save-current-configuration)
 
 (provide 'my-misc)
