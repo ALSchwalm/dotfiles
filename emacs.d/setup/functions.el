@@ -1,4 +1,4 @@
-(require 'dash)
+(req-package dash)
 
 (defvar backward-word-stop-regex
      (rx
@@ -68,6 +68,13 @@
   (if (not (region-active-p))
       (er/expand-region 1))
   (mc/mark-next-like-this 1))
+
+(defun reset-scratch ()
+  (interactive)
+  (switch-to-buffer "*scratch*")
+  (delete-region (point-min) (point-max))
+  (insert initial-scratch-message)
+  (set-buffer-modified-p nil))
 
 (defun new-line-dwim ()
   (interactive)
@@ -235,6 +242,7 @@ on their own line will not be indented."
       (forward-char (length comment-start))))
   (deactivate-mark))
 
+(req-package helm-ag)
 (defun my/helm-projectile-ag (arg)
   "Helm version of projectile-ag. Insert symbol under point if ARG is non-nil"
   (interactive "P")

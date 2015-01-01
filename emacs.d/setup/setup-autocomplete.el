@@ -5,26 +5,30 @@
   ;; Make sure emacs does the right thing with completion command
   (define-key (current-local-map) [remap hippie-expand] 'company-complete))
 
-(require 'company)
-(setq company-global-modes '(c++-mode lisp-mode emacs-lisp-mode)
-      company-c-headers-path-system '("/usr/include/c++/4.9.0/")
-      company-clang-arguments '("-std=c++11")
-      company-dabbrev-code-time-limit 0
-      company-idle-delay nil
-      company-dabbrev-downcase nil
-      company-dabbrev-ignore-case nil)
-(add-hook 'prog-mode-hook 'my/enable-company-mode)
+(req-package company
+  :config
+  (progn
+    (setq company-global-modes '(c++-mode lisp-mode emacs-lisp-mode)
+          company-c-headers-path-system '("/usr/include/c++/4.9.0/")
+          company-clang-arguments '("-std=c++11")
+          company-dabbrev-code-time-limit 0
+          company-idle-delay nil
+          company-dabbrev-downcase nil
+          company-dabbrev-ignore-case nil)
+    (add-hook 'prog-mode-hook 'my/enable-company-mode)))
 
 ;; semantic mode for parsing
 (semantic-mode t)
 
 ;; auto-complete setup
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
-(ac-config-default)
-(setq ac-use-menu-map t)
-(add-to-list 'ac-modes 'rust-mode)
-(add-to-list 'ac-modes 'd-mode)
+(req-package auto-complete-config
+  :config
+  (progn
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+    (ac-config-default)
+    (setq ac-use-menu-map t)
+    (add-to-list 'ac-modes 'rust-mode)
+    (add-to-list 'ac-modes 'd-mode)))
 
 ;; Enable completions in python
 (setq jedi:complete-on-dot t
@@ -33,8 +37,9 @@
 ;; Used in popups for autocomplete mode
 (req-package pos-tip)
 
-(require 'yasnippet)
-(yas-global-mode 1)
+(req-package yasnippet
+  :config (yas-global-mode 1))
+
 
 (req-package ggtags
   :config
