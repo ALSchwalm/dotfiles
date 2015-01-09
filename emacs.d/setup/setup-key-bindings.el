@@ -2,6 +2,7 @@
 (global-set-key (read-kbd-macro "M-n") 'scroll-up)
 (global-set-key (read-kbd-macro "M-p") 'scroll-down)
 (global-set-key (read-kbd-macro "<C-tab>") 'other-window)
+(global-set-key (read-kbd-macro "<C-backspace>") 'backward-delete-word)
 (global-set-key (read-kbd-macro "RET") 'new-line-dwim)
 (global-set-key (read-kbd-macro "M-x") 'smex)
 (global-set-key (read-kbd-macro "C-a") 'back-to-indentation-or-beginning)

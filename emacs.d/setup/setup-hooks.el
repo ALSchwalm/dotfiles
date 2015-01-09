@@ -113,7 +113,8 @@
 
 (eval-after-load "paredit"
   '(progn
-     (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)))
+     (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)
+     (define-key paredit-mode-map (kbd "C-<backspace>") 'paredit-backward-kill-word)))
 
 ;; Auto-update smex
 (defun smex-update-after-load (unused)
