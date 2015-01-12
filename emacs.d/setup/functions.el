@@ -217,8 +217,9 @@ This depends on major mode having setup syntax table properly."
 
 (defun project-explorer-toggle ()
   (interactive)
-  (if (pe/get-current-project-explorer-buffer)
-      (kill-buffer (pe/get-current-project-explorer-buffer))
+  (if (and (fboundp 'pe/get-project-explorer-buffers)
+           (pe/get-project-explorer-buffers))
+      (-map #'kill-buffer (pe/get-project-explorer-buffers))
     (project-explorer-open)))
 
 (defun duplicate-buffer ()
