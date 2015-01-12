@@ -64,5 +64,10 @@
 
 ;; Add matching parens / braces
 (show-paren-mode 1)
+(req-package mic-paren
+  :config (progn
+            (paren-activate)
+            (setq show-paren-delay 0)))
+
 
 (provide 'setup-theme)
