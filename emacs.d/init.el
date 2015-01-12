@@ -38,6 +38,7 @@
 (require 'setup-recentf)
 (require 'setup-hooks)
 (require 'setup-helm)
+(require 'setup-paredit)
 (require 'my-misc)
 (require 'functions)
 

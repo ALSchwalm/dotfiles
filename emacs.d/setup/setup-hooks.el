@@ -94,8 +94,6 @@
 ;; Enabled code folding in programming modes
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 
-(add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode t)))
-
 ;(add-hook 'python-mode-hook 'jedi:setup)
 
 (add-hook 'ecb-activate-hook #'(lambda ()
@@ -110,11 +108,6 @@
                (y-or-n-p (format "Directory `%s' does not exist. Create it?" parent-directory)))
       (make-directory parent-directory t))))
 (add-to-list 'find-file-not-found-functions #'create-non-existent-directory)
-
-(eval-after-load "paredit"
-  '(progn
-     (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)
-     (define-key paredit-mode-map (kbd "C-<backspace>") 'paredit-backward-kill-word)))
 
 ;; Auto-update smex
 (defun smex-update-after-load (unused)
