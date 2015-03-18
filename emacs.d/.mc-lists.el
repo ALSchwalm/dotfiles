@@ -9,8 +9,14 @@
         cua-delete-region
         eval-last-sexp
         indent-for-tab-command
+        lispy-cursor-down
+        lispy-mark-symbol
         paredit-forward-delete
         sgml-slash
+        special-lispy-clone
+        special-lispy-move-down
+        special-lispy-slurp
+        special-lispy-tab
         yas-expand
         ))
 

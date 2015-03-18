@@ -91,9 +91,6 @@
           '(lambda ()
              (define-key c-mode-base-map (read-kbd-macro "<C-backspace>") 'backward-delete-word)))
 
-;; Enabled code folding in programming modes
-(add-hook 'prog-mode-hook #'hs-minor-mode)
-
 ;(add-hook 'python-mode-hook 'jedi:setup)
 
 (add-hook 'ecb-activate-hook #'(lambda ()

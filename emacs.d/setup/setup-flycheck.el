@@ -1,7 +1,7 @@
 ;; Flycheck mode
 
 (req-package flycheck
-  :idle (global-flycheck-mode t)
+  :init (global-flycheck-mode t)
   :config
   (progn
     (setq flycheck-idle-change-delay 2

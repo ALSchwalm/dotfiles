@@ -7,6 +7,6 @@
         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
         helm-ff-file-name-history-use-recentf t)
 
-  :bind (((kbd "C-c h") . helm-command-prefix)))
+  :bind (("C-c h" . helm-command-prefix)))
 
 (provide 'setup-helm)

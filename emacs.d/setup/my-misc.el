@@ -75,7 +75,7 @@
 
 (req-package project-explorer
   :config (setq pe/width 30)
-  :bind (((read-kbd-macro "M-`") . project-explorer-toggle)))
+  :bind (("M-`" . project-explorer-toggle)))
 
 ;; Simple generic browser
 (setq browse-url-browser-function 'browse-url-generic
@@ -96,15 +96,15 @@
 (req-package flex-isearch
   :init (global-flex-isearch-mode)
   :config (setq flex-isearch-auto 'on-failed)
-  :bind (((read-kbd-macro "C-s") . flex-isearch-forward)
-         ((read-kbd-macro "C-r") . flex-isearch-backward)))
+  :bind (("C-s" . flex-isearch-forward)
+         ("C-r" . flex-isearch-backward)))
 
 ;; Save cursor position between sessions
 (req-package saveplace
   :config (setq-default save-place t))
 
 (req-package focus
-  :bind (((read-kbd-macro "<f11>") . focus-toggle-focus)))
+  :bind (("<f11>" . focus-toggle-focus)))
 
 (delete-selection-mode 1)
 (setq mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
@@ -119,9 +119,9 @@
 (setq apropos-do-all t)
 
 (req-package popwin
-  :init (popwin-mode)
   :config
   (progn
+    (popwin-mode)
     ;; kill ring
     (push "*Kill Ring*" popwin:special-display-config)
     (push '(" *undo-tree*" :position) popwin:special-display-config)
