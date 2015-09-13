@@ -38,6 +38,7 @@
 
 (add-hook 'c++-mode-hook
           '(lambda()
+             (cppcm-reload-all)
              (local-set-key (read-kbd-macro "<f1>") 'search-cpp-symbol-at-point)
 
              ;; We could place some regexes into `c-mode-common-hook', but note that their evaluation order
@@ -56,7 +57,7 @@
                     ("\\<\\(char16_t\\|char32_t\\)\\>" . font-lock-keyword-face)
                     ;; PREPROCESSOR_CONSTANT, PREPROCESSORCONSTANT
                     ("\\<[A-Z]*_[A-Z_]+\\>" . font-lock-constant-face)
-                    ("\\<[A-Z]\\{3,\\}\\>"  . font-lock-constant-face)
+                    ("\\<[A-Z]\\{5,\\}\\>"  . font-lock-constant-face)
                     ;; hexadecimal numbers
                     ("\\<0[xX][0-9A-Fa-f]+\\>" . font-lock-constant-face)
                     ;; integer/float/scientific numbers
@@ -111,5 +112,19 @@
   (when (boundp 'smex-cache)
     (smex-update)))
 (add-hook 'after-load-functions 'smex-update-after-load)
+
+(defvar hexcolour-keywords
+  '(("#[abcdefABCDEF[:digit:]]\\{6\\}"
+     (0 (put-text-property (match-beginning 0)
+                           (match-end 0)
+                           'face (list :foreground
+                                       (match-string-no-properties 0)))))))
+
+(defun hexcolour-add-to-font-lock ()
+    (interactive)
+    (font-lock-add-keywords nil hexcolour-keywords t))
+;; (add-hook 'js-mode-hook #'(lambda () (hexcolour-add-to-font-lock)))
+;; (add-hook 'web-mode-hook #'(lambda () (hexcolour-add-to-font-lock)))
+;; (add-hook 'css-mode-hook #'(lambda () (hexcolour-add-to-font-lock)))
 
 (provide 'setup-hooks)

@@ -28,9 +28,8 @@ main = xmonad =<<  statusBar myBar myPP  toggleStrutsKey (withUrgencyHook NoUrge
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ className =? "MPlayer"   --> doFloat
-    , className =? "Gimp"      --> doFloat
     , isDialog                 --> doFloat
-    , isFullscreen 	       --> (doF W.focusDown <+> doFullFloat)
+    , isFullscreen             --> (doF W.focusDown <+> doFullFloat)
     , manageWeb
     , manageSteam
     , manageTerm
@@ -81,7 +80,7 @@ myBar = "xmobar"
 -- Custom PP, configure it as you like. It determines what is being written to the bar
 myPP :: PP
 myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
-       		  ppLayout = const "",
+                  ppLayout = const "",
                   ppTitle = xmobarColor "#ee9a00" "" . shorten 50,
                   ppUrgent = wrap "~" "~"
                   }
@@ -114,13 +113,13 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 myConfig = defaultConfig
         { modMask = mod4Mask
-	, manageHook = manageSpawn <+> manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
+        , manageHook = manageSpawn <+> manageDocks <+> myManageHook <+> manageSpawn <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ myLayouts
         , startupHook = myStartup
         , handleEventHook = ewmhDesktopsEventHook
         , borderWidth = 3
-	, focusedBorderColor = "#BBBBBB"
-	, normalBorderColor = "#000000"
+        , focusedBorderColor = "#BBBBBB"
+        , normalBorderColor = "#000000"
         , terminal = "lxterminal"
         , workspaces = myWorkspaces
         , mouseBindings  = myMouseBindings
@@ -128,8 +127,8 @@ myConfig = defaultConfig
         [ ((0, 0x1008ff12),                 safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
         , ((0, 0x1008ff11),                 safeSpawn "amixer" ["-q", "set", "Master", "5-"])
         , ((0, 0x1008ff13),                 safeSpawn "amixer" ["-q", "set", "Master", "5+"])
-	, ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
-	, ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
+        , ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
+        , ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >>
                                                         spawn "emacsclient -c -a ''") (appName =? "emacs"))

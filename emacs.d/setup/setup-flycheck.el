@@ -11,6 +11,8 @@
 
     ;; Enable better c++
     (add-hook 'c++-mode-hook (lambda()
-                               (setq flycheck-clang-language-standard "c++11")))))
+                               (setq flycheck-clang-language-standard "c++1y")))
+    (eval-after-load 'flycheck
+      '(flycheck-package-setup))))
 
 (provide 'setup-flycheck)

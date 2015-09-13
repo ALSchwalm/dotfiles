@@ -78,13 +78,20 @@ function expand-or-complete-or-list-files() {
     fi
 }
 
+function previous-command () {
+    BUFFER="!:0"
+    zle expand-history
+}
+
 zle -N move_up
 zle -N move_back
 zle -N expand-or-complete-or-list-files
+zle -N previous-command
 
 bindkey "^[[1;3D" move_up
 bindkey "^[[1;3C" move_back
 bindkey '^I' expand-or-complete-or-list-files
+bindkey '\M-,' previous-command
 
 if [[ "$TERM" == "dumb" ]]
 then
@@ -138,5 +145,14 @@ source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Customize to your needs...
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export TERM=xterm-256color
-export PATH="/home/adam/.gem/ruby/2.1.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export PATH="/home/adam/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+
+# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
+export COCOS_CONSOLE_ROOT=/home/adam/Repos/cocos2d-x/tools/cocos2d-console/bin
+export PATH=$COCOS_CONSOLE_ROOT:$PATH
+
+# Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
+export COCOS_TEMPLATES_ROOT=/home/adam/Repos/cocos2d-x/templates
+export PATH=$COCOS_TEMPLATES_ROOT:$PATH

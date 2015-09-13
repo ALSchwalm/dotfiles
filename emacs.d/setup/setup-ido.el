@@ -19,7 +19,9 @@
   :init (flx-ido-mode t))
 
 (req-package ido-vertical-mode
-  :init (ido-vertical-mode))
+  :init (ido-vertical-mode)
+  :config (progn
+            (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)))
 
 
 (req-package ido-ubiquitous

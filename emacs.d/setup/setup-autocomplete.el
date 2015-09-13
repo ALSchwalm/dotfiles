@@ -9,16 +9,20 @@
   :config
   (progn
     (setq company-global-modes '(c++-mode lisp-mode emacs-lisp-mode)
-          company-c-headers-path-system '("/usr/include/c++/4.9.0/")
-          company-clang-arguments '("-std=c++11")
+          company-c-headers-path-system `( ,(nth 2 (directory-files "/usr/include/c++")))
+          company-clang-arguments '("-std=c++1y")
+          company-backends (delete 'company-semantic company-backends)
           company-dabbrev-code-time-limit 0
           company-idle-delay nil
           company-dabbrev-downcase nil
           company-dabbrev-ignore-case nil)
+    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (add-hook 'prog-mode-hook 'my/enable-company-mode)))
 
 ;; semantic mode for parsing
 (semantic-mode t)
+
+(req-package cpputils-cmake)
 
 ;; auto-complete setup
 (req-package auto-complete-config
@@ -27,6 +31,8 @@
     (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
     (ac-config-default)
     (setq ac-use-menu-map t)
+    (define-key ac-menu-map (kbd "RET") 'ac-complete)
+    (define-key ac-menu-map (kbd "<tab>") 'ac-next)
     (add-to-list 'ac-modes 'rust-mode)
     (add-to-list 'ac-modes 'd-mode)))
 
