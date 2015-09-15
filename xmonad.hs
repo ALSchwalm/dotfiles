@@ -88,7 +88,7 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
 myStartup :: X ()
 myStartup = do
           raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable") (appName =? "google-chrome-stable")
-          raiseMaybe (spawn "emacsclient -c -a ''") (appName =? "emacs")
+          raiseMaybe (spawn "emacs") (appName =? "emacs")
           replicateM_ 3 $ raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (appName =? "lxterminal")
           setWMName "LG3D"
           spawn "sh ~/.xmonad/run.sh"
@@ -131,7 +131,7 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >>
-                                                        spawn "emacsclient -c -a ''") (appName =? "emacs"))
+                                                        spawn "emacs") (appName =? "emacs"))
         , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
