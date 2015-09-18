@@ -1,8 +1,11 @@
+(add-to-load-path "~/.spacemacs-config/alschwalm")
+(require 'functions)
+
 ;; Additional global hotkeys
 (global-set-key (read-kbd-macro "M-n") 'scroll-up)
 (global-set-key (read-kbd-macro "M-p") 'scroll-down)
 (global-set-key (read-kbd-macro "<C-tab>") 'other-window)
-;; (global-set-key (read-kbd-macro "<C-backspace>") 'backward-delete-word)
+(global-set-key (read-kbd-macro "<C-backspace>") 'backward-delete-word)
 ;; (global-set-key (read-kbd-macro "RET") 'new-line-dwim)
 ;; (global-set-key (read-kbd-macro "C-a") 'back-to-indentation-or-beginning)
 ;; (global-set-key (read-kbd-macro "C-x C-b") 'ibuffer-other-window)

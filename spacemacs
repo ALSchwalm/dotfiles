@@ -164,6 +164,8 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
+  (set-default 'truncate-lines t)
+  (setq vc-follow-symlinks t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -172,10 +174,11 @@ user code."
 layers configuration. You are free to put any user code."
   (unless (server-running-p)
     (server-start))
-
+  (smartparens-global-mode -1)
   (global-company-mode)
   (global-flycheck-mode)
   (global-vi-tilde-fringe-mode -1)
+  (global-subword-mode)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

@@ -15,6 +15,7 @@
       ;; package names go here
       key-chord
       hy-mode
+      paredit
       ))
 
 ;; List of packages to exclude.
@@ -36,6 +37,19 @@
 
 (defun alschwalm/init-hy-mode ()
   (use-package hy-mode))
+
+(defun alschwalm/init-paredit ()
+  (use-package paredit
+    :config
+    (progn
+      (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)
+      (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+      (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+      (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+      (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+      (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+      (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
+    ))
 
 ;; For each package, define a function alschwalm/init-<package-name>
 ;;
