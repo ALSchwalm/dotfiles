@@ -30,7 +30,8 @@ values."
             shell-default-shell 'ansi-term
             shell-default-term-shell "/usr/sbin/zsh")
      spell-checking
-     (syntax-checking :variables syntax-checking-enable-tooltips nil)
+     (syntax-checking :variables
+                      syntax-checking-enable-tooltips nil)
      version-control
      alschwalm
      )
@@ -40,7 +41,7 @@ values."
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(rainbow-delimiters highlight-parentheses)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -55,36 +56,13 @@ values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
-   ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
-   ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
-   ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
-   ;; unchanged. (default 'vim)
    dotspacemacs-editing-style 'emacs
-   ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
-   ;; Specify the startup banner. Default value is `official', it displays
-   ;; the official spacemacs logo. An integer value is the index of text
-   ;; banner, `random' chooses a random text banner in `core/banners'
-   ;; directory. A string value must be a path to an image format supported
-   ;; by your Emacs build.
-   ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
-   ;; List of items to show in the startup buffer. If nil it is disabled.
-   ;; Possible values are: `recents' `bookmarks' `projects'.
-   ;; (default '(recents projects))
    dotspacemacs-startup-lists '(recents projects)
-   ;; List of themes, the first of the list is loaded when spacemacs starts.
-   ;; Press <SPC> T n to cycle to the next theme in the list (works great
-   ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-dark)
-   ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
-   ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
-   ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro-11"
-                               ;; :size 13
-                               ;; :weight normal
-                               ;; :width normal
                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -112,10 +90,10 @@ values."
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
    dotspacemacs-use-ido nil
    ;; If non nil, `helm' will try to miminimize the space it uses. (default nil)
-   dotspacemacs-helm-resize nil
+   dotspacemacs-helm-resize t
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header nil
+   dotspacemacs-helm-no-header t
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
    dotspacemacs-helm-position 'bottom
@@ -157,16 +135,14 @@ values."
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
-   dotspacemacs-default-package-repository nil
-   ))
+   dotspacemacs-default-package-repository nil))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
   (set-default 'truncate-lines t)
-  (setq vc-follow-symlinks t)
-  )
+  (setq vc-follow-symlinks t))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -174,12 +150,37 @@ user code."
 layers configuration. You are free to put any user code."
   (unless (server-running-p)
     (server-start))
-  (smartparens-global-mode -1)
+
   (global-company-mode)
+  (global-auto-complete-mode)
+
+  (smartparens-global-mode -1)
   (global-flycheck-mode)
   (global-vi-tilde-fringe-mode -1)
   (global-subword-mode)
-)
+
+  (add-hook 'before-save-hook 'my/before-save-function)
+
+  (helm-projectile-on)
+  (define-key helm-projectile-find-file-map (read-kbd-macro "C-f")
+    'my/helm-quit-and-ido-find-file)
+
+  (define-key projectile-command-map "s" 'helm-projectile-ag)
+
+  (setq-default cursor-type 'bar)
+  (setq evil-emacs-state-cursor '((bar . 2)))
+  (blink-cursor-mode)
+  (set-default 'cursor-in-non-selected-windows nil)
+
+  (setq flycheck-idle-change-delay 2
+        flycheck-check-syntax-automatically '(save new-line mode-enabled)
+        flycheck-clang-include-path (quote ("/usr/include")))
+
+  ;; Enable better c++
+  (add-hook 'c++-mode-hook (lambda()
+                             (setq flycheck-clang-language-standard "c++1y"))))
+
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

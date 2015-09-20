@@ -31,9 +31,7 @@
               (key-chord-define-global "KK" 'switch-to-next-buffer)
               ;; (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
               ;; (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
-              ;; (key-chord-define-global "??" 'er/expand-region)
-              )
-    ))
+              )))
 
 (defun alschwalm/init-hy-mode ()
   (use-package hy-mode))
@@ -48,8 +46,7 @@
       (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
       (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
       (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-      (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
-    ))
+      (add-hook 'scheme-mode-hook           #'enable-paredit-mode))))
 
 ;; For each package, define a function alschwalm/init-<package-name>
 ;;
