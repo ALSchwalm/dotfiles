@@ -11,6 +11,7 @@ values."
    dotspacemacs-configuration-layer-path '("~/.spacemacs-config/")
    dotspacemacs-configuration-layers
    '(
+     python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -24,6 +25,8 @@ values."
      emacs-lisp
      git
      haskell
+     html
+     rust
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom
@@ -64,26 +67,6 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro-11"
                                :powerline-scale 1.1)
-   ;; The leader key
-   dotspacemacs-leader-key "SPC"
-   ;; The leader key accessible in `emacs state' and `insert state'
-   ;; (default "M-m")
-   dotspacemacs-emacs-leader-key "M-m"
-   ;; Major mode leader key is a shortcut key which is the equivalent of
-   ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
-   dotspacemacs-major-mode-leader-key ","
-   ;; Major mode leader key accessible in `emacs state' and `insert state'.
-   ;; (default "C-M-m)
-   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
-   ;; The command key used for Evil commands (ex-commands) and
-   ;; Emacs commands (M-x).
-   ;; By default the command key is `:' so ex-commands are executed like in Vim
-   ;; with `:' and Emacs commands are executed with `<leader> :'.
-   dotspacemacs-command-key ":"
-   ;; Location where to auto-save files. Possible values are `original' to
-   ;; auto-save the file in-place, `cache' to auto-save the file to another
-   ;; file stored in the cache directory and `nil' to disable auto-saving.
-   ;; (default 'cache)
    dotspacemacs-auto-save-file-location 'cache
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
    ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
@@ -135,7 +118,11 @@ values."
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
-   dotspacemacs-default-package-repository nil))
+   dotspacemacs-default-package-repository nil
+   dotspacemacs-leader-key "SPC"
+   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-command-key ":"
+   ))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -174,11 +161,17 @@ layers configuration. You are free to put any user code."
 
   (setq flycheck-idle-change-delay 2
         flycheck-check-syntax-automatically '(save new-line mode-enabled)
-        flycheck-clang-include-path (quote ("/usr/include")))
+        flycheck-clang-include-path (quote ("/usr/include" "/usr/include/python2.7" )))
 
   ;; Enable better c++
   (add-hook 'c++-mode-hook (lambda()
-                             (setq flycheck-clang-language-standard "c++1y"))))
+                             (setq flycheck-clang-language-standard "c++1y")))
+
+  (add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
+
+  (setq web-mode-code-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-markup-indent-offset 2))
 
 
 
@@ -189,7 +182,8 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-toggle-key ""))
+ '(evil-toggle-key "")
+ '(org-startup-indented t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
