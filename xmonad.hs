@@ -11,7 +11,6 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.SpawnOn
-import XMonad.Actions.GridSelect
 import XMonad.Actions.WindowGo
 import XMonad.Layout.Tabbed
 import XMonad.Layout.NoBorders

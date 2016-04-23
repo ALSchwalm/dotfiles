@@ -100,7 +100,7 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -140,6 +140,7 @@ layers configuration. You are free to put any user code."
 
   (global-company-mode)
   (global-auto-complete-mode)
+  (setq auto-window-vscroll nil)
 
   (smartparens-global-mode -1)
   (global-flycheck-mode)
