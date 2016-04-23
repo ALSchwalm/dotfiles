@@ -126,7 +126,7 @@ myConfig = defaultConfig
         , workspaces = myWorkspaces
         , mouseBindings  = myMouseBindings
         } `additionalKeys`
-        [ ((0, 0x1008ff12),                 safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
+        ([ ((0, 0x1008ff12),                 safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
         , ((0, 0x1008ff11),                 safeSpawn "amixer" ["-q", "set", "Master", "5-"])
         , ((0, 0x1008ff13),                 safeSpawn "amixer" ["-q", "set", "Master", "5+"])
         , ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
@@ -134,7 +134,6 @@ myConfig = defaultConfig
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >>
                                                         spawn "emacs") (appName =? "emacs"))
-        , ((mod4Mask , xK_g),               goToSelected defaultGSConfig)
         , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
         , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
         , ((mod4Mask , xK_F1),              safeSpawn "xbacklight" ["-dec", "5"])
@@ -155,6 +154,20 @@ myConfig = defaultConfig
         , ((mod1Mask , xK_Tab),             windows W.focusDown)
         , ((mod1Mask .|. shiftMask, xK_Tab),  windows W.focusUp)
         ]
+        ++
+        [((mod4Mask, k), smartWindows $ W.greedyView i)
+           | (i, k) <- zip myWorkspaces [xK_1 .. xK_9]])
+
+-- ^ Like 'windows' but does nothing if there is no change in window set
+smartWindows :: (WindowSet -> WindowSet) -> X ()
+smartWindows f = do
+  XState { windowset = old } <- get
+  let new = f old::WindowSet
+  let windowid w = (W.tag ( W.workspace (W.current w)))
+  if windowid old == windowid new
+    then return ()
+  else
+    windows f
 
 -- ^ Essentially the same layout as Tall, but the window order is better
 data RotTall a = RotTall { tallNMaster :: !Int
