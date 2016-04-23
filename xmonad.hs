@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances, MultiParamTypeClasses, PatternGuards, TypeSynonymInstances, DeriveDataTypeable #-}
+
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -101,7 +103,7 @@ myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
             noBorders simpleTabbedBottom |||
             Full
   where
-     tiled   = Tall nmaster delta ratio
+     tiled   = RotTall nmaster delta ratio
      nmaster = 1
      ratio   = 1/2
      delta   = 3/100
@@ -139,8 +141,6 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_F2),              safeSpawn "xbacklight" ["-inc", "5"])
         , ((0 , 0x1008ff03),                safeSpawn "xbacklight" ["-dec", "5"])
         , ((0 , 0x1008ff02),                safeSpawn "xbacklight" ["-inc", "5"])
-        , ((mod4Mask , xK_r),               spawn "rotate toggle right")
-        , ((mod4Mask .|. shiftMask, xK_r),  spawn "rotate toggle left")
         , ((mod4Mask , xK_f),               nextWS)
         , ((mod4Mask , xK_Right),           nextWS)
         , ((mod4Mask , xK_d),               windows copyToAll)
@@ -155,3 +155,28 @@ myConfig = defaultConfig
         , ((mod1Mask , xK_Tab),             windows W.focusDown)
         , ((mod1Mask .|. shiftMask, xK_Tab),  windows W.focusUp)
         ]
+
+-- ^ Essentially the same layout as Tall, but the window order is better
+data RotTall a = RotTall { tallNMaster :: !Int
+                         , tallRatioIncrement :: !Rational
+                         , tallRatio :: !Rational
+                         }
+               deriving (Show, Read)
+
+-- a nice pure layout, lots of properties for the layout, and its messages, in Properties.hs
+instance LayoutClass RotTall a where
+    pureLayout (RotTall nmaster _ frac) r s = zip ws rs
+      where ws = fst p ++ (reverse $ snd p)
+              where p = splitAt nmaster $ W.integrate s
+            rs = tile frac r nmaster (length ws)
+
+
+    pureMessage (RotTall nmaster delta frac) m =
+            msum [fmap resize     (fromMessage m)
+                 ,fmap incmastern (fromMessage m)]
+
+      where resize Shrink             = RotTall nmaster delta (max 0 $ frac-delta)
+            resize Expand             = RotTall nmaster delta (min 1 $ frac+delta)
+            incmastern (IncMasterN d) = RotTall (max 0 (nmaster+d)) delta frac
+
+    description _ = "RotTall"
