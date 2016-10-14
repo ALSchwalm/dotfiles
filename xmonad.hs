@@ -7,9 +7,9 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
+import XMonad.Actions.UpdatePointer
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
-import XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.WindowGo
 import XMonad.Layout.Tabbed
@@ -55,7 +55,7 @@ manageEmacs = composeOne
 
 manageTerm :: ManageHook
 manageTerm = composeAll
-    [ (appName =? "lxterminal") --> (doF W.swapDown)]
+    [ (appName =? "xfce4-terminal") --> (doF W.swapDown)]
 
 manageSteam :: ManageHook
 manageSteam = composeAll
@@ -88,10 +88,10 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
 
 myStartup :: X ()
 myStartup = do
-          raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable") (appName =? "google-chrome-stable")
+          raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=1.21") (appName =? "google-chrome-stable")
           raiseMaybe (spawn "emacs") (appName =? "emacs")
-          replicateM_ 3 $ raiseMaybe (spawnOn (myWorkspaces!!0) "lxterminal") (appName =? "lxterminal")
-          setWMName "LG3D"
+          replicateM_ 3 $ raiseMaybe (spawnOn (myWorkspaces!!0) "xfce4-terminal") (appName =? "xfce4-terminal")
+          setWMName "Xfwm4"
           spawn "sh ~/.xmonad/run.sh"
 
 -- Key binding to toggle the gap for the bar.
@@ -107,10 +107,23 @@ myLayouts = smartBorders  $ onWorkspace "8:steam" Full $
      ratio   = 1/2
      delta   = 3/100
 
+
+mouseResizeMinWindow w mx my = whenX (isClient w) $ withDisplay $ \d -> do
+    io $ raiseWindow d w
+    wa <- io $ getWindowAttributes d w
+    sh <- io $ getWMNormalHints d w
+    mouseDrag (\ex ey -> do
+                 let x = ex - fromIntegral (wa_x wa)
+                     y = ey - fromIntegral (wa_y wa)
+                     sz = (max x mx, max y my)
+                 io $ resizeWindow d w `uncurry`
+                    applySizeHintsContents sh sz)
+              (float w)
+
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask .|. controlMask, button1), mouseMoveWindow)
     , ((modMask, button3), (\w -> focus w >> windows W.swapMaster))
-    , (((modMask .|. shiftMask), button1), (\w -> focus w >> Flex.mouseResizeWindow w)) ]
+    , (((modMask .|. shiftMask), button1), (\w -> focus w >> mouseResizeMinWindow w 200 200)) ]
 
 myConfig = defaultConfig
         { modMask = mod4Mask
@@ -121,24 +134,25 @@ myConfig = defaultConfig
         , borderWidth = 3
         , focusedBorderColor = "#BBBBBB"
         , normalBorderColor = "#000000"
-        , terminal = "lxterminal"
+        , terminal = "xfce4-terminal"
         , workspaces = myWorkspaces
         , mouseBindings  = myMouseBindings
         } `additionalKeys`
-        ([ ((0, 0x1008ff12),                 safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
-        , ((0, 0x1008ff11),                 safeSpawn "amixer" ["-q", "set", "Master", "5-"])
-        , ((0, 0x1008ff13),                 safeSpawn "amixer" ["-q", "set", "Master", "5+"])
-        , ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5-"])
-        , ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5+"])
+        ([((0, 0x1008ff12),                 safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
+        , ((0, 0x1008ff11),                 safeSpawn "amixer" ["-q", "set", "Master", "5%-"])
+        , ((0, 0x1008ff13),                 safeSpawn "amixer" ["-q", "set", "Master", "5%+"])
+        , ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5%-"])
+        , ((mod4Mask , xK_Up),              safeSpawn "amixer" ["-q", "set", "Master", "5%+"])
+        , ((0, 0x1008ff1b),                 safeSpawn "toggle-brightness" [])
         , ((mod4Mask .|. shiftMask, xK_x),  safeSpawn "xkill" [])
         , ((mod4Mask , xK_e),               raiseMaybe (moveTo Next (WSIs $ return (("2:emacs" ==) . W.tag)) >>
                                                         spawn "emacs") (appName =? "emacs"))
-        , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" [])
-        , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--incognito"])
-        , ((mod4Mask , xK_F1),              safeSpawn "xbacklight" ["-dec", "5"])
-        , ((mod4Mask , xK_F2),              safeSpawn "xbacklight" ["-inc", "5"])
-        , ((0 , 0x1008ff03),                safeSpawn "xbacklight" ["-dec", "5"])
-        , ((0 , 0x1008ff02),                safeSpawn "xbacklight" ["-inc", "5"])
+        , ((mod4Mask , xK_u),               safeSpawn "google-chrome-stable" ["--high-dpi-support=1", "--force-device-scale-factor=1.21"])
+        , ((mod4Mask .|. shiftMask, xK_u),  safeSpawn "google-chrome-stable" ["--high-dpi-support=1", "--force-device-scale-factor=1.21", "--incognito"])
+        , ((mod4Mask , xK_F2),              safeSpawn "xbacklight" ["-dec", "3"])
+        , ((mod4Mask , xK_F3),              safeSpawn "xbacklight" ["-inc", "3"])
+        , ((0 , 0x1008ff03),                safeSpawn "xbacklight" ["-dec", "3"])
+        , ((0 , 0x1008ff02),                safeSpawn "xbacklight" ["-inc", "3"])
         , ((mod4Mask , xK_f),               nextWS)
         , ((mod4Mask , xK_Right),           nextWS)
         , ((mod4Mask , xK_d),               windows copyToAll)
