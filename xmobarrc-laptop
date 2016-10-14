@@ -1,4 +1,4 @@
-Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+Config { font = "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
@@ -16,7 +16,7 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                                             "--low", "red", "--high", "green", "--nastring", "disconnected"] 300
 		    , Run StdinReader
 		    , Run ThermalZone 1 ["-t", "Temp: <temp>°C", "-L", "60", "-H", "70", "--low", "green", "--high", "red"] 30
-		    , Run BatteryP ["BAT1"]
+		    , Run BatteryP ["BAT0"]
 		                  ["-t", "<acstatus>"
 				   , "-L", "35", "-H", "75"
 				   , "-l", "red", "-h", "green"
