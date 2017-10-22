@@ -112,6 +112,17 @@
 (defun my/before-save-function ()
   (if (eq major-mode 'c++-mode)
       (clang-format-region (point-min) (point-max)))
+  (if (eq major-mode 'rust-mode)
+      (rust-format-buffer))
   (my/delete-whitespace-and-indent))
+
+(defun my/save-without-trim ()
+  (interactive)
+  (let ((b (current-buffer)))
+    (with-temp-buffer
+      (let ((before-save-hook (remove 'my/before-save-function before-save-hook)))
+        (with-current-buffer b
+          (let ((before-save-hook (remove 'my/before-save-function before-save-hook)))
+            (save-buffer)))))))
 
 (provide 'functions)

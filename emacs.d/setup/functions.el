@@ -243,24 +243,6 @@ on their own line will not be indented."
       (forward-char (length comment-start))))
   (deactivate-mark))
 
-(req-package helm-ag)
-(defun my/helm-projectile-ag (arg)
-  "Helm version of projectile-ag. Insert symbol under point if ARG is non-nil"
-  (interactive "P")
-  (unless (executable-find "ag")
-    (error "ag not available"))
-  (if (require 'helm-ag nil  'noerror)
-      (let* ((helm-ag-insert-at-point (if arg 'symbol nil))
-             (grep-find-ignored-files (-union projectile-globally-ignored-files grep-find-ignored-files))
-             (grep-find-ignored-directories (-union projectile-globally-ignored-directories grep-find-ignored-directories))
-             (ignored (mapconcat (lambda (i)
-                                   (concat "--ignore " i))
-                                 (append grep-find-ignored-files grep-find-ignored-directories)
-                                 " "))
-             (helm-ag-base-command (concat helm-ag-base-command " " ignored)))
-        (helm-do-ag (projectile-project-root)))
-    (error "helm-ag not available")))
-
 (require 'find-file "find-file")
 (defun find-other-buffer ()
   "ff-find-other-file with buffers"

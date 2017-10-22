@@ -146,10 +146,14 @@ plugins=(git extract autojump colored-man torrent emacs)
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Fix slow paste
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
 # Customize to your needs...
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export TERM=xterm-256color
 export PATH="/home/adam/.cargo/bin:/home/adam/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export GOPATH="/home/adam/.go"
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
 export COCOS_CONSOLE_ROOT=/home/adam/Repos/cocos2d-x/tools/cocos2d-console/bin

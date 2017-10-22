@@ -11,6 +11,13 @@ values."
    dotspacemacs-configuration-layer-path '("~/.spacemacs-config/")
    dotspacemacs-configuration-layers
    '(
+     php
+     go
+     lua
+     racket
+     yaml
+     ruby
+     markdown
      python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -67,7 +74,7 @@ values."
    dotspacemacs-startup-lists '(recents projects)
    dotspacemacs-themes '(solarized-dark)
    dotspacemacs-colorize-cursor-according-to-state t
-   dotspacemacs-default-font '("Source Code Pro-13"
+   dotspacemacs-default-font '("Source Code Pro-11"
                                :powerline-scale 1.1)
    dotspacemacs-auto-save-file-location 'cache
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
@@ -171,12 +178,14 @@ layers configuration. You are free to put any user code."
                              (setq flycheck-clang-language-standard "c++1y")))
 
   (add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
+  (setq shell-file-name "/usr/bin/zsh")
+
+  (spaceline-toggle-minor-modes-off)
 
   (setq web-mode-code-indent-offset 2
         web-mode-css-indent-offset 2
         web-mode-markup-indent-offset 2)
   (add-to-list 'projectile-globally-ignored-directories "node_modules"))
-
 
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -187,15 +196,15 @@ layers configuration. You are free to put any user code."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-toggle-key "")
+ '(exec-path-from-shell-shell-name "/usr/bin/zsh")
  '(js-indent-level 2)
  '(org-startup-indented t)
  '(package-selected-packages
    (quote
-    (wgrep smex counsel-projectile counsel swiper pug-mode yapfify uuidgen toc-org py-isort org org-plus-contrib org-bullets mwim livid-mode skewer-mode simple-httpd live-py-mode link-hint intero hlint-refactor helm-hoogle git-link flyspell-correct-helm flyspell-correct seq eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff eshell-z dumb-jump company-ghci column-enforce-mode cargo omnisharp csharp-mode spinner json-snatcher json-reformat parent-mode request haml-mode gitignore-mode fringe-helper git-gutter+ epl flx highlight web-completion-data dash-functional pos-tip pythonic s bind-map xterm-color ws-butler window-numbering web-mode toml-mode spacemacs-theme spaceline racer rust-mode persp-mode orgit open-junk-file neotree magit-gitflow leuven-theme less-css-mode js2-refactor js2-mode indent-guide hl-todo hindent help-fns+ helm-themes helm-pydoc helm-projectile helm-make projectile helm-descbinds helm-c-yasnippet helm-ag haskell-snippets google-translate git-messenger flycheck-rust expand-region exec-path-from-shell evil-surround evil-search-highlight-persist evil-mc evil-matchit evil-magit magit magit-popup evil-iedit-state iedit evil-exchange eshell-prompt-extras emmet-mode diff-hl company-racer company-quickhelp company-anaconda cmake-mode clang-format auto-yasnippet yasnippet auto-compile anaconda-mode ace-link ace-jump-helm-line auto-complete avy ghc tern anzu smartparens haskell-mode flycheck git-gutter git-commit with-editor company helm helm-core hydra f quelpa package-build use-package which-key evil dash web-beautify volatile-highlights vi-tilde-fringe undo-tree tagedit solarized-theme smooth-scrolling smeargle slim-mode shm shell-pop scss-mode sass-mode restart-emacs pyvenv pytest pyenv-mode py-yapf powerline popwin popup pkg-info pip-requirements pcre2el paredit paradox page-break-lines packed multiple-cursors multi-term move-text macrostep lorem-ipsum linum-relative key-chord json-mode js-doc jade-mode info+ ido-vertical-mode hy-mode hungry-delete highlight-numbers highlight-indentation helm-swoop helm-mode-manager helm-gitignore helm-flyspell helm-flx helm-css-scss helm-company goto-chg golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-gutter-fringe git-gutter-fringe+ flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery evil-visualstar evil-tutor evil-numbers evil-nerd-commenter evil-lisp-state evil-indent-plus evil-escape evil-args evil-anzu eval-sexp-fu esh-help elisp-slime-nav disaster diminish define-word deferred cython-mode company-web company-tern company-statistics company-ghc company-cabal company-c-headers coffee-mode cmm-mode clean-aindent-mode buffer-move bracketed-paste bind-key auto-highlight-symbol auto-dictionary async aggressive-indent adaptive-wrap ace-window ac-ispell))))
+    (elvish-mode package-lint phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode go-guru go-eldoc company-go go-mode parinfer lua-mode winum unfill minitest hide-comnt fuzzy rainbow-delimiters highlight-parentheses racket-mode faceup yaml-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake chruby bundler inf-ruby mmm-mode markdown-toc markdown-mode gh-md wgrep smex counsel-projectile counsel swiper pug-mode yapfify uuidgen toc-org py-isort org org-plus-contrib org-bullets mwim livid-mode skewer-mode simple-httpd live-py-mode link-hint intero hlint-refactor helm-hoogle git-link flyspell-correct-helm flyspell-correct seq eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff eshell-z dumb-jump company-ghci column-enforce-mode cargo omnisharp csharp-mode spinner json-snatcher json-reformat parent-mode request haml-mode gitignore-mode fringe-helper git-gutter+ epl flx highlight web-completion-data dash-functional pos-tip pythonic s bind-map xterm-color ws-butler window-numbering web-mode toml-mode spacemacs-theme spaceline racer rust-mode persp-mode orgit open-junk-file neotree magit-gitflow leuven-theme less-css-mode js2-refactor js2-mode indent-guide hl-todo hindent help-fns+ helm-themes helm-pydoc helm-projectile helm-make projectile helm-descbinds helm-c-yasnippet helm-ag haskell-snippets google-translate git-messenger flycheck-rust expand-region exec-path-from-shell evil-surround evil-search-highlight-persist evil-mc evil-matchit evil-magit magit magit-popup evil-iedit-state iedit evil-exchange eshell-prompt-extras emmet-mode diff-hl company-racer company-quickhelp company-anaconda cmake-mode clang-format auto-yasnippet yasnippet auto-compile anaconda-mode ace-link ace-jump-helm-line auto-complete avy ghc tern anzu smartparens haskell-mode flycheck git-gutter git-commit with-editor company helm helm-core hydra f quelpa package-build use-package which-key evil dash web-beautify volatile-highlights vi-tilde-fringe undo-tree tagedit solarized-theme smooth-scrolling smeargle slim-mode shm shell-pop scss-mode sass-mode restart-emacs pyvenv pytest pyenv-mode py-yapf powerline popwin popup pkg-info pip-requirements pcre2el paredit paradox page-break-lines packed multiple-cursors multi-term move-text macrostep lorem-ipsum linum-relative key-chord json-mode js-doc jade-mode info+ ido-vertical-mode hy-mode hungry-delete highlight-numbers highlight-indentation helm-swoop helm-mode-manager helm-gitignore helm-flyspell helm-flx helm-css-scss helm-company goto-chg golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-gutter-fringe git-gutter-fringe+ flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery evil-visualstar evil-tutor evil-numbers evil-nerd-commenter evil-lisp-state evil-indent-plus evil-escape evil-args evil-anzu eval-sexp-fu esh-help elisp-slime-nav disaster diminish define-word deferred cython-mode company-web company-tern company-statistics company-ghc company-cabal company-c-headers coffee-mode cmm-mode clean-aindent-mode buffer-move bracketed-paste bind-key auto-highlight-symbol auto-dictionary async aggressive-indent adaptive-wrap ace-window ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+ )

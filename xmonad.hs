@@ -7,7 +7,6 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
-import XMonad.Actions.UpdatePointer
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.SpawnOn
@@ -34,20 +33,20 @@ myManageHook = composeAll
     , manageWeb
     , manageSteam
     , manageTerm
-    , manageIRC
+    , manageIDA
     , manageEmacs]
 
 manageWeb :: ManageHook
 manageWeb = composeOne
     [ appName =? c -?> (doShift "3:web")
-    | c <- [ "chromium-browser",
+    | c <- [ "chromium",
              "google-chrome-stable",
              "firefox"
            ]]
 
-manageIRC :: ManageHook
-manageIRC = composeOne
-    [ className =? "Xchat" -?> doShift "7:irc" ]
+manageIDA :: ManageHook
+manageIDA = composeOne
+    [ className =? "IDA" -?> doShift "7:IDA" ]
 
 manageEmacs :: ManageHook
 manageEmacs = composeOne
@@ -69,7 +68,7 @@ myWorkspaces = [ "1:term"
                , "4"
                , "5"
                , "6"
-               , "7:irc"
+               , "7:IDA"
                , "8:steam"
                , "9:music"
                ]
@@ -138,7 +137,7 @@ myConfig = defaultConfig
         , workspaces = myWorkspaces
         , mouseBindings  = myMouseBindings
         } `additionalKeys`
-        ([((0, 0x1008ff12),                 safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
+        ([((0, 0x1008ff12),                 safeSpawn "pactl" ["set-sink-mute", "0", "toggle"])
         , ((0, 0x1008ff11),                 safeSpawn "amixer" ["-q", "set", "Master", "5%-"])
         , ((0, 0x1008ff13),                 safeSpawn "amixer" ["-q", "set", "Master", "5%+"])
         , ((mod4Mask , xK_Down ),           safeSpawn "amixer" ["-q", "set", "Master", "5%-"])
@@ -153,6 +152,7 @@ myConfig = defaultConfig
         , ((mod4Mask , xK_F3),              safeSpawn "xbacklight" ["-inc", "3"])
         , ((0 , 0x1008ff03),                safeSpawn "xbacklight" ["-dec", "3"])
         , ((0 , 0x1008ff02),                safeSpawn "xbacklight" ["-inc", "3"])
+        , ((mod4Mask , xK_p),               safeSpawn "rofi" ["-show", "run", "-location", "2", "-width", "100"])
         , ((mod4Mask , xK_f),               nextWS)
         , ((mod4Mask , xK_Right),           nextWS)
         , ((mod4Mask , xK_d),               windows copyToAll)
