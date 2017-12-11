@@ -87,7 +87,7 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#ee9a00" "" . wrap "[" "]",
 
 myStartup :: X ()
 myStartup = do
-          raiseMaybe (spawnOn (myWorkspaces!!2) "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=1.21") (appName =? "google-chrome-stable")
+          raiseMaybe (spawnOn (myWorkspaces!!2) "firefox") (appName =? "firefox")
           raiseMaybe (spawn "emacs") (appName =? "emacs")
           replicateM_ 3 $ raiseMaybe (spawnOn (myWorkspaces!!0) "xfce4-terminal") (appName =? "xfce4-terminal")
           setWMName "Xfwm4"
