@@ -76,9 +76,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.tile,
-    awful.layout.suit.max,
-    awful.layout.suit.magnifier
+  awful.layout.suit.tile,
+  awful.layout.suit.max
 }
 -- }}}
 
@@ -177,10 +176,14 @@ end
 
 function battery_format_callback(widget, bat_info)
   local state, percent, remaining = unpack(bat_info)
+  local status = "Battery"
   if state == "↯" then
     remaining = "Full"
+  elseif state == "+" then
+    status = color_span("Charging", beautiful.colors.light_green)
   end
-  return string.format("Battery: %s%% / %s",
+  return string.format("%s: %s%% / %s",
+                       status,
                        color_numeric_value(percent, { low = 35,
                                                       high = 75,
                                                       lowcolor = beautiful.colors.light_red,
@@ -344,7 +347,7 @@ globalkeys = gears.table.join(
       {description = "select previous", group = "layout"}),
 
     -- Media Keys
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("pactl set-sink-mute 0 toggle") end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -D pulse set Master 1+ toggle") end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q set Master 5%-") end),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q set Master 5%+") end),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("light -U 5") end),
@@ -559,10 +562,7 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-        and awful.client.focus.filter(c) then
-        client.focus = c
-    end
+    awful.client.focus.byidx(0, c)
 end)
 
 -- No border for maximized clients
