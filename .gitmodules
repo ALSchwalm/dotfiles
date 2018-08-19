@@ -1,3 +1,0 @@
-[submodule "emacs.d/emacs-powerline"]
-	path = emacs.d/emacs-powerline
-	url = https://github.com/ALSchwalm/emacs-powerline.git
