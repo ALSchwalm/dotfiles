@@ -23,8 +23,7 @@
   :config (progn
             (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)))
 
-
-(req-package ido-ubiquitous
+(req-package ido-completing-read+
   :init (ido-ubiquitous-mode t))
 
 (provide 'setup-ido)

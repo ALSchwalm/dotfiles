@@ -1,10 +1,6 @@
 ;; Load theme
 
-(req-package solarized-dark-theme
-  :config
-  (progn (setq sml/no-confirm-load-theme t)
-         (set-face-foreground 'minibuffer-prompt "#268bd2")
-         (setq custom-enabled-themes (quote (solarized-dark)))))
+(req-package solarized-theme)
 
 (req-package smart-mode-line
   :config
@@ -34,10 +30,6 @@
 (req-package git-gutter
   :config
   (progn (global-git-gutter-mode t)))
-
-;; Better duplicate buffer names
-(req-package uniquify
-  :config (progn (setq uniquify-buffer-name-style 'forward)))
 
 ;; always turn on, where available
 (global-font-lock-mode t)

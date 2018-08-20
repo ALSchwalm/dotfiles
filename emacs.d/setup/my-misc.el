@@ -19,8 +19,6 @@
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
 
-(req-package thing-at-point-string)
-
 ;; disaster for disassembly
 (req-package disaster
   :commands disaster
@@ -129,8 +127,5 @@
     (push '("^\\*helm.*\\*$" :height 0.5 :regexp t :position bottom)
           popwin:special-display-config)
     (global-set-key (kbd "C-c w") popwin:keymap)))
-
-(req-package revive)
-(add-hook 'kill-emacs-hook 'save-current-configuration)
 
 (provide 'my-misc)

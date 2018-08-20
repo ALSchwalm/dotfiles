@@ -25,7 +25,7 @@
 (req-package cpputils-cmake)
 
 ;; auto-complete setup
-(req-package auto-complete-config
+(req-package auto-complete
   :config
   (progn
     (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")

@@ -24,13 +24,17 @@
 (global-set-key (read-kbd-macro "M-y") 'helm-show-kill-ring)
 
  ;; Key chords
-(key-chord-mode t)
-(key-chord-define-global "uu" 'undo-tree-visualize)
-(key-chord-define-global "JJ" 'switch-to-prev-buffer)
-(key-chord-define-global "KK" 'switch-to-next-buffer)
-(key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
-(key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
-(key-chord-define-global "??" 'er/expand-region)
+(req-package key-chord
+  :init (key-chord-mode t)
+  :ensure t
+  :config
+  (progn
+    (key-chord-define-global "uu" 'undo-tree-visualize)
+    (key-chord-define-global "JJ" 'switch-to-prev-buffer)
+    (key-chord-define-global "KK" 'switch-to-next-buffer)
+    (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
+    (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
+    (key-chord-define-global "??" 'er/expand-region)))
 
 ;; Tree undo
 (global-unset-key (read-kbd-macro "C-z"))
