@@ -11,6 +11,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/setup/")
 (add-to-list 'load-path "~/.emacs.d/lisp/idle-highlight/")
+(add-to-list 'exec-path "/usr/local/bin")
 
 (require 'setup-package)
 (require-package 'req-package)
@@ -39,6 +40,7 @@
 (require 'setup-hooks)
 (require 'setup-helm)
 (require 'setup-paredit)
+(require 'setup-tramp)
 (require 'my-misc)
 (require 'functions)
 
@@ -58,7 +60,7 @@
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(package-selected-packages
    (quote
-    (smart-mode-line solarized-theme auto-complete ido-completing-read+ solarized-dark-theme key-chord req-package el-get))))
+    (rust-mode helm-ag projectile-ripgrep helm-rg smart-mode-line solarized-theme auto-complete ido-completing-read+ solarized-dark-theme key-chord req-package el-get))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

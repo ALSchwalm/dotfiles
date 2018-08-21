@@ -4,7 +4,8 @@
 
 (req-package smart-mode-line
   :config
-  (progn (sml/setup)
+  (progn (setq sml/no-confirm-load-theme t)
+         (sml/setup)
          (sml/apply-theme 'respectful)
          (setq sml/name-width 20)
          (setq sml/mode-width 'right)))
@@ -61,5 +62,6 @@
             (paren-activate)
             (setq show-paren-delay 0)))
 
+(req-package rust-mode)
 
 (provide 'setup-theme)

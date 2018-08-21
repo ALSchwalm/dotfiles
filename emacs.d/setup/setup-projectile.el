@@ -1,20 +1,27 @@
 
 (req-package projectile
   :init (projectile-global-mode)
+  :config (progn
+            (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+            (define-key projectile-command-map "s" 'helm-projectile-ag))
   :bind (("C-x C-f" . projectile-find-file-with-fallback)
          ("<M-f1>" . projectile-ff-find-other-file)
          ("<f5>" . projectile-compile-with-fallback)))
 
+(req-package helm-ag)
+
 (req-package helm-projectile
   :init (helm-projectile-on)
-  :config (define-key projectile-command-map "s" 'my/helm-projectile-ag))
+  :config (setq helm-projectile-set-input-automatically nil))
 
-;; Fallback to ido-find-file when not in a project
+;; Fallback to ido-find-file when not in a project (or over tramp)
 (defun projectile-find-file-with-fallback ()
   (interactive)
-  (condition-case nil
-      (projectile-find-file)
-    (error (ido-find-file))))
+  (if (or (not buffer-file-name) (file-remote-p buffer-file-name))
+      (ido-find-file)
+    (condition-case nil
+        (projectile-find-file)
+      (error (ido-find-file)))))
 
 (defun projectile-ff-find-other-file ()
   (interactive)

@@ -41,4 +41,7 @@
 (global-set-key (read-kbd-macro "C-z") 'undo-tree-undo)
 (global-set-key (read-kbd-macro "C-S-z") 'undo-tree-redo)
 
+;; Modifier for mac
+(setq mac-command-modifier 'control)
+
 (provide 'setup-key-bindings)

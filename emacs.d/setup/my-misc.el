@@ -4,6 +4,9 @@
 
 ")
 
+;; disable the bell (especially important on mac)
+(setq ring-bell-function 'ignore)
+
 ;; truncate long lines rather than wrapping
 (set-default 'truncate-lines t)
 
@@ -127,5 +130,8 @@
     (push '("^\\*helm.*\\*$" :height 0.5 :regexp t :position bottom)
           popwin:special-display-config)
     (global-set-key (kbd "C-c w") popwin:keymap)))
+
+;; Probably not looking at files vc'd under bazaar
+(setq vc-handled-backends '(SVN Git))
 
 (provide 'my-misc)
