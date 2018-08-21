@@ -264,4 +264,18 @@ on their own line will not be indented."
   (if (string-match "^/ssh:.*?:" (buffer-file-name (current-buffer)))
       (rename-buffer (concat (buffer-name (current-buffer)) "<" (match-string 0 (buffer-file-name (current-buffer))) ">")) nil))
 
+
+;; Like 'helm-buffers-list' but doesn't show the 'create buffer' option
+(defun my/helm-buffers-list ()
+  "Preconfigured `helm' to list buffers."
+  (interactive)
+  (unless helm-source-buffers-list
+    (setq helm-source-buffers-list
+          (helm-make-source "Buffers" 'helm-source-buffers)))
+  (helm :sources '(helm-source-buffers-list
+                   helm-source-ido-virtual-buffers)
+        :buffer "*helm buffers*"
+        :keymap helm-buffer-map
+        :truncate-lines helm-buffers-truncate-lines))
+
 (provide 'functions)

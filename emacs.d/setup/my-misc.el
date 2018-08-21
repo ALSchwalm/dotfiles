@@ -42,11 +42,6 @@
 ;; Add expand region
 (req-package expand-region)
 
-;; completion for M-x
-(req-package smex
-  :init (smex-initialize)
-  :config (smex-auto-update nil))
-
 ;; Move around with shift+arrow
 (windmove-default-keybindings)
 
@@ -96,7 +91,7 @@
     (push "*Kill Ring*" popwin:special-display-config)
     (push '(" *undo-tree*" :position) popwin:special-display-config)
     (push '("*ggtags-global*" :stick t) popwin:special-display-config)
-    (push '("^\\*helm.*\\*$" :height 0.5 :regexp t :position bottom)
+    (push '("^\\*helm.*\\*$" :regexp t :position bottom)
           popwin:special-display-config)
     (global-set-key (kbd "C-c w") popwin:keymap)))
 
