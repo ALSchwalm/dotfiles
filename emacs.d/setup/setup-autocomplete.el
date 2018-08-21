@@ -43,10 +43,6 @@
 ;; Used in popups for autocomplete mode
 (req-package pos-tip)
 
-(req-package yasnippet
-  :config (yas-global-mode 1))
-
-
 (req-package ggtags
   :config
   (progn

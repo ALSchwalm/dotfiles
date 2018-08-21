@@ -25,17 +25,4 @@ re-downloaded in order to locate PACKAGE."
         (package-refresh-contents)
         (require-package package min-version t)))))
 
-(require-package 'dash)
-(require 'dash)
-
-(defun packages-install (packages)
-  (--each packages
-    (when (not (package-installed-p it))
-      (package-install it)))
-  (delete-other-windows))
-
-;;; On-demand installation of packages
-
-
-
 (provide 'setup-package)

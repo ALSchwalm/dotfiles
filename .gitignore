@@ -7,6 +7,7 @@ emacs.d/project-explorer-cache/
 emacs.d/history
 emacs.d/.python-environments/
 emacs.d/smex-items
+emacs.d/eshell
 
 ###################
 # Autocomplete history

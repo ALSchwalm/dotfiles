@@ -32,14 +32,6 @@
                 (define-key c-mode-base-map (kbd "C-c d") 'disaster)))
     (setq disaster-cxxflags "-std=c++11")))
 
-
-;; Fix D compile regex
-(req-package compile
-  :config (add-to-list
-           'compilation-error-regexp-alist
-           '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
-             1 2 nil (3 . 4))))
-
 ;; Don't allow me to kill the scratch
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
   (let ((buffer-to-kill (ad-get-arg 0)))
@@ -59,24 +51,7 @@
 (windmove-default-keybindings)
 
 (req-package undo-tree
-  :init (global-undo-tree-mode)
-  :config
-  (progn
-    ;; Keep region while undoing in region
-    (defadvice undo-tree-undo (around keep-region activate)
-      (if (use-region-p)
-          (let ((m (set-marker (make-marker) (mark)))
-                (p (set-marker (make-marker) (point))))
-            ad-do-it
-            (goto-char p)
-            (set-mark m)
-            (set-marker p nil)
-            (set-marker m nil))
-        ad-do-it))))
-
-(req-package project-explorer
-  :config (setq pe/width 30)
-  :bind (("M-`" . project-explorer-toggle)))
+  :init (global-undo-tree-mode))
 
 ;; Simple generic browser
 (setq browse-url-browser-function 'browse-url-generic
@@ -96,24 +71,18 @@
 
 (req-package flex-isearch
   :init (global-flex-isearch-mode)
-  :config (setq flex-isearch-auto 'on-failed)
-  :bind (("C-s" . flex-isearch-forward)
-         ("C-r" . flex-isearch-backward)))
+  :config (setq flex-isearch-auto 'on-failed))
 
 ;; Save cursor position between sessions
-(req-package saveplace
-  :config (setq-default save-place t))
-
-(req-package focus
-  :bind (("<f11>" . focus-toggle-focus)))
+(save-place-mode 1)
+(setq save-place-file (concat user-emacs-directory "places"))
 
 (delete-selection-mode 1)
 (setq mouse-wheel-scroll-amount (quote (1 ((shift) . 1))))
 (setq mouse-yank-at-point t)
+(setq scroll-conservatively 1000)
 
 (setq save-interprogram-paste-before-kill t)
-(setq save-place-file (concat user-emacs-directory "places"))
-(setq scroll-conservatively 1000)
 
 (setq x-select-enable-clipboard t)
 (setq x-select-enable-primary t)
@@ -133,5 +102,8 @@
 
 ;; Probably not looking at files vc'd under bazaar
 (setq vc-handled-backends '(SVN Git))
+
+(req-package which-key
+  :config (which-key-mode))
 
 (provide 'my-misc)
