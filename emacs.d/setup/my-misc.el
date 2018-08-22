@@ -46,7 +46,16 @@
 (windmove-default-keybindings)
 
 (req-package undo-tree
-  :init (global-undo-tree-mode))
+  :init (global-undo-tree-mode)
+  :config (progn
+            (let ((undo-dir (concat user-emacs-directory "undo")))
+             (unless (file-exists-p undo-dir)
+               (make-directory undo-dir))
+             (setq undo-tree-mode-lighter " UT"
+                   undo-tree-auto-save-history t
+                   undo-tree-enable-undo-in-region nil
+                   undo-tree-history-directory-alist
+                   `(("." . ,undo-dir))))))
 
 ;; Simple generic browser
 (setq browse-url-browser-function 'browse-url-generic
