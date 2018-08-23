@@ -105,7 +105,7 @@
     (global-set-key (kbd "C-c w") popwin:keymap)))
 
 ;; Probably not looking at files vc'd under bazaar
-(setq vc-handled-backends '(SVN Git))
+;; (setq vc-handled-backends '(SVN Git))
 
 (req-package which-key
   :config (which-key-mode))

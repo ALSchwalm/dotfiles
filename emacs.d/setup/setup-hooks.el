@@ -38,7 +38,6 @@
 
 (add-hook 'c++-mode-hook
           '(lambda()
-             (cppcm-reload-all)
              (local-set-key (read-kbd-macro "<f1>") 'search-cpp-symbol-at-point)
 
              ;; We could place some regexes into `c-mode-common-hook', but note that their evaluation order
@@ -106,12 +105,6 @@
                (y-or-n-p (format "Directory `%s' does not exist. Create it?" parent-directory)))
       (make-directory parent-directory t))))
 (add-to-list 'find-file-not-found-functions #'create-non-existent-directory)
-
-;; Auto-update smex
-(defun smex-update-after-load (unused)
-  (when (boundp 'smex-cache)
-    (smex-update)))
-(add-hook 'after-load-functions 'smex-update-after-load)
 
 (defvar hexcolour-keywords
   '(("#[abcdefABCDEF[:digit:]]\\{6\\}"
