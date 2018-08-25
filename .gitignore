@@ -9,6 +9,7 @@ emacs.d/.python-environments/
 emacs.d/smex-items
 emacs.d/eshell
 emacs.d/undo
+emacs.d/.persistent-scratch
 
 ###################
 # Autocomplete history

@@ -1,8 +1,11 @@
 ;; Miscellaneous settigns
 
-(setq initial-scratch-message ";; This buffer is for notes you don't want to save, and for Lisp evaluation.
+(setq initial-scratch-message ";; This buffer is for notes, and for Lisp evaluation.
 
 ")
+
+(req-package persistent-scratch
+  :init (persistent-scratch-setup-default))
 
 ;; disable the bell (especially important on mac)
 (setq ring-bell-function 'ignore)
