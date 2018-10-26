@@ -3,9 +3,9 @@
   :init (projectile-global-mode)
   :config (progn
             (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-            (define-key projectile-command-map "s" 'helm-projectile-ag))
-  :bind (("C-x C-f" . projectile-find-file-with-fallback)
-         ("<M-f1>" . projectile-ff-find-other-file)
+            (define-key projectile-command-map "s" 'helm-projectile-ag)
+            (define-key projectile-command-map "f" 'projectile-find-file-with-fallback))
+  :bind (("<M-f1>" . projectile-ff-find-other-file)
          ("<f5>" . projectile-compile-with-fallback)))
 
 (req-package helm-ag)

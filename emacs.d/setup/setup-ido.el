@@ -9,11 +9,8 @@
           ido-auto-merge-work-directories-length -1
           ido-use-filename-at-point nil
           ido-use-faces nil
-          ido-max-prospects 10)
-
-    (defun ido-define-keys()
-      (define-key ido-completion-map (kbd "C-f") 'ido-enter-find-file))
-    (add-hook 'ido-setup-hook 'ido-define-keys)))
+          ido-max-prospects 10))
+  :bind (("C-x C-f" . ido-find-file)))
 
 (req-package flx-ido
   :init (flx-ido-mode t))
