@@ -66,4 +66,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(flycheck-error ((t (:background nil :foreground "#FF6E64" :underline t :weight bold))))
+ '(flycheck-warning ((t (:background nil :foreground "#DEB542" :underline t :weight bold)))))

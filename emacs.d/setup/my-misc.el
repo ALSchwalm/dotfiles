@@ -91,8 +91,7 @@
 
 (setq save-interprogram-paste-before-kill t)
 
-(setq x-select-enable-clipboard t)
-(setq x-select-enable-primary t)
+(setq select-enable-clipboard t)
 (setq apropos-do-all t)
 
 (req-package popwin
@@ -112,5 +111,23 @@
 
 (req-package which-key
   :config (which-key-mode))
+
+(defun my-change-window-divider ()
+  (let ((display-table (or buffer-display-table standard-display-table)))
+    (set-display-table-slot display-table 5 ?│)
+    (set-window-display-table (selected-window) display-table)))
+(add-hook 'window-configuration-change-hook 'my-change-window-divider)
+
+(when (not (display-graphic-p))
+  (require 'term/xterm)
+  (setq xterm-extra-capabilities '(setSelection))
+  (terminal-init-xterm)
+
+  ;; Fix for weird 'kitty' behavior where it doesn't clear the clipboard
+  (defadvice gui-select-text (around select-clear-old activate)
+    (ad-deactivate 'gui-select-text)
+    (gui-select-text "")
+    (ad-activate 'gui-select-text)
+    ad-do-it))
 
 (provide 'my-misc)
