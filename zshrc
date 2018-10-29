@@ -15,7 +15,7 @@ setopt IGNORE_EOF
 
 alias install="yaourt -S"
 alias search="yaourt -Ss"
-alias update="yaourt -Syua"
+alias update="yaourt -Syyua"
 alias autoremove="pacman -Qdtq | sudo pacman -Rcns -"
 alias remove="yaourt -Rcns"
 alias vpnhome="(cd /etc/openvpn/; sudo openvpn home.conf)"
@@ -151,7 +151,6 @@ zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 
 # Customize to your needs...
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export TERM=xterm-256color
 export PATH="/home/adam/.cargo/bin:/home/adam/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 export GOPATH="/home/adam/.go"
 
