@@ -43,9 +43,9 @@
 (global-set-key (read-kbd-macro "C-S-z") 'undo-tree-redo)
 
 ;; Add special escape sequences for terminal mode
-(define-key local-function-key-map "\033[55;5~" [(control ?')])
-(define-key local-function-key-map "\033[56;5~" [(control backspace)])
-(define-key local-function-key-map "\033[57;5~" [(control ?;)])
+(define-key function-key-map "\033[55;5~" [(control ?')])
+(define-key function-key-map "\033[56;5~" [(control backspace)])
+(define-key function-key-map "\033[57;5~" [(control ?\;)])
 
 ;; Modifier for mac
 (setq mac-command-modifier 'control)
