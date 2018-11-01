@@ -11,6 +11,9 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
 
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
 (defun ansi-term-default ()
   (interactive)
   (ansi-term "zsh" "localhost"))
