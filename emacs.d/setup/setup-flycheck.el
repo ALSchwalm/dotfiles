@@ -15,4 +15,10 @@
     (eval-after-load 'flycheck
       '(flycheck-package-setup))))
 
+(req-package flycheck-rust
+  :config
+  (progn
+    (with-eval-after-load 'rust-mode
+      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))))
+
 (provide 'setup-flycheck)

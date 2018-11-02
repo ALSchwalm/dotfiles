@@ -10,7 +10,7 @@
 (global-set-key (read-kbd-macro "C-x b") 'my/helm-buffers-list)
 (global-set-key (read-kbd-macro "C-x C-b") 'ibuffer-other-window)
 (global-set-key (read-kbd-macro "C-c C-t") 'ansi-term-default)
-(global-set-key (read-kbd-macro "C-;") 'ace-jump-word-mode)
+(global-set-key (read-kbd-macro "C-;") 'avy-goto-char-timer)
 (global-set-key (read-kbd-macro "C-'") 'er/expand-region)
 (global-set-key (read-kbd-macro "C--") 'er/contract-region)
 (global-set-key (read-kbd-macro "M-s M-s") 'sudo-edit)
@@ -33,9 +33,7 @@
   (progn
     (key-chord-define-global "uu" 'undo-tree-visualize)
     (key-chord-define-global "JJ" 'switch-to-prev-buffer)
-    (key-chord-define-global "KK" 'switch-to-next-buffer)
-    (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
-    (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)))
+    (key-chord-define-global "KK" 'switch-to-next-buffer)))
 
 ;; Tree undo
 (global-unset-key (read-kbd-macro "C-z"))

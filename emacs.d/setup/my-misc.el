@@ -28,16 +28,6 @@
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
 
-;; disaster for disassembly
-(req-package disaster
-  :commands disaster
-  :config
-  (progn
-    (add-hook 'c-mode-common-hook
-              (lambda ()
-                (define-key c-mode-base-map (kbd "C-c d") 'disaster)))
-    (setq disaster-cxxflags "-std=c++11")))
-
 ;; Don't allow me to kill the scratch
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
   (let ((buffer-to-kill (ad-get-arg 0)))
@@ -47,6 +37,9 @@
 
 ;; Add expand region
 (req-package expand-region)
+
+;; Add avy-mode
+(req-package avy)
 
 ;; Move around with shift+arrow
 (windmove-default-keybindings)

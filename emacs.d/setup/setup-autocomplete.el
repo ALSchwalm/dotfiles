@@ -22,7 +22,11 @@
         company-preview-frontend
         company-echo-metadata-frontend))
     (setq company-require-match 'never)
+
+    ;; Define for tab in terminal and gui
+    (define-key company-active-map (kbd "TAB") 'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+
     (add-hook 'prog-mode-hook 'my/enable-company-mode)))
 
 ;; Enable completions in python
