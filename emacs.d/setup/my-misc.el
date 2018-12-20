@@ -19,6 +19,9 @@
 ;; Move deleted files to trash
 (setq delete-by-moving-to-trash t)
 
+;; Use aspell for spelling
+(setq ispell-program-name "aspell")
+
 ;; Always follow symbolic links to version controlled files
 (setq vc-follow-symlinks t)
 
