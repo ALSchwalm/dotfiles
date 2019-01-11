@@ -23,6 +23,7 @@
 (global-set-key (read-kbd-macro "C-\\") 'hs-toggle-hiding)
 (global-set-key (read-kbd-macro "C-k") 'my-kill-line)
 (global-set-key (read-kbd-macro "M-y") 'helm-show-kill-ring)
+(global-set-key (read-kbd-macro "M-.") 'helm-gtags-dwim)
 
  ;; Key chords
 (req-package key-chord
@@ -34,8 +35,7 @@
     (key-chord-define-global "JJ" 'switch-to-prev-buffer)
     (key-chord-define-global "KK" 'switch-to-next-buffer)
     (key-chord-define-global ",," 'mc/mark-all-like-this-dwim)
-    (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)
-    (key-chord-define-global "??" 'er/expand-region)))
+    (key-chord-define-global "vv" 'mc/mark-next-like-this-expand)))
 
 ;; Tree undo
 (global-unset-key (read-kbd-macro "C-z"))
