@@ -1,4 +1,4 @@
-;; Miscellaneous settigns
+;; Miscellaneous settings
 
 (setq initial-scratch-message ";; This buffer is for notes, and for Lisp evaluation.
 
