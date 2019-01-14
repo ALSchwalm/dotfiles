@@ -33,4 +33,8 @@
 (setq jedi:complete-on-dot t
       jedi:tooltip-method nil)
 
+;; Jumping for when we don't have gtags
+(req-package dumb-jump
+  :config (setq dumb-jump-selector 'helm))
+
 (provide 'setup-autocomplete)

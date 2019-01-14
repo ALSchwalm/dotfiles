@@ -272,4 +272,11 @@ on their own line will not be indented."
         :keymap helm-buffer-map
         :truncate-lines helm-buffers-truncate-lines))
 
+(defun my/jump-to-definition-dwim ()
+  "Jump using gtags if available, otherwise dumb-jump."
+  (interactive)
+  (if (locate-dominating-file default-directory "GTAGS")
+      (helm-gtags-dwim)
+    (dumb-jump-go)))
+
 (provide 'functions)

@@ -23,7 +23,7 @@
 (global-set-key (read-kbd-macro "C-\\") 'hs-toggle-hiding)
 (global-set-key (read-kbd-macro "C-k") 'my-kill-line)
 (global-set-key (read-kbd-macro "M-y") 'helm-show-kill-ring)
-(global-set-key (read-kbd-macro "M-.") 'helm-gtags-dwim)
+(global-set-key (read-kbd-macro "M-.") 'my/jump-to-definition-dwim)
 
  ;; Key chords
 (req-package key-chord
