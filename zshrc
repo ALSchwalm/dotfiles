@@ -28,8 +28,8 @@ alias s=ls
 alias hr="hr ―"
 alias scons="scons -j3"
 alias make="make -j3"
-
-alias -g G='| egrep'
+alias emacs="emacsclient -nw"
+alias ssh="TERM=xterm-256color ssh"
 
 alias -s pdf=evince
 alias -s zip=file-roller
