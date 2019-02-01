@@ -83,6 +83,7 @@
 (add-hook 'prog-mode-hook
           '(lambda ()
              (define-key (current-local-map) (read-kbd-macro "<M-backspace>") 'backward-kill-sexp)
+             (global-set-key (read-kbd-macro "RET") 'new-line-dwim)
              (font-lock-add-keywords
               nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
                      1 '((:weight bold)) t)))))
