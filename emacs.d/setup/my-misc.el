@@ -51,10 +51,10 @@
              (unless (file-exists-p undo-dir)
                (make-directory undo-dir))
              (setq undo-tree-mode-lighter " UT"
-                   undo-tree-auto-save-history t
+                   ;; undo-tree-auto-save-history t
                    undo-tree-enable-undo-in-region nil
-                   undo-tree-history-directory-alist
-                   `(("." . ,undo-dir))))))
+                   ;; undo-tree-history-directory-alist `(("." . ,undo-dir))
+                   ))))
 
 ;; Simple generic browser
 (setq browse-url-browser-function 'browse-url-generic
@@ -108,11 +108,11 @@
 (req-package which-key
   :config (which-key-mode))
 
-(defun my-change-window-divider ()
+(defun my/change-window-divider ()
   (let ((display-table (or buffer-display-table standard-display-table)))
     (set-display-table-slot display-table 5 ?│)
     (set-window-display-table (selected-window) display-table)))
-(add-hook 'window-configuration-change-hook 'my-change-window-divider)
+(add-hook 'window-configuration-change-hook 'my/change-window-divider)
 
 (when (not (display-graphic-p))
   (require 'term/xterm)

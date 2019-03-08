@@ -1,10 +1,10 @@
 (req-package dash)
 
-(defvar backward-word-stop-regex
+(defvar my/backward-word-stop-regex
      (rx
       (or ?\" "}" "{" "<" ">" "[" "]" "(" ")")))
 
-(defun backward-word-stop (arg)
+(defun my/backward-word-stop (arg)
   (interactive "p")
   (let ((start (point))
         (start-of-line (line-beginning-position))
@@ -15,7 +15,7 @@
       (setq subword-back (point)))
     (save-excursion
       (setq search-back (re-search-backward
-                         backward-word-stop-regex
+                         my/backward-word-stop-regex
                          subword-back t)))
     (cond
      ;; If the point is at a word stop, move back one char
@@ -45,38 +45,38 @@
       (subword-backward arg)))))
 
 ;; Add basic delete word method
-(defun backward-delete-word (arg)
+(defun my/backward-delete-word (arg)
   (interactive "p")
   (if (= (point) (line-beginning-position))
       (backward-delete-char 1)
-    (delete-region (point) (progn (backward-word-stop arg) (point)))))
+    (delete-region (point) (progn (my/backward-word-stop arg) (point)))))
 
-(defun paredit-beginning-of-sexp ()
+(defun my/paredit-beginning-of-sexp ()
   (interactive)
   (paredit-close-round)
   (beginning-of-sexp))
 
-(defun back-to-indentation-or-beginning ()
+(defun my/back-to-indentation-or-beginning ()
   (interactive)
   (if (not visual-line-mode)
       (if (= (point) (progn (back-to-indentation) (point)))
           (beginning-of-line))
     (beginning-of-visual-line)))
 
-(defun mc/mark-next-like-this-expand ()
+(defun my/mark-next-like-this-expand ()
   (interactive)
   (if (not (region-active-p))
       (er/expand-region 1))
   (mc/mark-next-like-this 1))
 
-(defun reset-scratch ()
+(defun my/reset-scratch ()
   (interactive)
   (switch-to-buffer "*scratch*")
   (delete-region (point-min) (point-max))
   (insert initial-scratch-message)
   (set-buffer-modified-p nil))
 
-(defun new-line-dwim ()
+(defun my/new-line-dwim ()
   (interactive)
   (let ((break-open-pair (or (and (looking-back "{" 1) (looking-at "}"))
                              (and (looking-back ">" 1) (looking-at "<"))
@@ -89,7 +89,7 @@
         (indent-for-tab-command)))
     (indent-for-tab-command)))
 
-(defun search-cpp-docs (&optional search)
+(defun my/search-cpp-docs (&optional search)
   "Search en.cppreference.com for a given string"
   (interactive)
   (let ((search (if (not search)
@@ -100,28 +100,19 @@
   (message (concat "Search executed using " browse-url-generic-program))))
 
 (require 'thingatpt)
-(defun search-cpp-symbol-at-point ()
+(defun my/search-cpp-symbol-at-point ()
   (interactive)
   (let ((search (thing-at-point 'symbol)))
     (search-cpp-docs search)))
 
-(defun sudo-edit (&optional arg)
+(defun my/sudo-edit (&optional arg)
   (interactive "p")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(defun test-file (&optional number)
-  (interactive "P")
-  (let* ((current (file-name-extension (buffer-name)))
-         (extension (read-string "Test file format (e.g. py, d, cpp): " current))
-         (number (if (not number)
-                     (string-to-number (read-string "Test file number: "))
-                   number)))
-    (find-file (concat "~/test/test" (number-to-string number) "." extension))))
-
 ;; Provide a tiling window manager style window movement
-(defun expand-window-split (&optional delta)
+(defun my/expand-window-split (&optional delta)
   (interactive)
   (let ((delta (if (not delta) 5 delta)))
     (cond ((window-in-direction 'right)  (shrink-window-horizontally (* -1 delta)))
@@ -129,13 +120,13 @@
           ((window-in-direction 'above)  (enlarge-window (* -1 delta)))
           ((window-in-direction 'below)  (enlarge-window delta)))))
 
-(defun shrink-window-split (&optional delta)
+(defun my/shrink-window-split (&optional delta)
   (interactive)
   (let ((delta (if (not delta) 5 delta)))
-    (expand-window-split (* -1 delta))))
+    (my/expand-window-split (* -1 delta))))
 
 ;; Function to toggle vertical split to horizontal / vice versa
-(defun toggle-frame-split ()
+(defun my/toggle-frame-split ()
   (interactive)
   (unless (= (length (window-list)) 2) (error "Can only toggle a frame split in two"))
   (let ((split-vertically-p (window-combined-p)))
@@ -145,7 +136,7 @@
       (split-window-vertically)) ; gives us a split with the other window twice
     (switch-to-buffer nil)))
 
-(defun transpose-windows (&optional arg)
+(defun my/transpose-windows (&optional arg)
   "Transpose the buffers shown in two windows."
   (interactive)
   (setq arg (or arg 1))
@@ -159,7 +150,7 @@
       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
 ;; Reload files (for after a pull)
-(defun refresh-all-buffers ()
+(defun my/refresh-all-buffers ()
   "Refreshes all open buffers from their respective files"
   (interactive)
   (let* ((list (buffer-list))
@@ -174,13 +165,13 @@
   (message "Refreshed open files"))
 
 ;; Shorthand for C-x C-x then C-l
-(defun exchange-point-and-mark-center ()
+(defun my/exchange-point-and-mark-center ()
   (interactive)
   (exchange-point-and-mark ())
   (deactivate-mark)
   (recenter-top-bottom))
 
-(defun delete-whitespace-and-indent ()
+(defun my/delete-whitespace-and-indent ()
   (interactive)
   (let ((start (point)))
     (delete-trailing-whitespace)
@@ -189,12 +180,12 @@
                                           (line-end-position))) 0))
         (indent-for-tab-command))))
 
-(defun my-before-save-function ()
+(defun my/before-save-function ()
   (if (eq major-mode 'c++-mode)
       (clang-format-region (point-min) (point-max)))
   (delete-whitespace-and-indent))
 
-(defun my-kill-line ()
+(defun my/kill-line ()
   "Kill the remainder of the line, unless the line is only whitespace,
 in which case it is deleted."
   (interactive)
@@ -205,29 +196,24 @@ in which case it is deleted."
      (kill-line))
    (indent-for-tab-command)))
 
-(defun inside-comment-p ()
-  "Returns non-nil if inside comment, else nil.
-This depends on major mode having setup syntax table properly."
-  (nth 4 (syntax-ppss)))
-
-(defun inside-string-p ()
-  "Returns non-nil if inside string, else nil.
-This depends on major mode having setup syntax table properly."
-  (nth 3 (syntax-ppss)))
-
-(defun project-explorer-toggle ()
+(defun my/project-explorer-toggle ()
   (interactive)
   (if (and (fboundp 'pe/get-project-explorer-buffers)
            (pe/get-project-explorer-buffers))
       (-map #'kill-buffer (pe/get-project-explorer-buffers))
     (project-explorer-open)))
 
-(defun duplicate-buffer ()
+(defun my/duplicate-buffer ()
   (interactive)
-  (delete-other-windows)
-  (split-window-right))
+  (if (eq (length (window-list)) 1)
+      (split-window-right)
+    (let ((config (save-window-excursion
+                    (delete-other-windows)
+                    (window-state-get))))
+      (other-window 1)
+      (window-state-put config))))
 
-(defun commment-indent-region ()
+(defun my/commment-indent-region ()
   "Indent all comments in the region to the comment-column. Comments
 on their own line will not be indented."
   (interactive)
@@ -244,7 +230,7 @@ on their own line will not be indented."
   (deactivate-mark))
 
 (require 'find-file "find-file")
-(defun find-other-buffer ()
+(defun my/find-other-buffer ()
   "ff-find-other-file with buffers"
   (let ((other-buffer nil)
         (extension-list (cadr (-first (lambda (pair)

@@ -20,7 +20,7 @@
                             (setq global-hl-line-mode nil)))
 
 ;; Remove whitespace
-(add-hook 'before-save-hook 'my-before-save-function)
+(add-hook 'before-save-hook 'my/before-save-function)
 
 ;; Better defaults for Markdown mode
 (add-hook 'markdown-mode-hook (lambda()
@@ -38,7 +38,7 @@
 
 (add-hook 'c++-mode-hook
           '(lambda()
-             (local-set-key (read-kbd-macro "<f1>") 'search-cpp-symbol-at-point)
+             (local-set-key (read-kbd-macro "<f1>") 'my/search-cpp-symbol-at-point)
 
              ;; We could place some regexes into `c-mode-common-hook', but note that their evaluation order
              ;; matters.
@@ -83,14 +83,14 @@
 (add-hook 'prog-mode-hook
           '(lambda ()
              (define-key (current-local-map) (read-kbd-macro "<M-backspace>") 'backward-kill-sexp)
-             (global-set-key (read-kbd-macro "RET") 'new-line-dwim)
+             (define-key (current-local-map) (read-kbd-macro "RET") 'my/new-line-dwim)
              (font-lock-add-keywords
               nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
                      1 '((:weight bold)) t)))))
 
 (add-hook 'c-initialization-hook
           '(lambda ()
-             (define-key c-mode-base-map (read-kbd-macro "<C-backspace>") 'backward-delete-word)))
+             (define-key c-mode-base-map (read-kbd-macro "<C-backspace>") 'my/backward-delete-word)))
 
 ;(add-hook 'python-mode-hook 'jedi:setup)
 
