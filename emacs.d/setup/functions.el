@@ -183,7 +183,7 @@
 (defun my/before-save-function ()
   (if (eq major-mode 'c++-mode)
       (clang-format-region (point-min) (point-max)))
-  (delete-whitespace-and-indent))
+  (my/delete-whitespace-and-indent))
 
 (defun my/kill-line ()
   "Kill the remainder of the line, unless the line is only whitespace,
