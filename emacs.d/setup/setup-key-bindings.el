@@ -17,7 +17,7 @@
 (global-set-key (read-kbd-macro "C-x 4") 'my/transpose-windows)
 (global-set-key (read-kbd-macro "M-}") 'my/expand-window-split)
 (global-set-key (read-kbd-macro "M-{") 'my/shrink-window-split)
-(global-set-key (read-kbd-macro "C-x C-x") 'my/pop-global-mark)
+(global-set-key (read-kbd-macro "C-x C-x") 'window-history/back)
 (global-set-key (read-kbd-macro "C-x d") 'my/duplicate-buffer)
 (global-set-key (read-kbd-macro "C-\\") 'hs-toggle-hiding)
 (global-set-key (read-kbd-macro "C-k") 'my/kill-line)

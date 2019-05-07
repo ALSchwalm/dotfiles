@@ -45,6 +45,7 @@
 (require 'setup-helm)
 (require 'setup-paredit)
 (require 'setup-tramp)
+(require 'setup-window-history)
 (require 'my-misc)
 (require 'functions)
 
