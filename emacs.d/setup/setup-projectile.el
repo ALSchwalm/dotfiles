@@ -25,7 +25,7 @@
 
 (defun projectile-ff-find-other-file ()
   (interactive)
-  (let ((other-buffer (find-other-buffer)))
+  (let ((other-buffer (my/find-other-buffer)))
     (if (not other-buffer)
         (condition-case nil
             (let ((cc-search-directories (mapcar (lambda (file)
