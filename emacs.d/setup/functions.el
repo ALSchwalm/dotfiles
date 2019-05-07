@@ -164,11 +164,9 @@
       (setq buffer (car list))))
   (message "Refreshed open files"))
 
-;; Shorthand for C-x C-x then C-l
-(defun my/exchange-point-and-mark-center ()
+(defun my/pop-global-mark ()
   (interactive)
-  (exchange-point-and-mark ())
-  (deactivate-mark)
+  (pop-global-mark)
   (recenter-top-bottom))
 
 (defun my/delete-whitespace-and-indent ()
@@ -261,6 +259,7 @@ on their own line will not be indented."
 (defun my/jump-to-definition-dwim ()
   "Jump using gtags if available, otherwise dumb-jump."
   (interactive)
+  (push-mark)
   (if (locate-dominating-file default-directory "GTAGS")
       (helm-gtags-dwim)
     (dumb-jump-go)))
