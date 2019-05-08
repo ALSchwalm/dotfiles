@@ -1,5 +1,28 @@
 ;; Setup window history
 
+(defun window-history/helm-past-ring-candidates ()
+  (let ((ring (window-parameter (selected-window) 'window-history/past-ring)))
+    (cl-loop with points = (ring-elements ring)
+             for point in points
+             for p = (buffer-name (marker-buffer point))
+             collect (cons p point) into res
+             finally return res)))
+
+(defun window-history/helm-default-action (candidate)
+  (message "here"))
+
+(defvar window-history/helm-source-past-ring
+  (helm-build-sync-source "Window History Past Ring"
+    :candidates #'window-history/helm-past-ring-candidates
+    :persistent-help "Goto this location"
+    :group 'helm-ring))
+
+(defun helm-window-history ()
+  (interactive)
+  (helm :sources 'window-history/helm-source-past-ring
+        :resume 'noresume
+        :buffer "*helm window history*"))
+
 (defmacro window-history/--without-advice (body)
   `(progn
      (remove-hook 'buffer-list-update-hook #'window-history/push)
