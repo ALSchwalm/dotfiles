@@ -1,27 +1,41 @@
 ;; Setup window history
 
+(defvar window-history/saved-window)
+
 (defun window-history/helm-past-ring-candidates ()
-  (let ((ring (window-parameter (selected-window) 'window-history/past-ring)))
-    (cl-loop with points = (ring-elements ring)
-             for point in points
-             for p = (buffer-name (marker-buffer point))
-             collect (cons p point) into res
+  (let ((ring (window-parameter window-history/saved-window 'window-history/past-ring)))
+    (cl-loop with markers = (ring-elements ring)
+             for marker in markers
+             for m = (helm-global-mark-ring-format-buffer marker)
+             collect (cons m marker) into res
              finally return res)))
 
-(defun window-history/helm-default-action (candidate)
-  (message "here"))
+(defun window-history/helm-past-ring-default-action (candidate)
+  (let ((target (copy-marker candidate)))
+    (helm-aif (marker-buffer candidate)
+        (progn
+          (switch-to-buffer it)
+          (helm-log-run-hook 'helm-goto-line-before-hook)
+          (helm-match-line-cleanup)
+          (with-helm-current-buffer
+            (unless helm-yank-point (setq helm-yank-point (point))))
+          (helm-goto-char target)
+          (helm-highlight-current-line))
+      (error "Marker points to no buffer"))))
 
 (defvar window-history/helm-source-past-ring
   (helm-build-sync-source "Window History Past Ring"
     :candidates #'window-history/helm-past-ring-candidates
+    :action '(("Goto line" . window-history/helm-past-ring-default-action))
     :persistent-help "Goto this location"
     :group 'helm-ring))
 
 (defun helm-window-history ()
   (interactive)
-  (helm :sources 'window-history/helm-source-past-ring
-        :resume 'noresume
-        :buffer "*helm window history*"))
+  (let ((window-history/saved-window (selected-window)))
+    (helm :sources #'window-history/helm-source-past-ring
+         :resume 'noresume
+         :buffer "*helm window history*")))
 
 (defmacro window-history/--without-advice (body)
   `(progn
@@ -33,6 +47,10 @@
      (advice-add 'push-mark :before #'window-history/push)
      (advice-add 'set-mark :before #'window-history/push)))
 
+(defun window-history/reset-past-ring ()
+  (let* ((window (selected-window))
+         (new-ring (make-ring 20)))
+    (set-window-parameter window 'window-history/past-ring new-ring)))
 
 (defun window-history/push (&rest e)
   (interactive)
