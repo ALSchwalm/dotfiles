@@ -65,7 +65,6 @@
          (ring-insert push-ring marker)
          (set-window-parameter window 'window-history/past-ring push-ring))))))
 
-;; TODO: don't jump to the same position the point is at
 (defun window-history/back ()
   (interactive)
   (window-history/--without-advice
@@ -84,10 +83,10 @@
                (progn
                  (unless (equal (current-buffer) (marker-buffer position))
                    (switch-to-buffer (marker-buffer position)))
-                 (goto-char position)))
+                 (goto-char position)
 
-           ;; TODO: avoid recentering when jumping nearby
-           (recenter)
+                 ;; TODO: avoid recentering when jumping nearby
+                 (recenter)))
            (set-window-parameter window 'window-history/past-ring push-ring))))))
 
 ;; There is no good hook for this, so try to advice the relevant functions
