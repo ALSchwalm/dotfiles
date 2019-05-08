@@ -32,10 +32,18 @@
           (window (selected-window))
           (push-ring (window-parameter window 'window-history/past-ring)))
      (if (and push-ring (not (ring-empty-p push-ring)))
-         (let* ((position (ring-remove push-ring 0)))
-           (unless (equal (current-buffer) (marker-buffer position))
-             (switch-to-buffer (marker-buffer position)))
-           (goto-char position)
+         (let ((position (ring-remove push-ring 0)))
+
+           ;; Find the most recent location that isn't the current one
+           (while (and (not (ring-empty-p push-ring))
+                       (equal position (point-marker)))
+             (setq position (ring-remove push-ring 0)))
+
+           (if (not (equal position (point-marker)))
+               (progn
+                 (unless (equal (current-buffer) (marker-buffer position))
+                   (switch-to-buffer (marker-buffer position)))
+                 (goto-char position)))
 
            ;; TODO: avoid recentering when jumping nearby
            (recenter)
