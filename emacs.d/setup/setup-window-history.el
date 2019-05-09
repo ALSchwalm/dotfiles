@@ -4,11 +4,12 @@
 
 (defun window-history/helm-past-ring-candidates ()
   (let ((ring (window-parameter window-history/saved-window 'window-history/past-ring)))
-    (cl-loop with markers = (ring-elements ring)
-             for marker in markers
-             for m = (helm-global-mark-ring-format-buffer marker)
-             collect (cons m marker) into res
-             finally return res)))
+    (unless (null ring)
+      (cl-loop with markers = (ring-elements ring)
+               for marker in markers
+               for m = (helm-global-mark-ring-format-buffer marker)
+               collect (cons m marker) into res
+               finally return res))))
 
 (defun window-history/helm-past-ring-default-action (candidate)
   (let ((target (copy-marker candidate)))
@@ -17,8 +18,6 @@
           (switch-to-buffer it)
           (helm-log-run-hook 'helm-goto-line-before-hook)
           (helm-match-line-cleanup)
-          (with-helm-current-buffer
-            (unless helm-yank-point (setq helm-yank-point (point))))
           (helm-goto-char target)
           (helm-highlight-current-line))
       (error "Marker points to no buffer"))))
@@ -30,6 +29,17 @@
     :persistent-help "Goto this location"
     :group 'helm-ring))
 
+(defvar window-history/advice-targets '(isearch-forward
+                                        isearch-backward
+                                        beginning-of-buffer
+                                        end-of-buffer
+
+                                        ;; These should probably be done
+                                        ;; via hooks
+                                        helm-buffers-list
+                                        switch-to-prev-buffer
+                                        switch-to-next-buffer))
+
 (defun helm-window-history ()
   (interactive)
   (let ((window-history/saved-window (selected-window)))
@@ -39,13 +49,11 @@
 
 (defmacro window-history/--without-advice (body)
   `(progn
-     (remove-hook 'buffer-list-update-hook #'window-history/push)
-     (advice-remove 'push-mark #'window-history/push)
-     (advice-remove 'set-mark #'window-history/push)
+     (mapc (lambda (func) (advice-remove func #'window-history/push))
+           window-history/advice-targets)
      ,body
-     (add-hook 'buffer-list-update-hook #'window-history/push)
-     (advice-add 'push-mark :before #'window-history/push)
-     (advice-add 'set-mark :before #'window-history/push)))
+     (mapc (lambda (func) (advice-add func :before #'window-history/push))
+                      window-history/advice-targets)))
 
 (defun window-history/reset-past-ring ()
   (let* ((window (selected-window))
@@ -89,12 +97,9 @@
                  (recenter)))
            (set-window-parameter window 'window-history/past-ring push-ring))))))
 
-;; There is no good hook for this, so try to advice the relevant functions
-(advice-add 'push-mark :before #'window-history/push)
-(advice-add 'set-mark :before #'window-history/push)
 
-;; Also hook the buffer list change, so we can go back if a command
-;; takes us somewhere else.
-(add-hook 'buffer-list-update-hook #'window-history/push)
+;; TODO: this should activated by a global minor mode
+(mapc (lambda (func) (advice-add func :before #'window-history/push))
+      window-history/advice-targets)
 
 (provide 'setup-window-history)
