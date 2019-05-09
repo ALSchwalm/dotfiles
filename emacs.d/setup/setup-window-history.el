@@ -33,6 +33,8 @@
                                         isearch-backward
                                         beginning-of-buffer
                                         end-of-buffer
+                                        helm-projectile-rg
+                                        my/jump-to-definition-dwim
 
                                         ;; These should probably be done
                                         ;; via hooks
