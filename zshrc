@@ -13,11 +13,11 @@ setopt IGNORE_EOF
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias install="yaourt -S"
-alias search="yaourt -Ss"
-alias update="yaourt -Syyua"
+alias install="yay -S"
+alias search="yay -Ss"
+alias update="yay -Syyua"
 alias autoremove="pacman -Qdtq | sudo pacman -Rcns -"
-alias remove="yaourt -Rcns"
+alias remove="yay -Rcns"
 alias vpnhome="(cd /etc/openvpn/; sudo openvpn home.conf)"
 
 alias grep="egrep"
