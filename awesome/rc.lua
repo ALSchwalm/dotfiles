@@ -243,7 +243,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- wifi text widget
     local wifiwidget = wibox.widget.textbox()
-    vicious.register(wifiwidget, vicious.widgets.wifi, wifi_format_callback, 10, "wlan0")
+    vicious.register(wifiwidget, vicious.widgets.wifiiw, wifi_format_callback, 10, "wlan0")
 
     -- battery text widget
     local batwidget = wibox.widget.textbox()
