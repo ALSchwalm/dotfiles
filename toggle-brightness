@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -e /tmp/dark_mod ]; then
+    echo "Dark mode. Switching to Light"
+    rm /tmp/dark_mod
+    xcalib -c
+else
+    echo "Light mode. Switching to Dark"
+    touch /tmp/dark_mod
+    xcalib -co 40 -a
+fi
