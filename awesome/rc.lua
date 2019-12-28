@@ -338,7 +338,7 @@ globalkeys = gears.table.join(
       {description = "select previous", group = "layout"}),
 
     -- Media Keys
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -D pulse set Master 1+ toggle") end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master 1+ toggle") end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q set Master 5%-") end),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q set Master 5%+") end),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("light -U 5") end),
