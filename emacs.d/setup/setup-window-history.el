@@ -1,5 +1,7 @@
 ;; Setup window history
 
+(require 'helm)
+
 (defvar window-history/saved-window)
 
 (defun window-history/helm-past-ring-candidates ()

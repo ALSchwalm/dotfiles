@@ -18,6 +18,9 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- Vicious
 local vicious = require("vicious")
 
+-- The hidden tag
+local HIDDEN_TAG = "-HIDDEN-"
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -151,7 +154,8 @@ function volume_format_callback(widget, volume_info)
   local volume = volume_info[1]
   local color = nil
   local state = nil
-  if volume_info[2] == "♫" then
+  gears.debug.dump(volume_info)
+  if volume_info[2] == "🔉" then
     state = "[on]"
     color = beautiful.colors.light_green
   else
@@ -175,7 +179,7 @@ function wifi_format_callback(widget, wifi_info)
 end
 
 function battery_format_callback(widget, bat_info)
-  local state, percent, remaining = unpack(bat_info)
+  local state, percent, remaining = table.unpack(bat_info)
   local status = "Battery"
   if state == "↯" then
     remaining = "Full"
@@ -207,13 +211,19 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1:term", "2:emacs", "3:web", "4", "5", "6", "7:IDA", "8:steam", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1:term", "2:emacs", "3:web", "4", "5", "6", "7:IDA", "8:steam", "9", HIDDEN_TAG }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
 
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.noempty, taglist_buttons)
+    s.mytaglist = awful.widget.taglist(s, function (t)
+                                            if t.name == HIDDEN_TAG and not t.selected then
+                                               return false
+                                            else
+                                               return awful.widget.taglist.filter.noempty(t)
+                                            end
+                                          end, taglist_buttons)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, tasklist_filter_callback, tasklist_buttons,
@@ -295,12 +305,26 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "b",   awful.tag.viewprev,
+    awful.key({ modkey,           }, "b",   function ()
+          awful.tag.viewprev()
+          if awful.screen.focused().selected_tag.name == HIDDEN_TAG then
+             awful.tag.viewprev()
+          end
+    end,
               {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "f",  awful.tag.viewnext,
+    awful.key({ modkey,           }, "f",  function ()
+          awful.tag.viewnext()
+          if awful.screen.focused().selected_tag.name == HIDDEN_TAG then
+             awful.tag.viewnext()
+          end
+    end,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Tab", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
+    awful.key({ modkey,           }, "u", function ()
+          awful.tag.find_by_name(awful.screen.focused(), HIDDEN_TAG):view_only()
+    end,
+              {description = "go to hidden tag", group = "tag"}),
 
     -- Standard program
     awful.key({ modkey, "Shift"   }, "Return", function () awful.spawn(terminal) end,
@@ -338,7 +362,7 @@ globalkeys = gears.table.join(
       {description = "select previous", group = "layout"}),
 
     -- Media Keys
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master 1+ toggle") end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master toggle") end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q set Master 5%-") end),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q set Master 5%+") end),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("light -U 5") end),
@@ -362,7 +386,10 @@ globalkeys = gears.table.join(
 )
 
 function move_client_to_relative_tag(client, idx)
-  local tags = awful.screen.focused().tags
+  local all_tags = awful.screen.focused().tags
+
+  -- Ignore the 'hidden' tag
+  local tags = table.unpack(all_tags, 1, #all_tags-1)
   local t = awful.screen.focused().selected_tag
   if t == nil then
     return
@@ -387,8 +414,12 @@ clientkeys = gears.table.join(
     awful.key({ modkey, "Shift" }, "f", function(c) move_client_to_relative_tag(c, 1) end,
       { description = "Move client to next tag"}),
     awful.key({ modkey, "Shift" }, "b", function(c) move_client_to_relative_tag(c, -1) end,
-      { description = "Move client to previous tag"})
-
+      { description = "Move client to previous tag"}),
+    awful.key({ modkey, "Shift" }, "u", function(c)
+          local tag = awful.tag.find_by_name(awful.screen.focused(), HIDDEN_TAG)
+          c:move_to_tag(tag)
+    end,
+      { description = "Move client to hidden tag"})
 )
 
 -- Bind all key numbers to tags.

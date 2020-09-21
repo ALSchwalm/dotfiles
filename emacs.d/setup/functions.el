@@ -207,9 +207,9 @@ in which case it is deleted."
       (split-window-right)
     (let ((config (save-window-excursion
                     (delete-other-windows)
-                    (window-state-get))))
+                    (window-state-get (selected-window)))))
       (other-window 1)
-      (window-state-put config))))
+      (window-state-put config (selected-window)))))
 
 (defun my/commment-indent-region ()
   "Indent all comments in the region to the comment-column. Comments
