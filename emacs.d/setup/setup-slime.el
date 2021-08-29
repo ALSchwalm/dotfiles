@@ -1,5 +1,5 @@
 ;; Slime
-(req-package slime-autoloads)
+(use-package slime-autoloads)
 
 ;; Set your lisp system and, optionally, some contribs
 (setq inferior-lisp-program "/usr/sbin/sbcl")

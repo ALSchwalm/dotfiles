@@ -1,5 +1,5 @@
 
-(req-package helm
+(use-package helm
   :config
   (progn
     (setq helm-quick-update t
@@ -14,6 +14,9 @@
       input))
   :bind (("C-c h" . helm-command-prefix)))
 
-(req-package helm-gtags)
+(use-package helm-gtags)
+
+;; Use helm for all xref-based stuff
+(use-package helm-xref)
 
 (provide 'setup-helm)

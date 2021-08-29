@@ -1,6 +1,6 @@
 ;; Setup window history
 
-(require 'helm)
+(use-package 'helm :force)
 
 (defvar window-history/saved-window)
 

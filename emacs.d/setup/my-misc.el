@@ -4,7 +4,7 @@
 
 ")
 
-(req-package persistent-scratch
+(use-package persistent-scratch
   :init (persistent-scratch-setup-default))
 
 ;; disable the bell (especially important on mac)
@@ -36,15 +36,15 @@
       ad-do-it)))
 
 ;; Add expand region
-(req-package expand-region)
+(use-package expand-region)
 
 ;; Add avy-mode
-(req-package avy)
+(use-package avy)
 
 ;; Move around with shift+arrow
 (windmove-default-keybindings)
 
-(req-package undo-tree
+(use-package undo-tree
   :init (global-undo-tree-mode)
   :config (progn
             (let ((undo-dir (concat user-emacs-directory "undo")))
@@ -72,7 +72,7 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(req-package flex-isearch
+(use-package flex-isearch
   :init (global-flex-isearch-mode)
   :config (setq flex-isearch-auto 'on-failed))
 
@@ -90,7 +90,7 @@
 (setq select-enable-clipboard t)
 (setq apropos-do-all t)
 
-(req-package popwin
+(use-package popwin
   :config
   (progn
     (popwin-mode)
@@ -105,7 +105,7 @@
 ;; Probably not looking at files vc'd under bazaar
 ;; (setq vc-handled-backends '(SVN Git))
 
-(req-package which-key
+(use-package which-key
   :config (which-key-mode))
 
 (defun my/change-window-divider ()

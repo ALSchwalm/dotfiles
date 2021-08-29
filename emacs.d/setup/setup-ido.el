@@ -1,5 +1,5 @@
 ;; ido/flx/ido-ubiquitous
-(req-package ido
+(use-package ido
   :init (ido-mode t)
   :config
   (progn
@@ -12,15 +12,15 @@
           ido-max-prospects 10))
   :bind (("C-x C-f" . ido-find-file)))
 
-(req-package flx-ido
+(use-package flx-ido
   :init (flx-ido-mode t))
 
-(req-package ido-vertical-mode
+(use-package ido-vertical-mode
   :init (ido-vertical-mode)
   :config (progn
             (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)))
 
-(req-package ido-completing-read+
+(use-package ido-completing-read+
   :init (ido-ubiquitous-mode t))
 
 (provide 'setup-ido)

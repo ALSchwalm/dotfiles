@@ -1,8 +1,8 @@
 ;; Load theme
 
-(req-package solarized-theme)
+(use-package solarized-theme)
 
-(req-package smart-mode-line
+(use-package smart-mode-line
   :config
   (progn (setq sml/no-confirm-load-theme t)
          (sml/setup)
@@ -28,7 +28,7 @@
 (column-number-mode 1)
 
 ;; Git gutter mode
-(req-package git-gutter
+(use-package git-gutter
   :config
   (progn (global-git-gutter-mode t)))
 
@@ -47,7 +47,7 @@
 (c-add-style "custom-cpp-style" custom-cpp-style)
 (setq c-default-style "custom-cpp-style")
 
-(req-package web-mode
+(use-package web-mode
   :config (setq web-mode-markup-indent-offset 2
                 web-mode-css-indent-offset 2
                 web-mode-code-indent-offset 2))
@@ -57,11 +57,11 @@
 
 ;; Add matching parens / braces
 (show-paren-mode 1)
-(req-package mic-paren
+(use-package mic-paren
   :config (progn
             (paren-activate)
             (setq show-paren-delay 0)))
 
-(req-package rust-mode)
+(use-package rust-mode)
 
 (provide 'setup-theme)

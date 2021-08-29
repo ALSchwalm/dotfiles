@@ -1,6 +1,6 @@
 ;; Flycheck mode
 
-(req-package flycheck
+(use-package flycheck
   :init (global-flycheck-mode t)
   :config
   (progn
@@ -13,7 +13,7 @@
     (add-hook 'c++-mode-hook (lambda()
                                (setq flycheck-clang-language-standard "c++1y")))))
 
-(req-package flycheck-rust
+(use-package flycheck-rust
   :config
   (progn
     (with-eval-after-load 'rust-mode

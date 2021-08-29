@@ -1,5 +1,5 @@
 ;; Save a list of recent files visited. (open recent file with C-x f)
-(req-package recentf
+(use-package recentf
   :init (progn (recentf-mode t)
                (add-to-list 'recentf-exclude "\\TAGS\\'")
                (add-to-list 'recentf-exclude "\\archive-contents\\'"))

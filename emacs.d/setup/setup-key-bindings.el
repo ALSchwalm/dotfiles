@@ -23,9 +23,10 @@
 (global-set-key (read-kbd-macro "C-k") 'my/kill-line)
 (global-set-key (read-kbd-macro "M-y") 'helm-show-kill-ring)
 (global-set-key (read-kbd-macro "M-.") 'my/jump-to-definition-dwim)
+(global-set-key (read-kbd-macro "M-?") 'my/find-referenes-dwim)
 
  ;; Key chords
-(req-package key-chord
+(use-package key-chord
   :init (key-chord-mode t)
   :ensure t
   :config

@@ -1,6 +1,6 @@
 
 
-(req-package paredit
+(use-package paredit
   :config
   (progn
     (define-key paredit-mode-map (kbd "M-)") 'paredit-beginning-of-sexp)

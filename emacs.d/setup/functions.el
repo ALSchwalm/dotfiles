@@ -1,4 +1,4 @@
-(req-package dash)
+(use-package dash)
 
 (defvar my/backward-word-stop-regex
      (rx
@@ -250,18 +250,21 @@ on their own line will not be indented."
   (unless helm-source-buffers-list
     (setq helm-source-buffers-list
           (helm-make-source "Buffers" 'helm-source-buffers)))
-  (helm :sources '(helm-source-buffers-list
-                   helm-source-ido-virtual-buffers)
+  (helm :sources '(helm-source-buffers-list)
         :buffer "*helm buffers*"
         :keymap helm-buffer-map
         :truncate-lines helm-buffers-truncate-lines))
 
 (defun my/jump-to-definition-dwim ()
-  "Jump using gtags if available, otherwise dumb-jump."
+  "Find definition of the identifier at the point"
   (interactive)
-  (push-mark)
-  (if (locate-dominating-file default-directory "GTAGS")
-      (helm-gtags-dwim)
-    (dumb-jump-go)))
+  (xref-find-definitions
+     (xref-backend-identifier-at-point (xref-find-backend))))
+
+(defun my/find-referenes-dwim ()
+  "Find references to the identifier at the point"
+  (interactive)
+  (xref-find-references
+     (xref-backend-identifier-at-point (xref-find-backend))))
 
 (provide 'functions)
