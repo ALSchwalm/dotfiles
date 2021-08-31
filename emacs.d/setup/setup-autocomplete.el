@@ -34,12 +34,32 @@
 (use-package dumb-jump
   :config
   (progn
+    (setq dumb-jump-project-denoters '(".dumbjump" ".projectile" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".svn" "PkgInfo" "-pkg.el"))
     (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)))
 
 (use-package gxref
   :config
   (progn
     (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
+
+(defun my/lsp-setup-rust ()
+  (cl-defgeneric lsp-clients-extract-signature-on-hover (contents _server-id)
+    "Extract module and function information from rust-analyzer for LSP"
+    (if (not (eq major-mode 'rust-mode))
+        (car (s-lines (s-trim (lsp--render-element contents))))
+      (let* ((type-info (s-trim (car (s-split "---" (lsp--render-element contents) t))))
+             (parts (mapcar (-compose (lambda (part) (s-chop-suffix "," part)) 's-trim)
+                            (s-split "\n" type-info t))))
+        (if (eq (length parts) 1)
+            (car parts)
+          (format "[%s] %s" (car parts) (s-join " " (cdr parts)))))))
+
+  (setq lsp-rust-analyzer-server-display-inlay-hints t
+        lsp-rust-analyzer-inlay-hints-mode t
+        lsp-rust-analyzer-display-chaining-hints t
+        lsp-rust-analyzer-display-parameter-hints t)
+
+  (lsp))
 
 (use-package lsp-mode
   :init
@@ -51,12 +71,7 @@
     (setq lsp-headerline-breadcrumb-enable nil
           lsp-keep-workspace-alive nil
           lsp-auto-guess-root t))
-  :hook ((rust-mode . (lambda ()
-                        (setq lsp-rust-analyzer-server-display-inlay-hints t
-                              lsp-rust-analyzer-inlay-hints-mode t
-                              lsp-rust-analyzer-display-chaining-hints t
-                              lsp-rust-analyzer-display-parameter-hints t)
-                        (lsp)))
+  :hook ((rust-mode . my/lsp-setup-rust)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
@@ -68,5 +83,6 @@
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
                          (lsp))))
+
 
 (provide 'setup-autocomplete)

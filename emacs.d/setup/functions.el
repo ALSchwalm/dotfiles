@@ -267,4 +267,18 @@ on their own line will not be indented."
   (xref-find-references
      (xref-backend-identifier-at-point (xref-find-backend))))
 
+; This is upstream and can be removed once its in a release of lsp-mode
+(defun lsp-rust-analyzer-open-external-docs ()
+  "Open a URL for documentation related to the current TextDocumentPosition.
+
+Rust-Analyzer LSP protocol documented here
+https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/dev/lsp-extensions.md#open-external-documentation"
+  (interactive)
+  (-if-let* ((params (lsp-make-rust-analyzer-open-external-docs-params
+                      :text-document (lsp--text-document-identifier)
+                      :position (lsp--cur-position)))
+             (url (lsp-request "experimental/externalDocs" params)))
+      (browse-url url)
+    (lsp--warn "Couldn't find documentation URL or your version of rust-analyzer doesn't support this extension")))
+
 (provide 'functions)

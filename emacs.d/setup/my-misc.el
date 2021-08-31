@@ -19,6 +19,9 @@
 ;; Move deleted files to trash
 (setq delete-by-moving-to-trash t)
 
+;; Use firefox as the browser
+(setq browse-url-generic-program "firefox")
+
 ;; Use aspell for spelling
 (setq ispell-program-name "aspell")
 

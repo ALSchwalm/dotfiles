@@ -59,7 +59,7 @@
  '(custom-safe-themes
    '("fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(package-selected-packages
-   '(lsp-pyright auto-compile dumb-jump company lsp-mode helm-xref avy flycheck-rust exec-path-from-shell magit persistent-scratch which-key rust-mode helm-ag projectile-ripgrep smart-mode-line solarized-theme auto-complete ido-completing-read+ solarized-dark-theme key-chord el-get)))
+   '(w3m lsp-pyright auto-compile dumb-jump company lsp-mode helm-xref avy flycheck-rust exec-path-from-shell magit persistent-scratch which-key rust-mode helm-ag projectile-ripgrep smart-mode-line solarized-theme auto-complete ido-completing-read+ solarized-dark-theme key-chord el-get)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

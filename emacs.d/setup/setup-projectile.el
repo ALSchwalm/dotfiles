@@ -2,6 +2,7 @@
 (use-package projectile
   :init (projectile-global-mode)
   :config (progn
+            (setq projectile-use-git-grep t)
             (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
             (define-key projectile-command-map "s" 'helm-projectile-ag)
             (define-key projectile-command-map "f" 'projectile-find-file-with-fallback))
