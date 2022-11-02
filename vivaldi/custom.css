@@ -1,0 +1,36 @@
+/* Remove header */
+:-webkit-any(.native, .maximized)#browser #header {
+	min-height: 0 !important;
+}
+
+/* Keep Vivaldi button */
+:-webkit-any(.native, .maximized)#browser .vivaldi  {
+	z-index: 1;
+	top: 3px !important;
+        left: auto;
+        right: 4px !important;
+}
+
+/* Keep horizontal menu */
+:-webkit-any(.native, .maximized)#browser .topmenu {
+	position: absolute;
+}
+
+/* Reduce toolbar size for vivialdi button */
+:-webkit-any(.native, .maximized)#browser:not(.tabs-top) .toolbar.toolbar-addressbar {
+	padding-left: 24px;
+}
+
+/* Reduce toolbar size for horizontal menu */
+:-webkit-any(.native, .maximized).horizontal-menu#browser:not(.tabs-top) .toolbar.toolbar-addressbar {
+	padding-left: 267px;
+}
+
+.UrlBar.toolbar.toolbar-mainbar.toolbar-large {
+    padding-right: 40px;
+}
+
+.tab-audio {
+    transform: scale(1.7) !important;
+    color: red;
+}
