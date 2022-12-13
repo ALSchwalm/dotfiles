@@ -5,19 +5,11 @@
   (setq projectile-use-git-grep t)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-command-map "s" 'consult-ag)
-  (define-key projectile-command-map "f" 'my/projectile-find-file-with-fallback)
+  (define-key projectile-command-map "f" 'consult-find)
 
   :bind (("<M-f1>" . my/projectile-ff-find-other-file)
          ("<f5>" . my/projectile-compile-with-fallback)))
 
-;; Fallback to ido-find-file when not in a project (or over tramp)
-(defun my/projectile-find-file-with-fallback ()
-  (interactive)
-  (if (or (not buffer-file-name) (file-remote-p buffer-file-name))
-      (ido-find-file)
-    (condition-case nil
-        (projectile-find-file)
-      (error (ido-find-file)))))
 
 (defun my/projectile-ff-find-other-file ()
   (interactive)

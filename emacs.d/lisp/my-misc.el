@@ -5,7 +5,11 @@
 ")
 
 (use-package persistent-scratch
-  :init (persistent-scratch-setup-default))
+  :init (persistent-scratch-setup-default)
+  :config
+  (setq persistent-scratch-backup-directory (concat user-emacs-directory "scratch"))
+  (with-current-buffer "*scratch*"
+    (persistent-scratch-mode)))
 
 ;; disable the bell (especially important on mac)
 (setq ring-bell-function 'ignore)
@@ -65,7 +69,6 @@
     (unless (file-exists-p undo-dir)
       (make-directory undo-dir))
     (setq undo-tree-mode-lighter " UT"
-          ;; undo-tree-auto-save-history t
           undo-tree-enable-undo-in-region nil
           undo-tree-history-directory-alist `(("." . ,undo-dir))
           )))

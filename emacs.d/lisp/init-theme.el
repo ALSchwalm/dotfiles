@@ -13,12 +13,17 @@
   :init
 
   (load-theme 'solarized-dark t)
-  (let ((line (face-attribute 'mode-line :underline)))
-	(set-face-attribute 'mode-line          nil :overline   line)
-	(set-face-attribute 'mode-line-inactive nil :overline   line)
-	(set-face-attribute 'mode-line-inactive nil :underline  line)
-	(set-face-attribute 'mode-line          nil :box        nil)
-	(set-face-attribute 'mode-line-inactive nil :box        nil))
+
+  :config
+
+  (add-hook 'window-configuration-change-hook
+            (lambda ()
+              (let ((line (face-attribute 'mode-line :underline)))
+                (set-face-attribute 'mode-line          nil :overline   line)
+                (set-face-attribute 'mode-line-inactive nil :overline   line)
+                (set-face-attribute 'mode-line-inactive nil :underline  line)
+                (set-face-attribute 'mode-line          nil :box        nil)
+                (set-face-attribute 'mode-line-inactive nil :box        nil))))
 
   ;; Set the flycheck faces after make frame, because otherwise
   ;; things don't work in client/server mode

@@ -15,7 +15,7 @@ setopt IGNORE_EOF
 
 alias install="yay -S"
 alias search="yay -Ss"
-alias update="yay -Syyua"
+alias update="yay -Syu"
 alias autoremove="pacman -Qdtq | sudo pacman -Rcns -"
 alias remove="yay -Rcns"
 alias vpnhome="(cd /etc/openvpn/; sudo openvpn home.conf)"
@@ -27,7 +27,7 @@ alias open=""
 alias s=ls
 alias hr="hr ―"
 alias scons="scons -j3"
-alias make="make -j3"
+alias make="make -j10"
 alias emacs="emacsclient -nw"
 alias ssh="TERM=xterm-256color ssh"
 
@@ -95,6 +95,10 @@ bindkey "^[[1;3C" move_back
 bindkey '^I' expand-or-complete-or-list-files
 bindkey '\M-,' previous-command
 
+# We use a custom escape sequence so emacs can interpret the ctrl-backspace,
+# we also support it here.
+bindkey '\033[56;5~' backward-delete-word
+
 if [[ "$TERM" == "dumb" ]]
 then
     unsetopt zle
@@ -138,6 +142,8 @@ zstyle ':completion:*:default' menu 'select=0'
 # much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+eval $(dircolors ~/.dircolors)
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -151,9 +157,10 @@ zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 
 # Customize to your needs...
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export PATH="/home/adam/.cargo/bin:/home/adam/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export PATH="/home/adam/.local/bin:/home/adam/.cargo/bin:/home/adam/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 export GOPATH="/home/adam/.go"
 export EDITOR="emacsclient -nw"
+export MOZ_USE_XINPUT2=1
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
 export COCOS_CONSOLE_ROOT=/home/adam/Repos/cocos2d-x/tools/cocos2d-console/bin

@@ -69,14 +69,6 @@ targets."
   :init
   (marginalia-mode))
 
-;; Overrides are _added_ to the completion-styles, they do not completely
-;; replace them. So you probably don't want e.g. flex in there
-(setq completion-styles '(substring basic)
-      completion-category-defaults nil
-      completion-category-overrides '((multi-category (styles flex))
-                                      (buffer (styles flex))
-                                      (command (styles flex))
-                                      (file (styles flex partial-completion))))
 
 ;; Ignore case everywhere
 (setq read-buffer-completion-ignore-case t)
@@ -109,6 +101,7 @@ targets."
 
   :config
   (vertico-mode)
+
   (set-face-attribute 'vertico-current nil :inherit '(highlight underline))
   (advice-add 'vertico--recompute :filter-return #'my/vertico-avoid-prompt))
 
@@ -122,6 +115,13 @@ targets."
   (define-key vertico-map "\d" #'vertico-directory-delete-char)
   (define-key vertico-map "\M-\d" #'vertico-directory-delete-word)
   (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
+
+(use-package vertico-multiform
+  :ensure nil
+  :load-path "straight/build/vertico/extensions"
+  :straight nil
+  :config
+  (vertico-multiform-mode))
 
 (use-package consult
   :demand t
@@ -215,6 +215,21 @@ targets."
          ("C-n" . browse-kill-ring-forward)
          ("C-p" . browse-kill-ring-previous)))
 
+(defun my/override-metadata (overrides ret)
+  (if (and (listp ret) (eq (car ret) 'metadata))
+      (let ((metadata (cdr ret)))
+        (dolist (override overrides)
+          (add-to-list 'metadata override))
+        `(metadata . ,metadata))
+    ret))
+
+;; Helper function to allow overriding the metadata returned from any
+;; completion 'table' or other function
+(defun my/advice-override-metadata (collection-fn overrides)
+  (advice-add collection-fn :filter-return
+              `(lambda (ret)
+                 (my/override-metadata ',overrides ret))))
+
 (defun my/vertico-prescient--remember ()
   "Advice for remembering candidates in Vertico."
   (when (>= vertico--index 0)
@@ -229,7 +244,26 @@ targets."
 
   :config
   (prescient-persist-mode)
-  (setq vertico-sort-override-function #'prescient-completion-sort)
+
+  ;; Overrides are _added_ to the completion-styles, they do not completely
+  ;; replace them. So you probably don't want e.g. flex in there. Also, flex
+  ;; completion-style sets the display-sort-function as well if not already
+  ;; present. This can result in issues like files not being sorted by the
+  ;; most recently accessed. If you would like to use flex but with a different
+  ;; sort, you can use the my/advice-override-metadata function to define
+  ;; a display-sort-function or specialized completion-category.
+  ;; BE CAREFUL when adding anything to 'completion-styles. Inefficient ones
+  ;; will cause company completions to be slow
+  (setq completion-category-defaults nil
+        completion-category-overrides '((multi-category (styles prescient))
+                                        (buffer (styles prescient))
+                                        (command (styles flex))
+                                        (consult-location (styles prescient))
+                                        (file (styles prescient partial-completion))))
+
+  (my/advice-override-metadata 'completion-file-name-table
+                               '((display-sort-function . prescient-completion-sort)))
+
   (advice-add 'vertico-insert :after #'my/vertico-prescient--remember))
 
 (provide 'init-minibuffer)
