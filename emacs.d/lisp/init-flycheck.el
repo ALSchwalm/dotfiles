@@ -17,7 +17,6 @@
   (lv-message "%s" (flycheck-help-echo-all-error-messages errors)))
 
 (use-package flycheck
-  :after browse-kill-ring
   :init (global-flycheck-mode t)
   :config
   (setq flycheck-check-syntax-automatically '(save new-line mode-enabled)
@@ -26,9 +25,6 @@
 
   (add-hook 'post-command-hook #'my/flycheck-eldoc-post-command)
   (add-hook 'echo-area-clear-hook #'my/clear-flycheck-and-eldoc)
-
-  ; This is needed to avoid a strange interaction between lv and browse-kill-ring
-  (advice-add 'browse-kill-ring :before #'my/clear-flycheck-and-eldoc)
 
   (setq flycheck-display-errors-function #'my/flycheck-display-errors-function
         flycheck-display-errors-delay 0.3
@@ -39,10 +35,20 @@
 
 (use-package flycheck-rust
   :config
-  (progn
-    (with-eval-after-load 'rust-mode
-      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))))
+  (with-eval-after-load 'rust-mode
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
 
+(use-package consult-flycheck
+  :after (consult-lsp)
+  :config
+  (defun my/consult-diagnostics ()
+    (interactive)
+    (if (project-current)
+        (call-interactively 'consult-lsp-diagnostics)
+      (consult-flycheck)))
+
+  :bind
+  (("M-g e" . my/consult-diagnostics)))
 
 
 (provide 'init-flycheck)

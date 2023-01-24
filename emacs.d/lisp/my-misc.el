@@ -99,9 +99,9 @@
 (setq scroll-conservatively 1000)
 
 (setq save-interprogram-paste-before-kill t)
+(setq kill-do-not-save-duplicates t)
 
 (setq select-enable-clipboard t)
-(setq apropos-do-all t)
 
 (use-package popwin
   :config
@@ -109,14 +109,16 @@
   (popwin-mode)
   ;; kill ring
   (push "*Kill Ring*" popwin:special-display-config)
-  (push '(" *undo-tree*" :position) popwin:special-display-config)
+  (push '(" *undo-tree*" :position bottom) popwin:special-display-config)
   (push '("*ggtags-global*" :stick t) popwin:special-display-config)
-  (push '("^\\*helm.*\\*$" :regexp t :position bottom)
-        popwin:special-display-config)
   (global-set-key (kbd "C-c w") popwin:keymap))
 
 ;; Probably not looking at files vc'd under bazaar
 (setq vc-handled-backends '(Git Hg))
+
+(use-package magit)
+
+(use-package sudo-edit)
 
 (use-package which-key
   :config (which-key-mode))
@@ -129,18 +131,12 @@
 
 (when (not (display-graphic-p))
   (require 'term/xterm)
-  (setq xterm-extra-capabilities '(setSelection modifyOtherKeys))
+  (setq xterm-extra-capabilities '(setSelection getSelection modifyOtherKeys))
   (setq xterm-set-window-title t)
-  (terminal-init-xterm)
 
-  ; Basic mouse support
-  (xterm-mouse-mode)
-
-  ;; Fix for weird 'kitty' behavior where it doesn't clear the clipboard
-  (defadvice gui-select-text (around select-clear-old activate)
-    (ad-deactivate 'gui-select-text)
-    (gui-select-text "")
-    (ad-activate 'gui-select-text)
-    ad-do-it))
+  (add-hook 'tty-setup-hook
+            (lambda ()
+              (terminal-init-xterm)
+              (xterm-mouse-mode))))
 
 (provide 'my-misc)

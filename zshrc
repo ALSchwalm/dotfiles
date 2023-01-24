@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="gallois"
+ZSH_THEME="oldgallois"
 
 setopt IGNORE_EOF
 
@@ -160,6 +160,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export PATH="/home/adam/.local/bin:/home/adam/.cargo/bin:/home/adam/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 export GOPATH="/home/adam/.go"
 export EDITOR="emacsclient -nw"
+export GIT_EDITOR=$EDITOR
 export MOZ_USE_XINPUT2=1
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x

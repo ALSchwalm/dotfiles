@@ -21,21 +21,21 @@
 ;; Automatically recompile elisp buffers
 (use-package auto-compile
   :config
-  (progn (auto-compile-on-load-mode 1)
-         (auto-compile-on-save-mode 1)))
+  (auto-compile-on-load-mode 1)
+  (auto-compile-on-save-mode 1))
 
 (use-package exec-path-from-shell
   :config
-  (progn (exec-path-from-shell-initialize)))
+  (exec-path-from-shell-initialize))
 
 (require 'misc)
 (require 'init-theme)
 (require 'init-flycheck)
-(require 'init-projectile)
 (require 'init-autocomplete)
 (require 'init-recentf)
 (require 'init-hooks)
 (require 'init-paredit)
+(require 'init-combined-mark-ring)
 (require 'my-misc)
 (require 'functions)
 (require 'init-minibuffer)

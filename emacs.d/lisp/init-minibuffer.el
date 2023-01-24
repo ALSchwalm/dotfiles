@@ -30,6 +30,12 @@ targets."
 
 (use-package embark-consult
   :demand t
+  :bind
+  (:map embark-identifier-map
+        ("s" . consult-ripgrep)
+   :map embark-symbol-map
+        ("s" . consult-ripgrep))
+
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -69,7 +75,6 @@ targets."
   :init
   (marginalia-mode))
 
-
 ;; Ignore case everywhere
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
@@ -91,9 +96,10 @@ targets."
 
 (defun my/vertico-avoid-prompt (ret)
   "Advice to avoid selecting the vertico prompt"
-  (if (and (alist-get 'vertico--candidates ret)
+  (when (and (alist-get 'vertico--candidates ret)
            (eq (alist-get 'vertico--index ret) -1))
-      (setf (alist-get 'vertico--index ret) 0))
+    (setf (alist-get 'vertico--index ret) 0)
+    (setf (alist-get 'vertico--allow-prompt ret) nil))
   ret)
 
 (use-package vertico
@@ -127,44 +133,21 @@ targets."
   :demand t
 
   ;; Replace bindings. Lazily loaded due by `use-package'.
-  :bind (;; C-c bindings (mode-specific-map)
-         ("C-c h" . consult-history)
-         ("C-c m" . consult-mode-command)
-         ("C-c k" . consult-kmacro)
-         ;; C-x bindings (ctl-x-map)
+  :bind (
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-         ; ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-         ; ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
-         ;; Custom M-# bindings for fast register access
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
-         ("C-M-#" . consult-register)
-         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)
          ("<help> a" . consult-apropos)            ;; orig. apropos-command
-         ;; M-g bindings (goto-map)
-         ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)             ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
          ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
          ("M-g i" . consult-imenu)
          ("M-g I" . consult-imenu-multi)
-         ;; M-s bindings (search-map)
          ("M-s d" . consult-find)
-         ("M-s D" . consult-locate)
          ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
          ("M-s r" . consult-ripgrep)
          ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi)
-         ("M-s m" . consult-multi-occur)
-         ("M-s k" . consult-keep-lines)
-         ("M-s u" . consult-focus-lines)
+
          ;; Isearch integration
          ("M-s e" . consult-isearch-history)
          :map isearch-mode-map
@@ -193,27 +176,10 @@ targets."
 
   (set-face-attribute 'consult-preview-cursor nil :underline t :inherit nil)
 
-  (autoload 'projectile-project-root "projectile")
-  (setq consult-project-function (lambda (_) (projectile-project-root)))
-
   (setq consult-async-refresh-delay .2
       consult-async-input-throttle .4
       consult-async-input-debounce .2
       consult-async-min-input 3))
-
-(use-package consult-ag)
-
-(use-package browse-kill-ring
-  :demand t
-  :config
-  (setq browse-kill-ring-display-duplicates nil
-        browse-kill-ring-maximum-display-length 500)
-
-  :bind
-  ("M-y" . browse-kill-ring)
-  (:map browse-kill-ring-mode-map
-         ("C-n" . browse-kill-ring-forward)
-         ("C-p" . browse-kill-ring-previous)))
 
 (defun my/override-metadata (overrides ret)
   (if (and (listp ret) (eq (car ret) 'metadata))
@@ -258,6 +224,8 @@ targets."
         completion-category-overrides '((multi-category (styles prescient))
                                         (buffer (styles prescient))
                                         (command (styles flex))
+                                        (project-file (styles substring))
+                                        (kill-ring (styles substring))
                                         (consult-location (styles prescient))
                                         (file (styles prescient partial-completion))))
 

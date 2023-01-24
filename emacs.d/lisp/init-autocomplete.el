@@ -44,20 +44,18 @@
   :config
   (add-to-list 'xref-backend-functions 'gxref-xref-backend))
 
-(setq xref-show-definitions-function #'xref-show-definitions-completing-read)
 (setq xref-prompt-for-identifier nil)
 
 (defun my/lsp-setup-rust ()
-  (setq lsp-rust-analyzer-server-display-inlay-hints nil
-        lsp-rust-analyzer-inlay-hints-mode nil
-        lsp-rust-analyzer-display-chaining-hints t
+  (setq lsp-rust-analyzer-display-chaining-hints t
         lsp-rust-analyzer-display-parameter-hints t)
   (lsp))
 
 (use-package lsp-mode
   :init
   ;; Magic to prevent unrelated projects from being opened at once
-  (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
+  (advice-add 'lsp :before (lambda (&rest _args)
+                             (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
   ;; We use flycheck-rust rather than LSP until there's some way to avoid
   ;; getting inconsistent results from rust-analyzer

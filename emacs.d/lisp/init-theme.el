@@ -80,12 +80,8 @@
 ;; spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
-;; Add matching parens / braces
+;; Enable matching parens / braces
 (show-paren-mode 1)
-(use-package mic-paren
-  :config
-  (paren-activate)
-  (setq show-paren-delay 0))
 
 (use-package rust-mode)
 

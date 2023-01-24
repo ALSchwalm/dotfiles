@@ -10,6 +10,17 @@ emacs.d/smex-items
 emacs.d/eshell
 emacs.d/undo
 emacs.d/.persistent-scratch
+emacs.d/transient
+emacs.d/var
+emacs.d/projects
+emacs.d/scratch
+emacs.d/bookmarks
+emacs.d/.lsp-session-v1
+emacs.d/eln-cache
+emacs.d/straight/build-cache.el
+emacs.d/straight/build/
+emacs.d/straight/modified/
+emacs.d/straight/repos/
 
 ###################
 # Autocomplete history

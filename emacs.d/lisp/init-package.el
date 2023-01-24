@@ -1,7 +1,8 @@
 ;;; Setup the package manager.
 ;;; taken from: https://github.com/magnars/.emacs.d
 
-(setq straight-process-buffer " *straight-process*")
+(setq straight-process-buffer " *straight-process*"
+      straight-repository-branch "develop")
 
 (defvar bootstrap-version)
 (let ((bootstrap-file

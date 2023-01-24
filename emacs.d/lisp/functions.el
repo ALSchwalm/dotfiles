@@ -57,13 +57,6 @@
           (beginning-of-line))
     (beginning-of-visual-line)))
 
-(defun my/reset-scratch ()
-  (interactive)
-  (switch-to-buffer "*scratch*")
-  (delete-region (point-min) (point-max))
-  (insert initial-scratch-message)
-  (set-buffer-modified-p nil))
-
 (defun my/new-line-dwim ()
   (interactive)
   (let ((break-open-pair (or (and (looking-back "{" 1) (looking-at "}"))
@@ -76,22 +69,6 @@
         (newline)
         (indent-for-tab-command)))
     (indent-for-tab-command)))
-
-(defun my/search-cpp-docs (&optional search)
-  "Search en.cppreference.com for a given string"
-  (interactive)
-  (let ((search (if (not search)
-                   (read-from-minibuffer "Search for: ")
-                 search))
-        (base "http://en.cppreference.com/mwiki/index.php?search="))
-    (browse-url (concat base search))
-  (message (concat "Search executed using " browse-url-generic-program))))
-
-(require 'thingatpt)
-(defun my/search-cpp-symbol-at-point ()
-  (interactive)
-  (let ((search (thing-at-point 'symbol)))
-    (search-cpp-docs search)))
 
 ;; Provide a tiling window manager style window movement
 (defun my/expand-window-split (&optional delta)
@@ -131,26 +108,6 @@
         (select-window (funcall selector)))
       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
-;; Reload files (for after a pull)
-(defun my/refresh-all-buffers ()
-  "Refreshes all open buffers from their respective files"
-  (interactive)
-  (let* ((list (buffer-list))
-         (buffer (car list)))
-    (while buffer
-      (when (and (buffer-file-name buffer)
-                 (not (buffer-modified-p buffer)))
-        (set-buffer buffer)
-        (revert-buffer t t t))
-      (setq list (cdr list))
-      (setq buffer (car list))))
-  (message "Refreshed open files"))
-
-(defun my/pop-global-mark ()
-  (interactive)
-  (pop-global-mark)
-  (recenter-top-bottom))
-
 (defun my/delete-whitespace-and-indent ()
   (interactive)
   (let ((start (point)))
@@ -185,5 +142,11 @@ in which case it is deleted."
                     (window-state-get (selected-window)))))
       (other-window 1)
       (window-state-put config (selected-window)))))
+
+(defun my/project-find-file ()
+  (interactive)
+  (if (project-current)
+      (project-find-file)
+    (error "Not in a project")))
 
 (provide 'functions)
