@@ -12,14 +12,6 @@
                          nil)
                         (t t)))))))
 
-(defun my/consult-file-prefix (cand)
-  (let* ((info (get-text-property 0 'consult-location cand))
-         (line (cdr info))
-         (buffer-name (buffer-name (marker-buffer (car info)))))
-    (list cand (format #("%s:%d " 0 5 (face consult-line-number-prefix))
-                       buffer-name line)
-          "")))
-
 (defvar my/combined-mark-ring '())
 (defvar my/combined-mark-ring-max 50)
 (defun my/push-combined-mark (&optional location nomsg activate)
@@ -59,7 +51,6 @@
   (consult--read
    (my/consult-combined-mark-ring-candidates)
    :prompt "Go to mark: "
-   :annotate #'my/consult-file-prefix
    :sort nil
    :require-match t
    :lookup #'consult--lookup-location

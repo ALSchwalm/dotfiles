@@ -50,10 +50,27 @@
 ;; show column and line number
 (column-number-mode 1)
 
-;; Git gutter mode
-(use-package git-gutter
+(use-package diff-hl
   :config
-  (global-git-gutter-mode t))
+
+  (diff-hl-margin-mode)
+  (global-diff-hl-mode)
+  (setq vc-git-diff-switches '("--histogram"))
+
+  ;; Use '=' instead of '!' for changes
+  (custom-set-variables '(diff-hl-margin-symbols-alist
+                          '((insert . "+") (delete . "-") (change . "=")
+                            (unknown . "?") (ignored . "i"))))
+
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (set-face-attribute 'diff-hl-insert nil :background nil :weight 'bold)
+              (set-face-attribute 'diff-hl-delete nil :background nil :weight 'bold)
+              (set-face-attribute 'diff-hl-change nil :background nil :weight 'bold)))
+
+  ;; Prevent the indicators from being removed when a change is made to
+  ;; a hunk
+  (defun diff-hl-overlay-modified (ov after-p _beg _end &optional _length)))
 
 ;; always turn on, where available
 (global-font-lock-mode t)

@@ -22,9 +22,6 @@
 (use-package gcmh
   :init (gcmh-mode 1))
 
-;; Move deleted files to trash
-(setq delete-by-moving-to-trash t)
-
 ;; Use aspell for spelling
 (setq ispell-program-name "aspell")
 
@@ -88,6 +85,7 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+(setq tramp-allow-unsafe-temporary-files t)
 
 ;; Save cursor position between sessions
 (save-place-mode 1)
@@ -138,5 +136,14 @@
             (lambda ()
               (terminal-init-xterm)
               (xterm-mouse-mode))))
+
+;; Some tramp options
+(customize-set-variable
+ 'tramp-ssh-controlmaster-options
+ (concat
+  "-o ControlPath=/tmp/ssh-ControlPath-%%r@%%h:%%p "
+  "-o ControlMaster=auto -o ControlPersist=yes"))
+(setq auth-source-save-behavior nil)
+(setq tramp-verbose 2)
 
 (provide 'my-misc)
