@@ -1,3 +1,24 @@
+# Set env vars first, so we get them even if the
+# term is dumb
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export GOPATH="$HOME/.go"
+export EDITOR="emacsclient -nw"
+export GIT_EDITOR=$EDITOR
+export MOZ_USE_XINPUT2=1
+
+if [[ "$TERM" == "dumb" ]]
+then
+    unsetopt zle
+    unsetopt prompt_cr
+    unsetopt prompt_subst
+    unfunction precmd
+    unfunction preexec
+    PS1='$ '
+
+    return
+fi
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -99,17 +120,6 @@ bindkey '\M-,' previous-command
 # we also support it here.
 bindkey '\033[56;5~' backward-delete-word
 
-if [[ "$TERM" == "dumb" ]]
-then
-    unsetopt zle
-    unsetopt prompt_cr
-    unsetopt prompt_subst
-    unfunction precmd
-    unfunction preexec
-    PS1='$ '
-fi
-
-
 # Don't prompt for a huge list, page it!
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 
@@ -154,19 +164,3 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # Fix slow paste
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
-
-# Customize to your needs...
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export PATH="/home/adam/.local/bin:/home/adam/.cargo/bin:/home/adam/.gem/ruby/2.2.0/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
-export GOPATH="/home/adam/.go"
-export EDITOR="emacsclient -nw"
-export GIT_EDITOR=$EDITOR
-export MOZ_USE_XINPUT2=1
-
-# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/home/adam/Repos/cocos2d-x/tools/cocos2d-console/bin
-export PATH=$COCOS_CONSOLE_ROOT:$PATH
-
-# Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
-export COCOS_TEMPLATES_ROOT=/home/adam/Repos/cocos2d-x/templates
-export PATH=$COCOS_TEMPLATES_ROOT:$PATH
