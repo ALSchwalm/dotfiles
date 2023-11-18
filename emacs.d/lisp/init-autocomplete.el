@@ -57,10 +57,6 @@
   (advice-add 'lsp :before (lambda (&rest _args)
                              (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
-  ;; We use flycheck-rust rather than LSP until there's some way to avoid
-  ;; getting inconsistent results from rust-analyzer
-  (setq lsp-diagnostics-disabled-modes '(rust-mode))
-
   (setq lsp-headerline-breadcrumb-enable nil
         lsp-keymap-prefix "C-c l"
         lsp-enable-file-watchers nil
@@ -85,7 +81,28 @@
                          (require 'lsp-pyright)
                          (lsp))))
 
-(use-package consult-lsp)
+(use-package consult-lsp
+  :config
+
+  ;; Define a new annotation build that ensures no newlines
+  ;; in the diagnostic messages (because vertico doesn't deal
+  ;; with multi-line candidates)
+  (defun my/consult-lsp--diagnostics-annotate-builder ()
+    (let* ((width (length (number-to-string (line-number-at-pos
+                                             (point-max)
+                                             consult-line-numbers-widen)))))
+      (lambda (cand)
+        (let* ((diag (cdr (get-text-property 0 'consult--candidate cand))))
+          (list cand
+                (format "%-5s " (consult-lsp--diagnostics--severity-to-level diag))
+                (concat
+                 (format "%s" (subst-char-in-string ?\n ?\s
+                                                    (lsp:diagnostic-message diag)))
+                 (when-let ((source (consult-lsp--diagnostics--source diag)))
+                   (propertize (format " - %s" source) 'face 'font-lock-doc-face))))))))
+
+  (setq consult-lsp-diagnostics-annotate-builder-function
+        'my/consult-lsp--diagnostics-annotate-builder))
 
 (use-package yasnippet
   :init

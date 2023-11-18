@@ -33,17 +33,12 @@
   (add-hook 'rust-mode-hook (lambda ()
                               (setq-local flycheck-check-syntax-automatically '(save mode-enabled)))))
 
-(use-package flycheck-rust
-  :config
-  (with-eval-after-load 'rust-mode
-    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
-
 (use-package consult-flycheck
   :after (consult-lsp)
   :config
   (defun my/consult-diagnostics ()
     (interactive)
-    (if (project-current)
+    (if (bound-and-true-p lsp-mode)
         (call-interactively 'consult-lsp-diagnostics)
       (consult-flycheck)))
 

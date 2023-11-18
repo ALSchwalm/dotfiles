@@ -28,24 +28,11 @@ targets."
          (remq #'embark-which-key-indicator embark-indicators)))
       (apply fn args)))
 
-(use-package embark-consult
-  :demand t
-  :bind
-  (:map embark-identifier-map
-        ("s" . consult-ripgrep)
-   :map embark-symbol-map
-        ("s" . consult-ripgrep))
-
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
 (use-package embark
-  :demand t
-
   :bind
   (("C-." . embark-act)
    ("M-." . embark-dwim)
-   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+   ("C-h B" . embark-bindings))
 
   :init
 
@@ -56,7 +43,9 @@ targets."
 
   (set-face-attribute 'embark-target nil :inherit '(isearch))
 
-  ; Set up which-key support for embark
+  (custom-set-variables '(embark-help-key "?"))
+
+  ;; Set up which-key support for embark
   (setq embark-indicators
         '(my/embark-which-key-indicator
           embark-highlight-indicator
@@ -70,8 +59,17 @@ targets."
                  nil
                  (window-parameters (mode-line-format . none)))))
 
+(use-package embark-consult
+  :bind
+  (:map embark-identifier-map
+        ("s" . consult-ripgrep)
+   :map embark-symbol-map
+        ("s" . consult-ripgrep))
+
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package marginalia
-  :demand t
   :init
   (marginalia-mode))
 
@@ -103,8 +101,6 @@ targets."
   ret)
 
 (use-package vertico
-  :demand t
-
   :config
   (vertico-mode)
 
@@ -130,8 +126,6 @@ targets."
   (vertico-multiform-mode))
 
 (use-package consult
-  :demand t
-
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -204,8 +198,6 @@ targets."
       (nth vertico--index vertico--candidates)))))
 
 (use-package prescient
-  :demand t
-
   :after (vertico)
 
   :config

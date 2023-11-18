@@ -16,7 +16,8 @@
 ;; Simple y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure t
+      use-package-always-demand t)
 
 ;; Automatically recompile elisp buffers
 (use-package auto-compile

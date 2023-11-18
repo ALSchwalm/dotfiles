@@ -44,7 +44,8 @@
 	  (error "Combined mark position is outside accessible part of buffer %s"
                  (buffer-name buffer))))
     (goto-char position)
-    (switch-to-buffer buffer)))
+    (switch-to-buffer buffer)
+    (recenter-top-bottom)))
 
 (defun my/consult-combined-mark-ring ()
   (interactive)
