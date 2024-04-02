@@ -114,7 +114,15 @@
 ;; Probably not looking at files vc'd under bazaar
 (setq vc-handled-backends '(Git Hg))
 
-(use-package magit)
+(use-package magit
+  :config
+
+  ;; Fix bug where magit-blame shows empty lines for first style in
+  ;; terminal frames
+  (setq magit-blame-styles
+        '((highlight
+           (heading-format . "%-20a %C %s
+")))))
 
 (use-package sudo-edit)
 
