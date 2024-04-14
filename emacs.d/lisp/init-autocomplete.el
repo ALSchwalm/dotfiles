@@ -29,7 +29,6 @@
 
   (add-hook 'prog-mode-hook 'my/enable-company-mode))
 
-;; Jumping for when we don't have gtags
 (use-package dumb-jump
   :config
 
@@ -39,10 +38,6 @@
   ;; Remove Makefile from the list, as it kind of breaks recursive make
   (setq dumb-jump-project-denoters '(".dumbjump" ".projectile" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".svn" "PkgInfo" "-pkg.el"))
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
-
-(use-package gxref
-  :config
-  (add-to-list 'xref-backend-functions 'gxref-xref-backend))
 
 (setq xref-prompt-for-identifier nil)
 
